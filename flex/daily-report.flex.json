@@ -1,0 +1,149 @@
+{
+  "type": "flex",
+  "altText": "📊 昨日の全店実績: 純売上 ¥690,520（前日比 +5.4%）",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "none",
+      "paddingAll": "16px",
+      "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "📊 昨日の実績（全店）", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "{{date}} ・ ベーカリーこむぎ堂", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "paddingAll": "16px",
+      "contents": [
+        {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "none",
+          "contents": [
+            { "type": "text", "text": "全店 純売上（税抜）", "size": "xs", "color": "#8c8c8c" },
+            { "type": "text", "text": "¥690,520", "size": "xxl", "weight": "bold", "color": "#111111" },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "margin": "sm",
+              "contents": [
+                { "type": "text", "text": "前日比 +5.4%", "size": "xs", "color": "#2E7D32", "weight": "bold" },
+                { "type": "text", "text": "前週同曜 +3.1%", "size": "xs", "color": "#2E7D32", "align": "end" }
+              ]
+            }
+          ]
+        },
+        { "type": "separator", "margin": "md" },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "margin": "md",
+          "contents": [
+            { "type": "text", "text": "店舗別", "size": "xxs", "color": "#aaaaaa" },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                { "type": "text", "text": "梅田店", "size": "sm", "color": "#555555", "flex": 3 },
+                { "type": "text", "text": "¥249,100", "size": "sm", "weight": "bold", "align": "end", "flex": 4 },
+                { "type": "text", "text": "+6.2%", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 3 }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                { "type": "text", "text": "心斎橋店", "size": "sm", "color": "#555555", "flex": 3 },
+                { "type": "text", "text": "¥236,220", "size": "sm", "weight": "bold", "align": "end", "flex": 4 },
+                { "type": "text", "text": "+4.8%", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 3 }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                { "type": "text", "text": "難波店", "size": "sm", "color": "#555555", "flex": 3 },
+                { "type": "text", "text": "¥205,200", "size": "sm", "weight": "bold", "align": "end", "flex": 4 },
+                { "type": "text", "text": "+5.1%", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 3 }
+              ]
+            }
+          ]
+        },
+        { "type": "separator", "margin": "md" },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "none",
+              "contents": [
+                { "type": "text", "text": "客数", "size": "xs", "color": "#8c8c8c" },
+                { "type": "text", "text": "747人", "size": "md", "weight": "bold" }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "none",
+              "contents": [
+                { "type": "text", "text": "客単価", "size": "xs", "color": "#8c8c8c" },
+                { "type": "text", "text": "¥924", "size": "md", "weight": "bold" }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "none",
+              "contents": [
+                { "type": "text", "text": "目標達成率", "size": "xs", "color": "#8c8c8c" },
+                { "type": "text", "text": "102%", "size": "md", "weight": "bold", "color": "#2E7D32" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "md",
+          "paddingAll": "12px",
+          "backgroundColor": "#f5f7f5",
+          "cornerRadius": "8px",
+          "contents": [
+            { "type": "text", "text": "💬 全店プラス。難波店はクロワッサンが16時台に完売しており、夕方の機会損失が出ています。焼成の後ろ倒しで拾える可能性があります。", "size": "xs", "color": "#555555", "wrap": true }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "sm",
+      "paddingAll": "12px",
+      "contents": [
+        {
+          "type": "button",
+          "style": "primary",
+          "color": "#1DB446",
+          "height": "sm",
+          "action": { "type": "uri", "label": "詳しく見る（分析グラフ）", "uri": "{{liff_daily_url}}" }
+        },
+        {
+          "type": "button",
+          "style": "link",
+          "height": "sm",
+          "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{liff_shindan_url}}" }
+        }
+      ]
+    }
+  }
+}
