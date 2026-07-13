@@ -14,17 +14,18 @@
     .rankrow .rk { width: 20px; color: var(--sub); font-size: 12px; font-weight: 700; }
     .rankrow .nm { flex: 1; font-size: 13px; }
     .rankrow .nm .ow-bar { margin-top: 5px; }
-    .rankrow .amt { font-size: 13px; font-weight: 700; width: 76px; text-align: right; }
+    .rankrow .dlt { width: 52px; text-align: right; font-size: 12px; font-weight: 700; }
+    .rankrow .amt { font-size: 13px; font-weight: 700; width: 74px; text-align: right; }
     .dayin .ow-row { padding: 8px 0; }
     .dayin .k { width: 66px; font-weight: 600; }
-    .tmwrap { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .tmwrap { display: flex; align-items: center; gap: 8px; }
     .tmwrap .sep { color: var(--sub); }
   </style>
 </head>
 <body>
   <div class="ow-header">
     <div class="ttl">🧩 部品ギャラリー</div>
-    <div class="sub">お店のAIワーカー デモ ・ 全UIパーツ（Airレジ調）</div>
+    <div class="sub">お店のAIワーカー デモ ・ 全UIパーツ</div>
   </div>
 
   <div class="ow-wrap">
@@ -35,7 +36,7 @@
       <div class="ow-hero-lbl">純売上（税抜）</div>
       <div class="ow-hero-main">
         <span class="ow-hero-val">¥690,520</span>
-        <span class="ow-hero-delta"><span class="dl">前日比</span><span class="dv">+5.4% ↑</span></span>
+        <span class="ow-hero-delta"><span class="dl">前日比</span><span class="dv ow-up">+5.4% ↑</span></span>
       </div>
       <div class="ow-kpi2">
         <div><div class="l">客数</div><div class="v">747人</div></div>
@@ -46,18 +47,18 @@
     <div class="glabel">2. タブ</div>
     <div style="margin-bottom:12px"><span class="ow-tab on">全店</span> <span class="ow-tab">梅田店</span> <span class="ow-tab">心斎橋店</span> <span class="ow-tab">難波店</span></div>
 
-    <div class="glabel">3. グラフ（タップで単一の値・凡例は右上）</div>
+    <div class="glabel">3. グラフ（タップで値／ドーナツ=売上+%・利益=利益率）</div>
     <div class="ow-card"><h2>時間帯別 売上（棒）</h2><div class="chartbox"><canvas id="c-bar"></canvas></div></div>
     <div class="ow-card"><h2>時間帯グループ別（ランチ / カフェ / ディナー帯）</h2><div class="chartbox"><canvas id="c-band"></canvas></div></div>
     <div class="ow-card"><h2>直近7日 / 前週</h2><div class="chartbox"><canvas id="c-line"></canvas></div></div>
     <div class="ow-card"><h2>部門別 構成（ドーナツ）</h2><div class="chartbox"><canvas id="c-donut"></canvas></div></div>
     <div class="ow-card"><h2>12ヶ月 売上・利益（複合・折れ線前面）</h2><div class="chartbox"><canvas id="c-combo"></canvas></div></div>
 
-    <div class="glabel">4. リスト・表</div>
-    <div class="ow-card"><h2>売れ筋 TOP（順位＋構成比バー）</h2>
-      <div class="rankrow"><div class="rk">1</div><div class="nm">クロワッサン<div class="ow-bar"><i style="width:100%"></i></div></div><div class="amt">¥47,040</div></div>
-      <div class="rankrow"><div class="rk">2</div><div class="nm">生食パン「こむぎ」<div class="ow-bar"><i style="width:90%"></i></div></div><div class="amt">¥42,240</div></div>
-      <div class="rankrow"><div class="rk">3</div><div class="nm">カレーパン<div class="ow-bar"><i style="width:79%"></i></div></div><div class="amt">¥37,200</div></div>
+    <div class="glabel">4. リスト・表（売れ筋に前日比の列を追加）</div>
+    <div class="ow-card"><h2>売れ筋 TOP</h2>
+      <div class="rankrow"><div class="rk">1</div><div class="nm">クロワッサン<div class="ow-bar"><i style="width:100%"></i></div></div><div class="dlt ow-up">+24 ↑</div><div class="amt">¥47,040</div></div>
+      <div class="rankrow"><div class="rk">2</div><div class="nm">生食パン「こむぎ」<div class="ow-bar"><i style="width:90%"></i></div></div><div class="dlt ow-down">-12 ↓</div><div class="amt">¥42,240</div></div>
+      <div class="rankrow"><div class="rk">3</div><div class="nm">カレーパン<div class="ow-bar"><i style="width:79%"></i></div></div><div class="dlt ow-up">+10 ↑</div><div class="amt">¥37,200</div></div>
     </div>
     <div class="ow-card"><h2>損益表</h2>
       <table class="ow-table"><tbody>
@@ -104,7 +105,7 @@
         <textarea class="ow-textarea">T.K様、ご投稿ありがとうございます。夕方に品切れとなり申し訳ございませんでした。15:30頃に2回目の焼き上がりがございます。</textarea></div>
     </div>
 
-    <div class="glabel">8. シフト表（確認・時間表記 / smashif参照）</div>
+    <div class="glabel">8. シフト表（確認・時間表記 / Airシフト配色）</div>
     <div class="ow-card">
       <h2>来月 上旬（横スクロール →）</h2>
       <div class="ow-shift-scroll">
@@ -122,7 +123,7 @@
           </tbody>
         </table>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:var(--sub)"><span class="sh sh-am" style="background:#E3EEF7;color:#2C77B0">早番</span> <span class="sh sh-mid" style="background:#E3F0EA;color:#3C8B6E">中番</span> <span class="sh sh-pm" style="background:#E8E9F4;color:#545AA0">遅番</span></div>
+      <div style="margin-top:10px;font-size:11px;color:var(--sub)"><span class="sh" style="background:#E4F3E6;color:#3F9E4E">早番</span> <span class="sh" style="background:#E4EEF8;color:#2C77B0">中番</span> <span class="sh" style="background:#FBEEDD;color:#CE7E24">遅番</span></div>
     </div>
 
     <div class="glabel">9. シフト希望入力（パターン：早番/中番/遅番）</div>
@@ -143,25 +144,48 @@
         <div class="ow-row" style="border-top:none"><span class="k">1（月）</span><div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">中番</span><span class="ow-chip">遅番</span></div></div>
         <div class="ow-row"><span class="k">2（火）</span><div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">中番</span><span class="ow-chip">遅番</span></div></div>
         <div class="ow-row"><span class="k">4（木）</span><div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip on">中番</span><span class="ow-chip">遅番</span></div></div>
-        <div class="ow-row"><span class="k">5（金）</span><div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip">中番</span><span class="ow-chip on">遅番</span></div></div>
       </div>
-      <div style="margin-top:16px"><button class="ow-btn">希望を送信する</button></div>
+      <div style="margin-top:16px"><button class="ow-btn shift">シフトを提出</button></div>
     </div>
 
-    <div class="glabel">10. シフト希望入力（時間：日別に開始〜終了）</div>
+    <div class="glabel">10. シフト希望入力（時間＋メモ）</div>
     <div class="ow-card">
       <h2>希望時間を入力（来月・○の日）</h2>
-      <div class="dayin">
-        <div class="ow-row" style="border-top:none"><span class="k">1（月）</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="16:00"></div></div>
-        <div class="ow-row"><span class="k">2（火）</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="16:00"></div></div>
-        <div class="ow-row"><span class="k">4（木）</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm" value="17:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="22:00"></div></div>
-        <div class="ow-row"><span class="k" style="color:#2E7BC4">6（土）</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm" value="09:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="15:00"></div></div>
+      <div class="ow-dayrow">
+        <div class="top"><span class="dk">6/16(火)</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm2" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="16:00"></div></div>
+        <input class="ow-memo" placeholder="メモがある場合は入力してください">
       </div>
-      <div style="margin-top:16px"><button class="ow-btn">希望を送信する</button></div>
+      <div class="ow-dayrow">
+        <div class="top"><span class="dk">6/17(水)</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm2" value="17:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="22:00"></div></div>
+        <input class="ow-memo" placeholder="メモがある場合は入力してください">
+      </div>
+      <div class="ow-dayrow">
+        <div class="top"><span class="dk sat">6/20(土)</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm2" value="09:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="15:00"></div></div>
+        <input class="ow-memo" placeholder="メモがある場合は入力してください">
+      </div>
+      <div style="margin-top:16px"><button class="ow-btn shift">シフトを提出</button></div>
+    </div>
+
+    <div class="glabel">11. シフトカレンダー（Airシフト調・タップで詳細）</div>
+    <div class="ow-card" style="padding:0;overflow:hidden">
+      <div class="ow-cal-wrap" style="border:none">
+        <div class="ow-cal-head"><span class="nav">‹</span><span>2026年5月</span><span class="nav">›</span></div>
+        <div class="ow-cal-wd"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="sat">土</div><div class="sun">日</div></div>
+        <div class="ow-cal">
+          <div class="c out"><span class="dn">27</span></div><div class="c out"><span class="dn">28</span></div><div class="c out"><span class="dn">29</span></div><div class="c out"><span class="dn">30</span></div><div class="c"><span class="dn">1</span></div><div class="c sat"><span class="dn">2</span></div><div class="c sun"><span class="dn">3</span></div>
+          <div class="c"><span class="dn">4</span></div><div class="c"><span class="dn">5</span></div><div class="c"><span class="dn">6</span></div><div class="c"><span class="dn">7</span></div><div class="c"><span class="dn">8</span></div><div class="c sat"><span class="dn">9</span></div><div class="c sun"><span class="dn">10</span></div>
+          <div class="c"><span class="dn">11</span><span class="pill">17:00〜 ホール</span><div class="dots"><i style="background:#4CAF50"></i><i style="background:#2C77B0"></i><i style="background:#CE7E24"></i></div></div><div class="c"><span class="dn">12</span><span class="pill">17:00〜 ホール</span><div class="dots"><i style="background:#4CAF50"></i><i style="background:#2C77B0"></i></div></div><div class="c"><span class="dn">13</span></div><div class="c"><span class="dn">14</span></div><div class="c sel"><span class="dn">15</span><div class="dots"><i style="background:#CE7E24"></i></div></div><div class="c sat"><span class="dn">16</span></div><div class="c sun"><span class="dn">17</span></div>
+          <div class="c"><span class="dn">18</span><span class="pill">17:00〜 ホール</span></div><div class="c"><span class="dn">19</span></div><div class="c"><span class="dn">20</span></div><div class="c"><span class="dn">21</span></div><div class="c"><span class="dn">22</span><span class="pill">17:00〜 ホール</span></div><div class="c sat"><span class="dn">23</span></div><div class="c sun"><span class="dn">24</span></div>
+          <div class="c"><span class="dn">25</span><span class="pill">10:00〜 キッチン</span></div><div class="c"><span class="dn">26</span></div><div class="c"><span class="dn">27</span></div><div class="c"><span class="dn">28</span></div><div class="c"><span class="dn">29</span><span class="pill">17:00〜 ホール</span></div><div class="c sat"><span class="dn">30</span></div><div class="c sun"><span class="dn">31</span></div>
+        </div>
+        <div class="ow-cal-detail"><span>2026年5月15日（金）</span><span>1人 出勤</span></div>
+        <div style="padding:0 12px 14px">
+          <div class="ow-cal-shift"><span class="tm">10:00<br>22:00</span><span>藤田 みなみ（ホール）</span></div>
+        </div>
+      </div>
     </div>
 
     <div style="height:40px"></div>
@@ -199,11 +223,12 @@
         plugins:{ legend:legendTR, tooltip:tip(c=>yen(c.parsed.y*1000)) },
         scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v/10+"万"}}} } });
 
+    const deptSales=[4310000,3951000,3233000,2335000,2155000,1078000,898000];
     new Chart($("c-donut"), { type:"doughnut",
       data:{ labels:["菓子パン","食パン","惣菜パン","サンド","ハード","焼菓子","ドリンク"],
         datasets:[{ data:[24,22,18,13,12,6,5], backgroundColor:PAL, borderWidth:0 }] },
       options:{ responsive:true, maintainAspectRatio:false, cutout:"58%",
-        plugins:{ legend:{position:"right",labels:{font:{size:10},boxWidth:12}}, tooltip:tip(c=>`${c.label} ${c.parsed}%`) } } });
+        plugins:{ legend:{position:"right",labels:{font:{size:10},boxWidth:12}}, tooltip:tip(c=>`${c.label} ${yen(deptSales[c.dataIndex])}（${c.parsed}%）`) } } });
 
     new Chart($("c-combo"), {
       data:{ labels:["8","9","10","11","12","1","2","3","4","5","6","7"],
@@ -211,7 +236,9 @@
           { type:"bar", label:"売上", order:2, data:[1680,1650,1710,1740,1860,1590,1640,1760,1720,1750,1800,1796], backgroundColor:"#BFE3F5", borderRadius:3, yAxisID:"y" },
           { type:"line", label:"利益", order:1, data:[310,300,320,330,370,270,290,340,330,340,350,351], borderColor:BLUE, backgroundColor:BLUE, borderWidth:2, tension:.35, pointRadius:2, pointBackgroundColor:BLUE, yAxisID:"y" } ]},
       options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:"nearest",intersect:true},
-        plugins:{ legend:legendTR, tooltip:tip(c=>`${c.dataset.label} ${yen(c.parsed.y*1000)}`) },
+        plugins:{ legend:legendTR, tooltip:{ enabled:true, displayColors:false, callbacks:{ title:()=>"",
+          label:function(c){ const sales=c.chart.data.datasets[0].data[c.dataIndex]; const profit=c.chart.data.datasets[1].data[c.dataIndex];
+            return c.datasetIndex===1 ? `利益率 ${(profit/sales*100).toFixed(1)}%` : `売上 ${yen(sales*10000)}`; } } } },
         scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v/100+"万"}}} } });
   </script>
 </body>
