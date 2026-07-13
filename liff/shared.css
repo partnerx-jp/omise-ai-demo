@@ -60,11 +60,20 @@ body {
 /* グレーの見出し帯（Airレジの客数/客単価ヘッダー風・任意） */
 .ow-headbar { background: var(--head-bg); color: var(--ink); font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: var(--radius-sm) var(--radius-sm) 0 0; margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 12px; }
 
-/* ヒーロー数値（大きく・軽く・ブルー） */
-.ow-hero-lbl { font-size: 12px; color: var(--sub); }
+/* ヒーロー（左詰め: 全店 → 純売上ラベル → 数値＋前日比 → 客数/客単価） */
+.ow-scope { font-size: 13px; color: var(--sub); font-weight: 600; }
+.ow-hero-lbl { font-size: 12px; color: var(--sub); margin-top: 2px; }
+.ow-hero-main { display: flex; align-items: baseline; gap: 12px; margin-top: 2px; flex-wrap: wrap; }
 .ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; }
+.ow-hero-delta { font-size: 15px; font-weight: 700; }
+/* 下段 2列（客数/客単価・左詰め） */
+.ow-kpi2 { display: flex; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.ow-kpi2 > div { flex: 1; }
+.ow-kpi2 > div + div { border-left: 1px solid var(--line); padding-left: 16px; }
+.ow-kpi2 .l { font-size: 11px; color: var(--sub); }
+.ow-kpi2 .v { font-size: 20px; font-weight: 400; color: var(--brand); margin-top: 3px; }
 
-/* KPI 3列（数値はブルー・軽い／区切りはハーライン） */
+/* KPI 3列（従来・他画面互換用） */
 .ow-kpis { display: flex; }
 .ow-kpi { flex: 1; text-align: center; }
 .ow-kpi + .ow-kpi { border-left: 1px solid var(--line); }
@@ -81,7 +90,9 @@ body {
 .ow-tab.on { color: var(--brand); border-bottom-color: var(--brand); font-weight: 700; }
 
 /* バッジ・ハイライト・注意・AIひとこと */
-.ow-badge { display: inline-block; font-size: 10px; color: var(--brand-dark); background: var(--brand-tint); border-radius: 4px; padding: 2px 7px; }
+/* バッジ（ニュートラルなグレー枠・"AIっぽさ"を排除） */
+.ow-badge { display: inline-block; font-size: 10px; color: var(--sub); background: #fff; border: 1px solid #DADDE0; border-radius: 4px; padding: 1px 6px; }
+.ow-badge.star { color: #C8891A; border-color: #EBD3A3; }
 .ow-hl    { background: var(--hl-bg); border-radius: var(--radius-sm); padding: 8px 10px; }
 .ow-warn  { background: var(--warn-bg); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 12px; color: var(--warn-ink); }
 .ow-ai    { background: var(--info-bg); border-radius: var(--radius-sm); padding: 13px 14px; font-size: 12.5px; line-height: 1.75; color: #4a4f55; }
@@ -95,14 +106,16 @@ body {
 /* バー（ブルー・薄いトラック） */
 .ow-bar  { height: 6px; border-radius: 3px; background: #EEF1F2; overflow: hidden; }
 .ow-bar > i { display: block; height: 100%; background: var(--brand); }
-.ow-prog { height: 8px; border-radius: 5px; background: #EEF1F2; overflow: hidden; }
+.ow-prog { height: 12px; border-radius: 6px; background: #EEF1F2; overflow: hidden; }
 .ow-prog > i { display: block; height: 100%; background: var(--brand); }
 
 /* CTA（Airレジのブルー） */
 .ow-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom,0)); background: linear-gradient(180deg, rgba(255,255,255,0), #fff 26%); }
-.ow-cta button, .ow-btn { width: 100%; border: none; background: linear-gradient(180deg, #16ABEE 0%, #00A0E9 100%); color: #fff; font-size: 15px; font-weight: 700; padding: 15px; border-radius: var(--radius-sm); box-shadow: 0 3px 8px rgba(0,140,199,.30); }
-.ow-cta button:active, .ow-btn:active { box-shadow: 0 1px 3px rgba(0,140,199,.30); transform: translateY(1px); }
-.ow-btn.sub { background: #fff; color: var(--brand-dark); border: 1px solid var(--line); box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+/* ボタン（フラットなブルー＋枠線でメリハリ・添付画像準拠） */
+.ow-cta button, .ow-btn { width: 100%; background: var(--brand); color: #fff; font-size: 15px; font-weight: 700; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--brand-dark); box-shadow: 0 1px 2px rgba(0,0,0,.10); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ow-cta button:active, .ow-btn:active { background: var(--brand-dark); }
+.ow-btn .ext { width: 15px; height: 15px; }
+.ow-btn.sub { background: #fff; color: var(--brand-dark); border: 1px solid #CFD4D8; box-shadow: none; }
 
 /* 状態 */
 .ow-loading, .ow-error { text-align: center; color: var(--sub); padding: 60px 20px; font-size: 14px; }
@@ -124,7 +137,7 @@ body {
 
 /* 選択チップ */
 .ow-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.ow-chip { font-size: 13px; color: var(--sub); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; }
+.ow-chip { font-size: 13px; color: var(--sub); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; }
 .ow-chip.on { color: #fff; background: var(--brand); border-color: var(--brand); font-weight: 700; }
 
 /* シフト表（スタッフ×日付・横スクロール） */
@@ -144,3 +157,24 @@ body {
 .sh-mid { background: #EAF6E1; color: #4E9E39; }
 .sh-pm  { background: #FDEFE0; color: #D9822B; }
 .sh-off { background: #F2F3F4; color: #9AA0A6; }
+
+/* シフト表・時間表記セル（smashif風・時間帯で淡色分け） */
+.ow-shift td.name .av { display: inline-flex; width: 22px; height: 22px; border-radius: 999px; background: #E8EDF1; color: var(--sub); align-items: center; justify-content: center; font-size: 11px; margin-right: 6px; vertical-align: middle; }
+.ow-shift td.tc { font-size: 11.5px; font-weight: 600; color: #3a4046; line-height: 1.35; }
+.tc-am  { background: #EAF5EA; }   /* 早め（〜16時） */
+.tc-day { background: #E9F1FA; }   /* 日中 */
+.tc-pm  { background: #EFEBF7; }   /* 遅め（夜） */
+.tc-sun { background: #FBEDEC; }   /* 日曜 */
+.ow-shift td.tc.off, .ow-shift td.off { color: var(--muted); font-weight: 400; }
+
+/* シフト希望入力（smashif風・日ごとに ○希望あり / ×希望なし） */
+.ow-req { display: flex; gap: 4px; }
+.ow-req .d { flex: 1; min-width: 42px; text-align: center; }
+.ow-req .d .dl { font-size: 11px; color: var(--ink); line-height: 1.3; }
+.ow-req .d .dl small { display: block; font-size: 10px; color: var(--sub); }
+.ow-req .d.sat .dl { color: #2E7BC4; } .ow-req .d.sun .dl { color: var(--neg); }
+.ow-req .d .mk { width: 30px; height: 30px; border-radius: 999px; margin: 8px auto 4px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.ow-req .d.yes .mk { border: 2px solid var(--brand); color: var(--brand); background: #fff; }
+.ow-req .d.no  .mk { background: #E7E9EB; color: #B0B5BA; }
+.ow-req .d .st { font-size: 10px; }
+.ow-req .d.yes .st { color: var(--brand); } .ow-req .d.no .st { color: var(--muted); }

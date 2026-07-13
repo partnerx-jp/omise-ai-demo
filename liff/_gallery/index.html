@@ -7,14 +7,13 @@
   <link rel="stylesheet" href="../shared.css">
   <title>部品ギャラリー｜お店のAIワーカー</title>
   <style>
-    .gsec { padding: 4px 0 8px; }
     .glabel { font-size: 11px; color: var(--muted); letter-spacing: .06em; margin: 22px 4px 8px; text-transform: uppercase; }
     .chartbox { position: relative; height: 190px; }
     .rankrow { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); }
     .rankrow:first-child { border-top: none; }
     .rankrow .rk { width: 20px; color: var(--sub); font-size: 12px; font-weight: 700; }
     .rankrow .nm { flex: 1; font-size: 13px; }
-    .rankrow .nm .bar { margin-top: 5px; }
+    .rankrow .nm .ow-bar { margin-top: 5px; }
     .rankrow .amt { font-size: 13px; font-weight: 700; width: 76px; text-align: right; }
   </style>
 </head>
@@ -26,25 +25,29 @@
 
   <div class="ow-wrap">
 
-    <div class="glabel">1. 数値・KPI</div>
+    <div class="glabel">1. 数値・KPI（左詰め / 純売上＋前日比 → 客数・客単価）</div>
     <div class="ow-card">
-      <div class="ow-hero-lbl">全店 純売上（税抜）</div>
-      <div class="ow-hero-val">¥690,520</div>
-      <div class="ow-kpis" style="margin-top:14px">
-        <div class="ow-kpi"><div class="l">前日比</div><div class="v ow-up">+5.4% ↑</div></div>
-        <div class="ow-kpi"><div class="l">客数</div><div class="v">747人</div></div>
-        <div class="ow-kpi"><div class="l">客単価</div><div class="v">¥924</div></div>
+      <div class="ow-scope">全店</div>
+      <div class="ow-hero-lbl">純売上（税抜）</div>
+      <div class="ow-hero-main">
+        <span class="ow-hero-val">¥690,520</span>
+        <span class="ow-hero-delta ow-up">前日比 +5.4% ↑</span>
+      </div>
+      <div class="ow-kpi2">
+        <div><div class="l">客数</div><div class="v">747人</div></div>
+        <div><div class="l">客単価</div><div class="v">¥924</div></div>
       </div>
     </div>
 
     <div class="glabel">2. タブ（下線式）</div>
     <div style="margin-bottom:12px"><span class="ow-tab on">全店</span> <span class="ow-tab">梅田店</span> <span class="ow-tab">心斎橋店</span> <span class="ow-tab">難波店</span></div>
 
-    <div class="glabel">3. グラフ（棒 / 折れ線 / ドーナツ / 複合）</div>
+    <div class="glabel">3. グラフ（棒 / 時間帯グループ / 折れ線 / ドーナツ / 複合）</div>
     <div class="ow-card"><h2>時間帯別 売上（棒）</h2><div class="chartbox"><canvas id="c-bar"></canvas></div></div>
-    <div class="ow-card"><h2>直近7日 / 前週（折れ線・今=青 前=グレー）</h2><div class="chartbox"><canvas id="c-line"></canvas></div></div>
+    <div class="ow-card"><h2>時間帯グループ別（ランチ / カフェ / ディナー帯）</h2><div class="chartbox"><canvas id="c-band"></canvas></div></div>
+    <div class="ow-card"><h2>直近7日 / 前週（今=青 前=グレー破線）</h2><div class="chartbox"><canvas id="c-line"></canvas></div></div>
     <div class="ow-card"><h2>部門別 構成（ドーナツ・原色寄り）</h2><div class="chartbox"><canvas id="c-donut"></canvas></div></div>
-    <div class="ow-card"><h2>12ヶ月 売上・利益（複合）</h2><div class="chartbox"><canvas id="c-combo"></canvas></div></div>
+    <div class="ow-card"><h2>12ヶ月 売上・利益（複合・折れ線を前面に）</h2><div class="chartbox"><canvas id="c-combo"></canvas></div></div>
 
     <div class="glabel">4. リスト・表</div>
     <div class="ow-card"><h2>売れ筋 TOP（順位＋構成比バー）</h2>
@@ -59,34 +62,37 @@
         <tr><td style="text-align:left;font-weight:700">営業利益</td><td style="text-align:right;font-weight:700;color:var(--brand)">¥3,509,000</td><td style="color:var(--brand)">19.5%</td><td></td></tr>
       </tbody></table>
     </div>
-    <div class="ow-card"><h2>日別打刻（勤務実績）</h2>
+    <div class="ow-card"><h2>日別打刻（勤務実績・縦そろえ / タグなし）</h2>
       <table class="ow-table"><thead><tr><th style="text-align:left">日付</th><th>出勤</th><th>退勤</th><th>休憩</th><th>実働</th></tr></thead><tbody>
         <tr><td style="text-align:left">7/1</td><td>4:28</td><td>13:32</td><td>60分</td><td style="font-weight:700">8.1h</td></tr>
-        <tr><td style="text-align:left">7/8</td><td>4:28</td><td>20:10</td><td>90分</td><td style="font-weight:700">15.2h <span class="ow-badge">通し</span></td></tr>
+        <tr><td style="text-align:left">7/6</td><td>4:29</td><td>13:33</td><td>60分</td><td style="font-weight:700">8.1h</td></tr>
+        <tr><td style="text-align:left">7/8</td><td>4:28</td><td>20:10</td><td>90分</td><td style="font-weight:700">15.2h</td></tr>
       </tbody></table>
     </div>
 
-    <div class="glabel">5. 進捗・状態・注意・AI・提案</div>
-    <div class="ow-card"><h2>今月の進捗</h2>
+    <div class="glabel">5. 進捗・状態・注意・AI</div>
+    <div class="ow-card"><h2>今月の進捗（バー太め）</h2>
       <div class="ow-prog"><i style="width:92%"></i></div>
       <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ¥5,480,000</span><span class="ow-down">目標比 -0.8% ↓</span></div>
     </div>
     <div class="ow-card">
-      <div style="margin-bottom:12px">バッジ: <span class="ow-badge">計算済</span> <span class="ow-badge" style="color:var(--star);background:#FFF6E5">★4.3</span></div>
+      <div style="margin-bottom:12px">バッジ（ニュートラル）: <span class="ow-badge">計算済</span> <span class="ow-badge">未提出1</span> <span class="ow-badge star">★4.3</span></div>
       <div class="ow-warn" style="margin-bottom:10px">⚠️ FL率 59.0%（目標57%を2pt超過）</div>
       <div class="ow-hl" style="margin-bottom:12px;font-size:12px;color:#3d7a2c">✅ 重要な正の影響: 客数 +70.1万（薄緑ハイライト）</div>
       <div class="ow-ai"><b>💬 AIのひとこと</b><br>難波店はクロワッサンが16時台に完売。夕方の機会損失が出ています。焼成の後ろ倒しで拾える可能性があります。</div>
     </div>
 
-    <div class="glabel">6. ボタン</div>
-    <button class="ow-btn" style="margin-bottom:10px">詳しく見る（分析グラフ）</button>
+    <div class="glabel">6. ボタン（枠線でメリハリ・添付画像準拠）</div>
+    <button class="ow-btn" style="margin-bottom:10px">詳しくはこちら
+      <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v8H3V6h8"/></svg>
+    </button>
     <button class="ow-btn sub" style="margin-bottom:4px">🔍 無料診断</button>
 
-    <div class="glabel">7. フォーム部品（請求書修正 / 診断 / 口コミ編集）</div>
+    <div class="glabel">7. フォーム部品（チップ縦幅コンパクト）</div>
     <div class="ow-card">
       <div class="ow-field"><label>取引先</label><input class="ow-input" value="株式会社ナニワ製粉"></div>
       <div class="ow-field"><label>勘定科目</label>
-        <select class="ow-select"><option>仕入高（原材料）</option><option>消耗品費</option><option>水道光熱費</option></select></div>
+        <select class="ow-select"><option>仕入高（原材料）</option><option>消耗品費</option></select></div>
       <div class="ow-field"><label>税区分</label>
         <div class="ow-chips"><span class="ow-chip on">軽減8%</span><span class="ow-chip">標準10%</span></div></div>
       <div class="ow-field"><label>返信文（口コミ）／トーン</label>
@@ -94,41 +100,39 @@
         <textarea class="ow-textarea">T.K様、ご投稿ありがとうございます。夕方に品切れとなり申し訳ございませんでした。15:30頃に2回目の焼き上がりがございます。</textarea></div>
     </div>
 
-    <div class="glabel">8. シフト表（確認・店長ビュー / スタッフ×日付）</div>
+    <div class="glabel">8. シフト表（確認・時間表記 / smashif参照）</div>
     <div class="ow-card">
       <h2>来月 上旬（横スクロール →）</h2>
       <div class="ow-shift-scroll">
         <table class="ow-shift">
           <thead><tr>
             <th class="name">スタッフ</th>
-            <th>1<br>月</th><th>2<br>火</th><th>3<br>水</th><th>4<br>木</th><th>5<br>金</th><th class="sat">6<br>土</th><th class="sun">7<br>日</th><th>日数</th>
+            <th>1<br>月</th><th>2<br>火</th><th>3<br>水</th><th>4<br>木</th><th>5<br>金</th><th class="sat">6<br>土</th><th class="sun">7<br>日</th>
           </tr></thead>
           <tbody>
-            <tr><td class="name">藤田<small>製造</small></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-off">休</span></td><td class="total">5</td></tr>
-            <tr><td class="name">岡本<small>製造</small></td><td><span class="sh sh-mid">中</span></td><td><span class="sh sh-mid">中</span></td><td><span class="sh sh-mid">中</span></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-mid">中</span></td><td><span class="sh sh-mid">中</span></td><td><span class="sh sh-mid">中</span></td><td class="total">6</td></tr>
-            <tr><td class="name">三浦<small>製造</small></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-pm">遅</span></td><td class="total">5</td></tr>
-            <tr><td class="name">田村<small>販売</small></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-am">早</span></td><td><span class="sh sh-am">早</span></td><td class="total">6</td></tr>
-            <tr><td class="name">小林<small>販売</small></td><td><span class="sh sh-off">休</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-pm">遅</span></td><td><span class="sh sh-off">休</span></td><td class="total">5</td></tr>
+            <tr><td class="name"><span class="av">藤</span>藤田</td><td class="tc tc-am">4:30<br>13:30</td><td class="tc tc-am">4:30<br>13:30</td><td class="off">-</td><td class="tc tc-am">4:30<br>13:30</td><td class="tc tc-am">4:30<br>13:30</td><td class="tc tc-am">4:30<br>13:30</td><td class="off tc-sun">-</td></tr>
+            <tr><td class="name"><span class="av">岡</span>岡本</td><td class="tc tc-am">5:00<br>14:00</td><td class="tc tc-am">5:00<br>14:00</td><td class="tc tc-am">5:00<br>14:00</td><td class="off">-</td><td class="tc tc-am">5:00<br>14:00</td><td class="tc tc-am">5:00<br>14:00</td><td class="tc tc-sun">5:00<br>14:00</td></tr>
+            <tr><td class="name"><span class="av">三</span>三浦</td><td class="tc tc-day">8:00<br>17:00</td><td class="off">-</td><td class="tc tc-day">8:00<br>17:00</td><td class="tc tc-day">8:00<br>17:00</td><td class="tc tc-day">8:00<br>17:00</td><td class="off">-</td><td class="tc tc-sun">8:00<br>17:00</td></tr>
+            <tr><td class="name"><span class="av">田</span>田村</td><td class="tc tc-day">6:45<br>15:45</td><td class="tc tc-day">6:45<br>15:45</td><td class="tc tc-day">6:45<br>15:45</td><td class="tc tc-day">6:45<br>15:45</td><td class="off">-</td><td class="tc tc-day">6:45<br>15:45</td><td class="tc tc-sun">6:45<br>15:45</td></tr>
+            <tr><td class="name"><span class="av">小</span>小林</td><td class="off">-</td><td class="tc tc-pm">10:30<br>19:30</td><td class="tc tc-pm">10:30<br>19:30</td><td class="tc tc-pm">10:30<br>19:30</td><td class="tc tc-pm">10:30<br>19:30</td><td class="tc tc-pm">10:30<br>19:30</td><td class="off tc-sun">-</td></tr>
           </tbody>
         </table>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:var(--sub)"><span class="sh sh-am">早</span> 早番 <span class="sh sh-mid">中</span> 中番 <span class="sh sh-pm">遅</span> 遅番 <span class="sh sh-off">休</span> 休み</div>
     </div>
 
-    <div class="glabel">9. シフト入力（スタッフ提出・日ごとに希望を選択）</div>
+    <div class="glabel">9. シフト入力（希望提出・smashifスマホUI準拠）</div>
     <div class="ow-card">
-      <h2>来月 1〜5日 の希望（田村さん）</h2>
-      <div class="ow-shift-input">
-        <div class="ow-row" style="border-top:none"><span class="k" style="width:70px">7/1（月）</span>
-          <div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">遅番</span><span class="ow-chip">休み</span></div></div>
-        <div class="ow-row"><span class="k" style="width:70px">7/2（火）</span>
-          <div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">遅番</span><span class="ow-chip">休み</span></div></div>
-        <div class="ow-row"><span class="k" style="width:70px">7/3（水）</span>
-          <div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip on">遅番</span><span class="ow-chip">休み</span></div></div>
-        <div class="ow-row"><span class="k" style="width:70px;color:var(--neg)">7/5（土）</span>
-          <div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip">遅番</span><span class="ow-chip on">休み</span></div></div>
+      <h2>希望シフトを提出する（来月 1〜7日）</h2>
+      <div class="ow-req">
+        <div class="d yes"><div class="dl">1<small>月</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
+        <div class="d yes"><div class="dl">2<small>火</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
+        <div class="d no"><div class="dl">3<small>水</small></div><div class="mk">✕</div><div class="st">希望なし</div></div>
+        <div class="d yes"><div class="dl">4<small>木</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
+        <div class="d yes"><div class="dl">5<small>金</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
+        <div class="d yes sat"><div class="dl">6<small>土</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
+        <div class="d no sun"><div class="dl">7<small>日</small></div><div class="mk">✕</div><div class="st">希望なし</div></div>
       </div>
-      <div style="margin-top:14px"><button class="ow-btn">この内容で提出する</button></div>
+      <div style="margin-top:16px"><button class="ow-btn">希望を送信する</button></div>
     </div>
 
     <div style="height:40px"></div>
@@ -140,31 +144,36 @@
     const PAL = ["#1E9FE0","#7CB928","#EE5F9A","#F5901E","#8E6FD6","#17B9A0","#98A0A6"];
     const grid = { grid:{color:"#F0F0F0"}, ticks:{font:{size:10},color:"#999"} };
     const gridX = { grid:{display:false}, ticks:{font:{size:10},color:"#999"} };
-    const c_bar=document.getElementById('c-bar'), c_line=document.getElementById('c-line'),
-          c_donut=document.getElementById('c-donut'), c_combo=document.getElementById('c-combo');
+    const $ = id => document.getElementById(id);
 
-    new Chart(c_bar, { type:"bar",
+    new Chart($("c-bar"), { type:"bar",
       data:{ labels:["7","9","11","13","15","17","19"].map(h=>h+"時"),
         datasets:[{ data:[31,22,20,25,13,22,8], backgroundColor:BLUE, borderRadius:3 }] },
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:gridX,y:grid} } });
 
-    new Chart(c_line, { type:"line",
+    new Chart($("c-band"), { type:"bar",
+      data:{ labels:["ランチ帯\n11-15","カフェ帯\n15-17","ディナー帯\n17-23"].map(s=>s.split("\n")),
+        datasets:[{ data:[248,96,182], backgroundColor:["#1E9FE0","#7CB928","#8E6FD6"], borderRadius:4, barPercentage:.6 }] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>"¥"+(c.parsed.y*1000).toLocaleString()}}},
+        scales:{x:{...gridX,ticks:{...gridX.ticks,font:{size:10}}},y:{...grid,ticks:{...grid.ticks,callback:v=>v+"k"}}} } });
+
+    new Chart($("c-line"), { type:"line",
       data:{ labels:["月","火","水","木","金","土","日"],
         datasets:[
           { label:"今週", data:[64,70,73,81,76,64,69], borderColor:BLUE, backgroundColor:"rgba(0,160,233,.10)", fill:true, tension:.35, pointRadius:3, pointBackgroundColor:BLUE },
           { label:"前週", data:[60,63,68,72,70,58,66], borderColor:GRAY, borderDash:[4,3], tension:.35, pointRadius:2, pointBackgroundColor:GRAY } ]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{size:10},boxWidth:12}}}, scales:{x:gridX,y:grid} } });
 
-    new Chart(c_donut, { type:"doughnut",
+    new Chart($("c-donut"), { type:"doughnut",
       data:{ labels:["菓子パン","食パン","惣菜パン","サンド","ハード","焼菓子","ドリンク"],
         datasets:[{ data:[24,22,18,13,12,6,5], backgroundColor:PAL, borderWidth:0 }] },
       options:{ responsive:true, maintainAspectRatio:false, cutout:"58%", plugins:{legend:{position:"right",labels:{font:{size:10},boxWidth:12}}} } });
 
-    new Chart(c_combo, {
+    new Chart($("c-combo"), {
       data:{ labels:["8","9","10","11","12","1","2","3","4","5","6","7"],
         datasets:[
-          { type:"bar", label:"売上", data:[168,165,171,174,186,159,164,176,172,175,180,180], backgroundColor:"#BFE3F5", borderRadius:3, yAxisID:"y" },
-          { type:"line", label:"利益", data:[31,30,32,33,37,27,29,34,33,34,35,35], borderColor:BLUE, backgroundColor:BLUE, tension:.35, pointRadius:2, yAxisID:"y" } ]},
+          { type:"bar", label:"売上", order:2, data:[168,165,171,174,186,159,164,176,172,175,180,180], backgroundColor:"#BFE3F5", borderRadius:3, yAxisID:"y" },
+          { type:"line", label:"利益", order:1, data:[31,30,32,33,37,27,29,34,33,34,35,35], borderColor:BLUE, backgroundColor:BLUE, borderWidth:2, tension:.35, pointRadius:2, pointBackgroundColor:BLUE, yAxisID:"y" } ]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{size:10},boxWidth:12}}}, scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v+"万"}}} } });
   </script>
 </body>
