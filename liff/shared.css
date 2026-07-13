@@ -1,40 +1,44 @@
 /* お店のAIワーカー デモ — 共通デザインシステム
-   トンマナ: Airレジ（白・余白・ハーライン・グレーのラベル・大きく軽い数字）
-   強調色 : StockSun オレンジ
+   トンマナ: Airレジ完全再現
+   ・白背景・たっぷり余白・細いグレー枠/ハーライン・グレーの見出し帯
+   ・主要数値/バー/グラフ = Airレジブルー #00A0E9
+   ・上昇/良化 = 緑↑ / 下降/悪化 = 赤↓
    トークンを1か所で管理し、各ページはこれをimportするだけ。 */
 
 :root {
-  /* 強調（StockSunオレンジ） */
-  --brand:      #E8500E;   /* アクセント: 主要数値・リンク・CTA・アクティブ */
-  --brand-dark: #C9420A;   /* 押下 */
-  --brand-tint: #FDEFE8;   /* 薄いオレンジの面（強調ブロック） */
+  /* Airレジ ブルー（主要数値・バー・現在の折れ線・アクティブ・リンク・CTA） */
+  --brand:      #00A0E9;
+  --brand-dark: #0089C7;
+  --brand-tint: #E5F5FC;   /* 薄いブルーの面 */
 
-  /* テキスト（Airレジ調の濃グレー〜グレー） */
-  --ink:   #2E2E2E;        /* 主テキスト */
-  --sub:   #8A8F96;        /* ラベル・副次 */
-  --muted: #B4B9BE;        /* キャプション */
+  /* テキスト */
+  --ink:   #333333;        /* 主テキスト・明細の数値 */
+  --sub:   #888888;        /* ラベル・副次 */
+  --muted: #ABABAB;        /* キャプション */
 
   /* 面・線 */
-  --bg:    #FFFFFF;        /* 白背景 */
-  --card:  #FFFFFF;
-  --line:  #ECECEC;        /* ハーライン */
+  --bg:      #FFFFFF;
+  --card:    #FFFFFF;
+  --line:    #E7E7E7;      /* 枠・ハーライン */
+  --head-bg: #F2F3F4;      /* 見出し帯のグレー */
 
-  /* セマンティック（モノ＋1アクセントに寄せ、色数を絞る） */
-  --pos:      #E8500E;     /* 上昇・良化＝アクセント（強調） */
-  --neg:      #D0454A;     /* 下降・悪化＝抑えた赤 */
-  --warn-bg:  #FFF6EC;     /* 注意の面 */
-  --warn-ink: #B4600F;     /* 注意の文字 */
-  --info-bg:  #F7F8F9;     /* AIひとことの面（ごく薄いグレー） */
-  --star:     #E6A817;
+  /* セマンティック（Airレジ流: 増減は緑/赤の矢印で） */
+  --pos:     #5AAE43;      /* 上昇・良化（↑） */
+  --neg:     #E5504F;      /* 下降・悪化（↓） */
+  --hl-bg:   #E9F5E1;      /* 重要な正の影響ハイライト（薄緑） */
+  --warn-bg: #FFF7E6;      /* 注意の面 */
+  --warn-ink:#A9770F;      /* 注意の文字 */
+  --info-bg: #F5F7F8;      /* AIひとことの面 */
+  --star:    #F5A623;
 
   /* かたち（余白広め・角ひかえめ・影なし） */
-  --radius: 10px;
-  --radius-sm: 8px;
-  --pad: 20px;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --pad: 18px;
   --gap: 12px;
 
-  /* グラフ配色（オレンジスケール＋グレー） */
-  --c1:#E8500E; --c2:#F17D48; --c3:#F6A57E; --c4:#FAC7B0; --c5:#FCE3D7; --c6:#C9420A; --c7:#AEB4BA;
+  /* グラフ配色（Airレジ調パステル＋現在=ブルー・前=グレー） */
+  --c1:#6EC1E4; --c2:#A8D08D; --c3:#F4A7C1; --c4:#F6B26B; --c5:#B4A7D6; --c6:#79C6B6; --c7:#C9CDD1;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -44,56 +48,60 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ヘッダー（白・ハーライン・色は使わない＝Airレジ調） */
-.ow-header { background: #fff; color: var(--ink); padding: 20px 18px 16px calc(env(safe-area-inset-top,0) + 18px); border-bottom: 1px solid var(--line); }
-.ow-header .ttl { font-weight: 600; font-size: 17px; letter-spacing: .01em; }
+/* ヘッダー（白・タイトル濃／日付グレー・下にハーライン） */
+.ow-header { background: #fff; color: var(--ink); padding: 20px 18px 14px calc(env(safe-area-inset-top,0) + 18px); border-bottom: 1px solid var(--line); }
+.ow-header .ttl { font-weight: 700; font-size: 17px; }
 .ow-header .sub { font-size: 12px; color: var(--sub); margin-top: 4px; }
 
 /* カード（影なし・細枠・余白広め） */
 .ow-wrap { padding: 6px 16px; }
 .ow-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); margin-bottom: var(--gap); }
-.ow-card h2 { font-size: 12px; color: var(--sub); margin: 0 0 14px; font-weight: 600; letter-spacing: .02em; }
+.ow-card h2 { font-size: 12px; color: var(--sub); margin: 0 0 12px; font-weight: 600; }
+/* グレーの見出し帯（Airレジの客数/客単価ヘッダー風・任意） */
+.ow-headbar { background: var(--head-bg); color: var(--ink); font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: var(--radius-sm) var(--radius-sm) 0 0; margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 12px; }
 
-/* ヒーロー数値（大きく・軽く・アクセント色） */
+/* ヒーロー数値（大きく・軽く・ブルー） */
 .ow-hero-lbl { font-size: 12px; color: var(--sub); }
 .ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; }
 
-/* KPI 3列（数字はアクセント・軽い） */
+/* KPI 3列（数値はブルー・軽い／区切りはハーライン） */
 .ow-kpis { display: flex; }
 .ow-kpi { flex: 1; text-align: center; }
 .ow-kpi + .ow-kpi { border-left: 1px solid var(--line); }
 .ow-kpi .l { font-size: 11px; color: var(--sub); }
 .ow-kpi .v { font-size: 22px; font-weight: 400; margin-top: 4px; color: var(--brand); }
 
-/* 増減 */
-.ow-up { color: var(--pos); } .ow-down { color: var(--neg); }
+/* 増減（緑↑/赤↓）— KPI数値のブルーより優先させる */
+.ow-up, .ow-kpi .v.ow-up, .ow-hero-val.ow-up { color: var(--pos); }
+.ow-down, .ow-kpi .v.ow-down, .ow-hero-val.ow-down { color: var(--neg); }
 
-/* タブ（下線式・ひかえめ） */
+/* タブ（下線式・アクティブはブルー） */
 .ow-tabs { display: flex; gap: 20px; padding: 10px 18px 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
 .ow-tab { flex: 0 0 auto; padding: 10px 2px; font-size: 14px; color: var(--sub); border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
 .ow-tab.on { color: var(--brand); border-bottom-color: var(--brand); font-weight: 700; }
 
-/* バッジ・注意・AIひとこと */
-.ow-badge { display: inline-block; font-size: 10px; color: var(--brand); background: var(--brand-tint); border-radius: 4px; padding: 2px 7px; }
+/* バッジ・ハイライト・注意・AIひとこと */
+.ow-badge { display: inline-block; font-size: 10px; color: var(--brand-dark); background: var(--brand-tint); border-radius: 4px; padding: 2px 7px; }
+.ow-hl    { background: var(--hl-bg); border-radius: var(--radius-sm); padding: 8px 10px; }
 .ow-warn  { background: var(--warn-bg); border-radius: var(--radius-sm); padding: 11px 13px; font-size: 12px; color: var(--warn-ink); }
 .ow-ai    { background: var(--info-bg); border-radius: var(--radius-sm); padding: 13px 14px; font-size: 12.5px; line-height: 1.75; color: #4a4f55; }
-.ow-ai b  { color: var(--brand); }
+.ow-ai b  { color: var(--brand-dark); }
 
 /* テーブル（ハーライン） */
 .ow-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .ow-table th, .ow-table td { padding: 11px 4px; text-align: center; border-top: 1px solid var(--line); }
 .ow-table th { color: var(--sub); font-size: 11px; font-weight: 600; border-top: none; }
 
-/* バー */
-.ow-bar  { height: 5px; border-radius: 3px; background: #F0F0F0; overflow: hidden; }
+/* バー（ブルー・薄いトラック） */
+.ow-bar  { height: 6px; border-radius: 3px; background: #EEF1F2; overflow: hidden; }
 .ow-bar > i { display: block; height: 100%; background: var(--brand); }
-.ow-prog { height: 8px; border-radius: 5px; background: #F0F0F0; overflow: hidden; }
+.ow-prog { height: 8px; border-radius: 5px; background: #EEF1F2; overflow: hidden; }
 .ow-prog > i { display: block; height: 100%; background: var(--brand); }
 
-/* CTA（塗りオレンジ＝StockSun調） */
+/* CTA（Airレジのブルー） */
 .ow-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom,0)); background: linear-gradient(180deg, rgba(255,255,255,0), #fff 26%); }
 .ow-cta button, .ow-btn { width: 100%; border: none; background: var(--brand); color: #fff; font-size: 15px; font-weight: 700; padding: 15px; border-radius: var(--radius-sm); }
-.ow-btn.sub { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.ow-btn.sub { background: #fff; color: var(--brand-dark); border: 1px solid var(--line); }
 
 /* 状態 */
 .ow-loading, .ow-error { text-align: center; color: var(--sub); padding: 60px 20px; font-size: 14px; }
