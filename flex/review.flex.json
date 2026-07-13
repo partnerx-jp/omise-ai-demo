@@ -1,0 +1,34 @@
+{
+  "type": "flex",
+  "altText": "⭐ 難波店に新しい口コミ（★3）とAI返信案が届きました",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "⭐ 新しい口コミが届きました", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "Google マップ ・ 難波店 ・ 1時間前", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+      "contents": [
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "★★★☆☆ 3.0", "size": "sm", "color": "#e6a817", "flex": 5 }, { "type": "text", "text": "T.K さん", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 } ]},
+        { "type": "text", "text": "「クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。」", "size": "sm", "color": "#333333", "wrap": true, "margin": "sm" },
+        { "type": "separator", "margin": "md" },
+        { "type": "text", "text": "🤖 AIが返信文を用意しました", "size": "xs", "color": "#2E7D32", "margin": "md", "weight": "bold" },
+        { "type": "box", "layout": "vertical", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "margin": "sm", "contents": [
+          { "type": "text", "text": "T.K様、ご投稿ありがとうございます。クロワッサンをお褒めいただき嬉しく思います。夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きも承っておりますので、ぜひご利用ください。 難波店 店長 花岡", "size": "xs", "color": "#555555", "wrap": true }
+        ]},
+        { "type": "text", "text": "💬 感謝＋お詫び＋次回来店の導線（2回目焼成・取り置き）まで入った返信を自動生成。ワンタップで投稿できます。", "size": "xs", "color": "#8c8c8c", "wrap": true, "margin": "md" }
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}

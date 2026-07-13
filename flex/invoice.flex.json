@@ -1,0 +1,36 @@
+{
+  "type": "flex",
+  "altText": "🧾 請求書を読み取りました：株式会社ナニワ製粉 ¥133,920",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "🧾 請求書を読み取りました", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "この内容で登録できます", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+      "contents": [
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "取引先", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "株式会社ナニワ製粉", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "品目", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "強力粉 25kg×20袋 ほか", "size": "sm", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "税抜 / 消費税", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "¥124,000 / ¥9,920", "size": "sm", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "合計", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "¥133,920", "size": "md", "weight": "bold", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
+        { "type": "separator", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "税区分", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "軽減税率8%（食品仕入）", "size": "sm", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "勘定科目", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "仕入高（原材料）", "size": "sm", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "💬 AIが自動で読み取り、税区分（軽減8%）まで判定。ワンタップで freee起票＋Google Drive保存（経理>請求書>2026年7月）まで完了します。", "size": "xs", "color": "#555555", "wrap": true }
+        ]}
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}

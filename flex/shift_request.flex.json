@@ -1,0 +1,36 @@
+{
+  "type": "flex",
+  "altText": "📝 シフト希望の提出依頼（来月1日〜15日・締切 今月20日）",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "📝 シフト希望の提出をお願いします", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "スタッフ全員へ自動送信", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+      "contents": [
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "対象期間", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "来月 1日〜15日", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "提出締切", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "今月 20日", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
+        { "type": "separator", "margin": "md" },
+        { "type": "text", "text": "回収状況（3店舗）", "size": "xxs", "color": "#aaaaaa", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "梅田店", "size": "sm", "flex": 4 }, { "type": "text", "text": "4/5 提出済", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "心斎橋店", "size": "sm", "flex": 4 }, { "type": "text", "text": "5/5 提出済 ✅", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "難波店", "size": "sm", "flex": 4 }, { "type": "text", "text": "3/5 提出済", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "💬 スタッフはLINEのフォームから希望日を提出（早番/中番/遅番/休み）。未提出者には明日AIが自動で催促します。集計まで自動。", "size": "xs", "color": "#555555", "wrap": true }
+        ]}
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}
