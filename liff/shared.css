@@ -37,8 +37,8 @@
   --pad: 18px;
   --gap: 12px;
 
-  /* グラフ配色（Airレジ調パステル＋現在=ブルー・前=グレー） */
-  --c1:#6EC1E4; --c2:#A8D08D; --c3:#F4A7C1; --c4:#F6B26B; --c5:#B4A7D6; --c6:#79C6B6; --c7:#C9CDD1;
+  /* グラフ配色（原色寄り・鮮やか／現在=ブルー・前=グレー） */
+  --c1:#1E9FE0; --c2:#7CB928; --c3:#EE5F9A; --c4:#F5901E; --c5:#8E6FD6; --c6:#17B9A0; --c7:#98A0A6;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -100,8 +100,9 @@ body {
 
 /* CTA（Airレジのブルー） */
 .ow-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom,0)); background: linear-gradient(180deg, rgba(255,255,255,0), #fff 26%); }
-.ow-cta button, .ow-btn { width: 100%; border: none; background: var(--brand); color: #fff; font-size: 15px; font-weight: 700; padding: 15px; border-radius: var(--radius-sm); }
-.ow-btn.sub { background: #fff; color: var(--brand-dark); border: 1px solid var(--line); }
+.ow-cta button, .ow-btn { width: 100%; border: none; background: linear-gradient(180deg, #16ABEE 0%, #00A0E9 100%); color: #fff; font-size: 15px; font-weight: 700; padding: 15px; border-radius: var(--radius-sm); box-shadow: 0 3px 8px rgba(0,140,199,.30); }
+.ow-cta button:active, .ow-btn:active { box-shadow: 0 1px 3px rgba(0,140,199,.30); transform: translateY(1px); }
+.ow-btn.sub { background: #fff; color: var(--brand-dark); border: 1px solid var(--line); box-shadow: 0 1px 3px rgba(0,0,0,.05); }
 
 /* 状態 */
 .ow-loading, .ow-error { text-align: center; color: var(--sub); padding: 60px 20px; font-size: 14px; }
