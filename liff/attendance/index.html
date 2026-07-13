@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <title>勤務実績（日別打刻）｜お店AI</title>
+  <style>
+    :root { --green:#1DB446; --green-d:#2E7D32; --red:#d9534f; --ink:#222; --sub:#8c8c8c; --line:#eee; --bg:#f5f7f5; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:88px; }
+    header { background:var(--green); color:#fff; padding:16px 18px calc(16px + env(safe-area-inset-top,0)); }
+    header .ttl { font-weight:700; font-size:16px; }
+    header .sub { font-size:12px; opacity:.9; margin-top:3px; }
+    .tabs { display:flex; gap:6px; padding:12px 14px 4px; overflow-x:auto; }
+    .tab { flex:0 0 auto; padding:7px 13px; border-radius:999px; border:1px solid var(--line); background:#fff; font-size:13px; color:#555; }
+    .tab.on { background:var(--green); color:#fff; border-color:var(--green); font-weight:700; }
+    .wrap { padding:8px 14px; }
+    .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,.04); }
+    .sum { display:flex; gap:10px; }
+    .sum .b { flex:1; text-align:center; }
+    .sum .l { font-size:11px; color:var(--sub); }
+    .sum .v { font-size:18px; font-weight:800; margin-top:2px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { padding:8px 4px; text-align:center; border-top:1px solid var(--line); }
+    th { color:var(--sub); font-size:11px; font-weight:700; border-top:none; }
+    td.date { text-align:left; color:#555; }
+    .badge { display:inline-block; font-size:10px; color:var(--green-d); background:#eef7ef; border-radius:4px; padding:1px 6px; margin-left:4px; }
+    .cta { position:fixed; left:0; right:0; bottom:0; padding:12px 14px calc(12px + env(safe-area-inset-bottom,0)); background:linear-gradient(180deg,rgba(245,247,245,0),var(--bg) 24%); }
+    .cta button { width:100%; border:none; background:var(--green); color:#fff; font-size:15px; font-weight:700; padding:14px; border-radius:12px; box-shadow:0 4px 14px rgba(29,180,70,.35); }
+    .loading,.error { text-align:center; color:var(--sub); padding:60px 20px; } .error { color:var(--red); }
+  </style>
+</head>
+<body>
+  <header><div class="ttl">⏱ 勤務実績（梅田店）</div><div class="sub" id="sub">読み込み中…</div></header>
+  <div class="tabs" id="tabs"></div>
+  <div id="app"><div class="loading">読み込み中…</div></div>
+  <div class="cta"><button id="ctaBtn">🔍 あなたのお店の数字で見る（無料診断）</button></div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    const LIFF_ID = "";
+    const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+    let DATA, A;
+    async function boot(){
+      try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
+      try { const r = await fetch("../../data/demo-data.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA=await r.json(); }
+      catch(e){ document.getElementById("app").innerHTML=`<div class="error">読み込み失敗（${e.message}）</div>`; return; }
+      A = DATA.attendance;
+      document.getElementById("sub").textContent = `${A.as_of} ・ 総労働 ${A.total.hours}h / 概算 ${yen(A.total.est_wage)}`;
+      const el = document.getElementById("tabs");
+      el.innerHTML = A.staff.map((s,i)=>`<div class="tab${i===0?' on':''}" data-n="${s.name}">${s.name}</div>`).join("");
+      el.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ el.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on"); render(t.dataset.n); }));
+      render(A.staff[0].name);
+    }
+    function render(name){
+      const s = A.staff.find(x=>x.name===name);
+      const punches = A.daily_punches[name] || [];
+      let html = `<div class="wrap"><div class="card"><div class="sum">
+        <div class="b"><div class="l">区分</div><div class="v" style="font-size:15px">${s.position}</div></div>
+        <div class="b"><div class="l">出勤</div><div class="v">${s.days}日</div></div>
+        <div class="b"><div class="l">労働</div><div class="v">${s.hours}h</div></div>
+        <div class="b"><div class="l">概算給与</div><div class="v" style="font-size:15px">${yen(s.est_wage)}</div></div>
+      </div>${s.early_morning_h>0?`<div style="margin-top:10px;font-size:11px;color:#2E7D32">✅ 早朝 ${s.early_morning_h}h は深夜割増25%で計算済み</div>`:""}</div>`;
+      html += `<div class="card"><table><thead><tr><th style="text-align:left">日付</th><th>出勤</th><th>退勤</th><th>休憩</th><th>実働</th></tr></thead><tbody>` +
+        punches.map(p=>`<tr><td class="date">${p.date}</td><td>${p.in}</td><td>${p.out}</td><td>${p.break}分</td><td><b>${p.work}h</b>${p.work>12?'<span class="badge">通し</span>':''}</td></tr>`).join("") +
+        `</tbody></table>${punches.length<7?'<div style="margin-top:8px;font-size:11px;color:#aaa">※デモは一部日付のみ表示</div>':''}</div></div>`;
+      document.getElementById("app").innerHTML = html;
+    }
+    document.getElementById("ctaBtn").addEventListener("click",()=>{ location.href="../shindan/"; });
+    boot();
+  </script>
+</body>
+</html>

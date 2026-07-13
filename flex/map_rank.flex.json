@@ -1,0 +1,42 @@
+{
+  "type": "flex",
+  "altText": "📍 今週のGoogleマップ順位: 梅田5位↑2 / 心斎橋3位↑1 / 難波9位↑4",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "📍 今週のGoogleマップ順位", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "3店舗 ・ 毎週月曜配信", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "md", "paddingAll": "16px",
+      "contents": [
+        { "type": "box", "layout": "vertical", "spacing": "sm", "contents": [
+          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "梅田店", "size": "sm", "flex": 3 }, { "type": "text", "text": "「梅田 パン屋」", "size": "xs", "color": "#8c8c8c", "flex": 5, "gravity": "center" }, { "type": "text", "text": "5位", "size": "md", "weight": "bold", "align": "end", "flex": 2 }, { "type": "text", "text": "↑2", "size": "xs", "color": "#2E7D32", "align": "end", "flex": 2 } ]},
+          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "心斎橋店", "size": "sm", "flex": 3 }, { "type": "text", "text": "「心斎橋 パン屋」", "size": "xs", "color": "#8c8c8c", "flex": 5, "gravity": "center" }, { "type": "text", "text": "3位", "size": "md", "weight": "bold", "color": "#2E7D32", "align": "end", "flex": 2 }, { "type": "text", "text": "↑1", "size": "xs", "color": "#2E7D32", "align": "end", "flex": 2 } ]},
+          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "難波店", "size": "sm", "flex": 3 }, { "type": "text", "text": "「難波 パン屋」", "size": "xs", "color": "#8c8c8c", "flex": 5, "gravity": "center" }, { "type": "text", "text": "9位", "size": "md", "weight": "bold", "align": "end", "flex": 2 }, { "type": "text", "text": "↑4", "size": "xs", "color": "#2E7D32", "align": "end", "flex": 2 } ]}
+        ]},
+        { "type": "separator", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [
+          { "type": "text", "text": "⭐ 梅田 4.3", "size": "xs", "color": "#555555", "align": "center" },
+          { "type": "text", "text": "⭐ 心斎橋 4.4", "size": "xs", "color": "#555555", "align": "center" },
+          { "type": "text", "text": "⭐ 難波 4.0", "size": "xs", "color": "#555555", "align": "center" }
+        ]},
+        { "type": "text", "text": "口コミ返信率 100% ・ 今月 +14件", "size": "xxs", "color": "#8c8c8c", "align": "center", "margin": "sm" },
+        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "💬 心斎橋店が3位に到達（地図の初期表示圏内）。難波店は順位改善中ですが評価4.0が最下位。直近の低評価3件はいずれも『夕方の売り切れ』——口コミ対策というより焼成スケジュールの問題です。", "size": "xs", "color": "#555555", "wrap": true }
+        ]}
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "primary", "color": "#1DB446", "height": "sm", "action": { "type": "uri", "label": "詳しく見る（順位推移・競合）", "uri": "{{liff_url}}" } },
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の順位を無料で調べる", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}

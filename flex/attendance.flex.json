@@ -1,0 +1,40 @@
+{
+  "type": "flex",
+  "altText": "⏱ 今月の勤務実績（梅田店・1〜8日時点）総労働 278.0h / 概算人件費 ¥347,100",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "⏱ 今月の勤務実績（梅田店）", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "1〜8日時点 ・ ベーカリーこむぎ堂", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "md", "paddingAll": "16px",
+      "contents": [
+        { "type": "text", "text": "🥖 製造", "size": "xs", "color": "#aaaaaa" },
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "藤田 かおる", "size": "sm", "flex": 5 }, { "type": "text", "text": "7日 / 60.0h", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥85,225", "size": "sm", "weight": "bold", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "岡本 しゅん", "size": "sm", "flex": 5 }, { "type": "text", "text": "7日 / 59.5h", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥77,350", "size": "sm", "weight": "bold", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "三浦 ゆか", "size": "sm", "flex": 5 }, { "type": "text", "text": "6日 / 48.0h", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥60,000", "size": "sm", "weight": "bold", "align": "end", "flex": 4 } ]},
+        { "type": "text", "text": "🛒 販売", "size": "xs", "color": "#aaaaaa", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "田村 さき", "size": "sm", "flex": 5 }, { "type": "text", "text": "7日 / 59.5h", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥68,425", "size": "sm", "weight": "bold", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "小林 まい", "size": "sm", "flex": 5 }, { "type": "text", "text": "6日 / 51.0h", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥56,100", "size": "sm", "weight": "bold", "align": "end", "flex": 4 } ]},
+        { "type": "separator", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "合計", "size": "sm", "weight": "bold", "flex": 5 }, { "type": "text", "text": "278.0h", "size": "sm", "weight": "bold", "color": "#8c8c8c", "align": "end", "flex": 5 }, { "type": "text", "text": "¥347,100", "size": "sm", "weight": "bold", "color": "#2E7D32", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "vertical", "margin": "md", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✅ 藤田さんの早朝（〜5:00）3.5hは深夜割増25%で計算済み", "size": "xxs", "color": "#2E7D32", "wrap": true },
+          { "type": "box", "layout": "vertical", "paddingAll": "10px", "backgroundColor": "#fff7ed", "cornerRadius": "8px", "contents": [ { "type": "text", "text": "⚠️ このペースだと梅田店の月間人件費は前月比+6%見込み", "size": "xs", "color": "#8a5a1a", "wrap": true } ]}
+        ]}
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "primary", "color": "#1DB446", "height": "sm", "action": { "type": "uri", "label": "詳しく見る（日別打刻）", "uri": "{{liff_url}}" } },
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}

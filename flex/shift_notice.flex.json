@@ -1,0 +1,41 @@
+{
+  "type": "flex",
+  "altText": "🔔 明日 {{tomorrow}} のシフト（梅田店）",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "header": {
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "contents": [
+        { "type": "text", "text": "お疲れ様〜！", "color": "#ffffff", "weight": "bold", "size": "md" },
+        { "type": "text", "text": "明日 {{tomorrow}} もよろしくね〜！🍀", "color": "#e8f5e9", "size": "sm", "margin": "sm" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "spacing": "md", "paddingAll": "16px",
+      "contents": [
+        { "type": "box", "layout": "horizontal", "spacing": "md", "contents": [
+          { "type": "text", "text": "⛅ 曇りのち晴れ", "size": "sm", "color": "#555555", "flex": 5 },
+          { "type": "text", "text": "🌡 32℃ / 26℃", "size": "sm", "color": "#555555", "align": "end", "flex": 5 }
+        ]},
+        { "type": "separator", "margin": "md" },
+        { "type": "text", "text": "🥖 製造", "size": "xs", "color": "#aaaaaa", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "藤田 かおる", "size": "sm", "flex": 4 }, { "type": "text", "text": "4:30〜13:30", "size": "sm", "color": "#555555", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "岡本 しゅん", "size": "sm", "flex": 4 }, { "type": "text", "text": "5:00〜14:00", "size": "sm", "color": "#555555", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "三浦 ゆか", "size": "sm", "flex": 4 }, { "type": "text", "text": "8:00〜17:00", "size": "sm", "color": "#555555", "align": "end", "flex": 4 } ]},
+        { "type": "text", "text": "🛒 販売", "size": "xs", "color": "#aaaaaa", "margin": "md" },
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "田村 さき", "size": "sm", "flex": 4 }, { "type": "text", "text": "6:45〜15:45", "size": "sm", "color": "#555555", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "小林 まい", "size": "sm", "flex": 4 }, { "type": "text", "text": "10:30〜19:30", "size": "sm", "color": "#555555", "align": "end", "flex": 4 } ]},
+        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "💬 最高32℃予報。揚げ物（カレーパン）は動きが鈍る傾向。サンドイッチと冷たいドリンクの仕込み増を検討しては？", "size": "xs", "color": "#555555", "wrap": true }
+        ]}
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+      ]
+    }
+  }
+}

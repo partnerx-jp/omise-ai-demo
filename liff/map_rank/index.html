@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <title>Googleマップ順位｜お店AI</title>
+  <style>
+    :root { --green:#1DB446; --green-d:#2E7D32; --red:#d9534f; --ink:#222; --sub:#8c8c8c; --line:#eee; --bg:#f5f7f5; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:88px; }
+    header { background:var(--green); color:#fff; padding:16px 18px calc(16px + env(safe-area-inset-top,0)); }
+    header .ttl { font-weight:700; font-size:16px; } header .sub { font-size:12px; opacity:.9; margin-top:3px; }
+    .tabs { display:flex; gap:6px; padding:12px 14px 4px; }
+    .tab { flex:1; text-align:center; padding:7px 10px; border-radius:999px; border:1px solid var(--line); background:#fff; font-size:13px; color:#555; }
+    .tab.on { background:var(--green); color:#fff; border-color:var(--green); font-weight:700; }
+    .wrap { padding:8px 14px; }
+    .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,.04); }
+    .card h2 { font-size:13px; color:var(--sub); margin:0 0 10px; font-weight:700; }
+    .hero { display:flex; align-items:baseline; gap:10px; }
+    .hero .rk { font-size:34px; font-weight:800; } .hero .kw { font-size:13px; color:var(--sub); }
+    .hero .diff { font-size:13px; font-weight:700; margin-left:auto; }
+    .up { color:var(--green-d); } .down { color:var(--red); }
+    .meta { display:flex; gap:10px; margin-top:10px; }
+    .meta .b { flex:1; text-align:center; } .meta .l { font-size:11px; color:var(--sub); } .meta .v { font-size:16px; font-weight:800; }
+    .chartbox { position:relative; height:180px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { padding:8px 4px; border-top:1px solid var(--line); text-align:center; } th { color:var(--sub); font-size:11px; border-top:none; }
+    td.nm,th.nm { text-align:left; }
+    tr.self { background:#eef7ef; font-weight:700; }
+    .sug { display:flex; gap:8px; padding:8px 0; border-top:1px solid var(--line); font-size:13px; } .sug:first-child{border-top:none;}
+    .cta { position:fixed; left:0; right:0; bottom:0; padding:12px 14px calc(12px + env(safe-area-inset-bottom,0)); background:linear-gradient(180deg,rgba(245,247,245,0),var(--bg) 24%); }
+    .cta button { width:100%; border:none; background:var(--green); color:#fff; font-size:15px; font-weight:700; padding:14px; border-radius:12px; box-shadow:0 4px 14px rgba(29,180,70,.35); }
+    .loading,.error { text-align:center; color:var(--sub); padding:60px 20px; } .error { color:var(--red); }
+  </style>
+</head>
+<body>
+  <header><div class="ttl">📍 Googleマップ順位</div><div class="sub" id="sub">読み込み中…</div></header>
+  <div class="tabs" id="tabs"></div>
+  <div id="app"><div class="loading">読み込み中…</div></div>
+  <div class="cta"><button id="ctaBtn">🔍 あなたのお店の順位を無料で調べる</button></div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="../vendor/chart.umd.min.js"></script>
+  <script>
+    const LIFF_ID = "";
+    let DATA, M, chart;
+    async function boot(){
+      try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
+      try { const r = await fetch("../../data/demo-data.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA=await r.json(); }
+      catch(e){ document.getElementById("app").innerHTML=`<div class="error">読み込み失敗（${e.message}）</div>`; return; }
+      M = DATA.map_rank;
+      document.getElementById("sub").textContent = `返信率 ${Math.round(M.reply_rate*100)}% ・ 今月 +${M.review_diff_30d}件`;
+      const el = document.getElementById("tabs");
+      el.innerHTML = M.by_store.map((s,i)=>{ const st=DATA.stores.find(x=>x.id===s.store); return `<div class="tab${i===0?' on':''}" data-id="${s.store}">${st.name}</div>`; }).join("");
+      el.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ el.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on"); render(t.dataset.id); }));
+      render(M.by_store[0].store);
+    }
+    function stName(id){ const s=DATA.stores.find(x=>x.id===id); return s?s.name:id; }
+    function render(store){
+      if(chart){chart.destroy();chart=null;}
+      const s = M.by_store.find(x=>x.store===store);
+      let html = `<div class="wrap"><div class="card">
+        <div class="hero"><div class="rk">${s.rank}位</div><div class="kw">「${s.kw}」</div>
+          <div class="diff ${s.diff>=0?'up':'down'}">${s.diff>=0?'↑':'↓'}${Math.abs(s.diff)}</div></div>
+        <div class="meta"><div class="b"><div class="l">評価</div><div class="v">⭐${s.rating}</div></div>
+          <div class="b"><div class="l">口コミ数</div><div class="v">${s.reviews}</div></div>
+          <div class="b"><div class="l">返信率</div><div class="v">${Math.round(M.reply_rate*100)}%</div></div></div>
+        ${s.rank<=3?'<div style="margin-top:10px;font-size:11px;color:#2E7D32">✅ 3位以内＝地図の初期表示圏内</div>':''}
+      </div>`;
+      html += `<div class="card"><h2>30日 順位推移</h2><div class="chartbox"><canvas id="rcv"></canvas></div></div>`;
+      // competitors
+      const comp = (M.competitors && M.competitors[store]) || null;
+      if (comp){
+        const rows = comp.concat([{name:stName(store)+"（自店）", rank:s.rank, reviews:s.reviews, rating:s.rating, self:true}]).sort((a,b)=>a.rank-b.rank);
+        html += `<div class="card"><h2>周辺の競合比較</h2><table><thead><tr><th>順位</th><th class="nm">店舗</th><th>口コミ</th><th>評価</th></tr></thead><tbody>` +
+          rows.map(r=>`<tr class="${r.self?'self':''}"><td>${r.rank}</td><td class="nm">${r.name}</td><td>${r.reviews}</td><td>⭐${r.rating}</td></tr>`).join("") +
+          `</tbody></table></div>`;
+      }
+      // suggestions (店舗名に一致 or 共通)
+      const sug = M.suggestions.filter(x=> x.includes(stName(store)) || !/店:/.test(x));
+      if (sug.length){
+        html += `<div class="card"><h2>今週の改善提案</h2>` + sug.map(x=>`<div class="sug"><span>☑️</span><span>${x.replace(/^[^:：]+[:：]\s*/,'')}</span></div>`).join("") + `</div>`;
+      }
+      html += `<div class="card"><div style="background:#f0f7f1;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.7;color:#3b5b40"><b style="color:#2E7D32">💬 AIのひとこと</b><br>${M.ai_comment}</div></div></div>`;
+      document.getElementById("app").innerHTML = html;
+      drawRank(M.rank_trend_30d[store] || []);
+    }
+    function drawRank(series){
+      const labels = series.map((_,i)=> i===series.length-1 ? "今週" : `${(series.length-1-i)}週前`);
+      chart = new Chart(document.getElementById("rcv"), {
+        type:"line",
+        data:{ labels, datasets:[{ data:series, borderColor:"#1DB446", backgroundColor:"rgba(29,180,70,.12)", fill:true, tension:.3, pointRadius:3, pointBackgroundColor:"#1DB446" }] },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=> c.parsed.y+"位" } } },
+          scales:{ x:{ grid:{display:false}, ticks:{font:{size:10},color:"#999"} },
+            y:{ reverse:true, min:1, grid:{color:"#f0f0f0"}, ticks:{ stepSize:2, font:{size:10}, color:"#999", callback:v=>v+"位" } } } }
+      });
+    }
+    document.getElementById("ctaBtn").addEventListener("click",()=>{ location.href="../shindan/"; });
+    boot();
+  </script>
+</body>
+</html>
