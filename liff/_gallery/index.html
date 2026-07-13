@@ -17,6 +17,8 @@
     .rankrow .amt { font-size: 13px; font-weight: 700; width: 76px; text-align: right; }
     .dayin .ow-row { padding: 8px 0; }
     .dayin .k { width: 66px; font-weight: 600; }
+    .tmwrap { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .tmwrap .sep { color: var(--sub); }
   </style>
 </head>
 <body>
@@ -33,7 +35,7 @@
       <div class="ow-hero-lbl">純売上（税抜）</div>
       <div class="ow-hero-main">
         <span class="ow-hero-val">¥690,520</span>
-        <span class="ow-hero-delta"><span class="dl">前日比</span><span class="dv ow-up">+5.4% ↑</span></span>
+        <span class="ow-hero-delta"><span class="dl">前日比</span><span class="dv">+5.4% ↑</span></span>
       </div>
       <div class="ow-kpi2">
         <div><div class="l">客数</div><div class="v">747人</div></div>
@@ -113,16 +115,17 @@
           </tr></thead>
           <tbody>
             <tr><td class="name"><span class="av">藤</span>藤田</td><td class="tc"><span class="tblk tc-am">4:30<br>13:30</span></td><td class="tc"><span class="tblk tc-am">4:30<br>13:30</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-am">4:30<br>13:30</span></td><td class="tc"><span class="tblk tc-am">4:30<br>13:30</span></td><td class="tc"><span class="tblk tc-am">4:30<br>13:30</span></td><td class="off">-</td></tr>
-            <tr><td class="name"><span class="av">岡</span>岡本</td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-sun">5:00<br>14:00</span></td></tr>
-            <tr><td class="name"><span class="av">三</span>三浦</td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-sun">8:00<br>17:00</span></td></tr>
-            <tr><td class="name"><span class="av">田</span>田村</td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-sun">6:45<br>15:45</span></td></tr>
+            <tr><td class="name"><span class="av">岡</span>岡本</td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td><td class="tc"><span class="tblk tc-am">5:00<br>14:00</span></td></tr>
+            <tr><td class="name"><span class="av">三</span>三浦</td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-day">8:00<br>17:00</span></td></tr>
+            <tr><td class="name"><span class="av">田</span>田村</td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="off">-</td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td><td class="tc"><span class="tblk tc-day">6:45<br>15:45</span></td></tr>
             <tr><td class="name"><span class="av">小</span>小林</td><td class="off">-</td><td class="tc"><span class="tblk tc-pm">10:30<br>19:30</span></td><td class="tc"><span class="tblk tc-pm">10:30<br>19:30</span></td><td class="tc"><span class="tblk tc-pm">10:30<br>19:30</span></td><td class="tc"><span class="tblk tc-pm">10:30<br>19:30</span></td><td class="tc"><span class="tblk tc-pm">10:30<br>19:30</span></td><td class="off">-</td></tr>
           </tbody>
         </table>
       </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--sub)"><span class="sh sh-am" style="background:#E3EEF7;color:#2C77B0">早番</span> <span class="sh sh-mid" style="background:#E3F0EA;color:#3C8B6E">中番</span> <span class="sh sh-pm" style="background:#E8E9F4;color:#545AA0">遅番</span></div>
     </div>
 
-    <div class="glabel">9. シフト希望入力（週の○×概要＋日別に詳細入力）</div>
+    <div class="glabel">9. シフト希望入力（パターン：早番/中番/遅番）</div>
     <div class="ow-card">
       <h2>希望シフトを提出する（来月 1〜7日）</h2>
       <div class="ow-req">
@@ -134,7 +137,6 @@
         <div class="d yes sat"><div class="dl">6<small>土</small></div><div class="mk">◯</div><div class="st">希望あり</div></div>
         <div class="d no sun"><div class="dl">7<small>日</small></div><div class="mk">✕</div><div class="st">希望なし</div></div>
       </div>
-
       <div style="border-top:1px solid var(--line); margin:16px 0 4px"></div>
       <div class="ow-hero-lbl" style="margin-bottom:6px">日別に希望を入力（○の日）</div>
       <div class="dayin">
@@ -142,9 +144,23 @@
         <div class="ow-row"><span class="k">2（火）</span><div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">中番</span><span class="ow-chip">遅番</span></div></div>
         <div class="ow-row"><span class="k">4（木）</span><div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip on">中番</span><span class="ow-chip">遅番</span></div></div>
         <div class="ow-row"><span class="k">5（金）</span><div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip">中番</span><span class="ow-chip on">遅番</span></div></div>
-        <div class="ow-row"><span class="k" style="color:#2E7BC4">6（土）</span><div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">中番</span><span class="ow-chip">遅番</span></div></div>
       </div>
+      <div style="margin-top:16px"><button class="ow-btn">希望を送信する</button></div>
+    </div>
 
+    <div class="glabel">10. シフト希望入力（時間：日別に開始〜終了）</div>
+    <div class="ow-card">
+      <h2>希望時間を入力（来月・○の日）</h2>
+      <div class="dayin">
+        <div class="ow-row" style="border-top:none"><span class="k">1（月）</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="16:00"></div></div>
+        <div class="ow-row"><span class="k">2（火）</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="16:00"></div></div>
+        <div class="ow-row"><span class="k">4（木）</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm" value="17:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="22:00"></div></div>
+        <div class="ow-row"><span class="k" style="color:#2E7BC4">6（土）</span>
+          <div class="tmwrap"><input type="time" class="ow-input tm" value="09:00"><span class="sep">〜</span><input type="time" class="ow-input tm" value="15:00"></div></div>
+      </div>
       <div style="margin-top:16px"><button class="ow-btn">希望を送信する</button></div>
     </div>
 
@@ -159,7 +175,6 @@
     const gridX = { grid:{display:false}, ticks:{font:{size:10},color:"#999"} };
     const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
     const $ = id => document.getElementById(id);
-    // ツールチップ共通: タイトル(11時等)＋色ボックスを消し、単一の値だけ
     const tip = labelFn => ({ enabled:true, displayColors:false, callbacks:{ title:()=>"", label:labelFn } });
     const legendTR = { display:true, position:"top", align:"end", labels:{ font:{size:10}, boxWidth:12 } };
 
@@ -181,7 +196,7 @@
           { label:"今週", data:[648,702,735,812,760,642,690], borderColor:BLUE, backgroundColor:"rgba(0,160,233,.10)", fill:true, tension:.35, pointRadius:3, pointBackgroundColor:BLUE },
           { label:"前週", data:[601,632,681,725,704,585,662], borderColor:GRAY, borderDash:[4,3], tension:.35, pointRadius:2, pointBackgroundColor:GRAY } ]},
       options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:"nearest",intersect:true},
-        plugins:{ legend:legendTR, tooltip:tip(c=>`${c.dataset.label} ${yen(c.parsed.y*1000)}`) },
+        plugins:{ legend:legendTR, tooltip:tip(c=>yen(c.parsed.y*1000)) },
         scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v/10+"万"}}} } });
 
     new Chart($("c-donut"), { type:"doughnut",
