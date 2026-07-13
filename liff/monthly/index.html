@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <title>月次レポート（PL）｜お店AI</title>
+  <style>
+    :root { --green:#1DB446; --green-d:#2E7D32; --red:#d9534f; --ink:#222; --sub:#8c8c8c; --line:#eee; --bg:#f5f7f5; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:88px; }
+    header { background:var(--green); color:#fff; padding:16px 18px calc(16px + env(safe-area-inset-top,0)); }
+    header .ttl { font-weight:700; font-size:16px; }
+    header .sub { font-size:12px; opacity:.9; margin-top:3px; }
+    .wrap { padding:8px 14px; }
+    .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,.04); }
+    .card h2 { font-size:13px; color:var(--sub); margin:0 0 10px; font-weight:700; }
+    .hero .lbl { font-size:12px; color:var(--sub); }
+    .hero .val { font-size:28px; font-weight:800; letter-spacing:-.5px; }
+    .herorow { display:flex; gap:12px; margin-top:8px; }
+    .herorow .b { flex:1; }
+    .herorow .b .l { font-size:11px; color:var(--sub); }
+    .herorow .b .v { font-size:18px; font-weight:800; }
+    .up { color:var(--green-d); } .down { color:var(--red); }
+    .fl { height:12px; border-radius:6px; background:#eee; position:relative; overflow:hidden; margin-top:6px; }
+    .fl > i { display:block; height:100%; background:var(--red); }
+    .fl .tgt { position:absolute; top:-3px; width:2px; height:18px; background:#333; }
+    .plrow { display:flex; padding:7px 0; border-top:1px solid var(--line); font-size:13px; }
+    .plrow:first-child { border-top:none; }
+    .plrow .l { flex:5; color:#555; }
+    .plrow .a { flex:4; text-align:right; }
+    .plrow .p { flex:2; text-align:right; color:var(--sub); }
+    .plrow .d { flex:3; text-align:right; font-size:11px; }
+    .plrow.total { border-top:2px solid #ddd; font-weight:800; }
+    .plrow.total .a,.plrow.total .p { color:var(--green-d); }
+    .chartbox { position:relative; height:200px; }
+    .cmp { display:flex; align-items:center; gap:8px; padding:8px 0; border-top:1px solid var(--line); font-size:13px; }
+    .cmp:first-child { border-top:none; }
+    .cmp .nm { width:74px; }
+    .cmp .barwrap { flex:1; background:#eef7ef; border-radius:4px; height:16px; overflow:hidden; }
+    .cmp .barwrap > i { display:block; height:100%; background:var(--green); }
+    .cmp .barwrap > i.warn { background:var(--red); }
+    .cmp .v { width:52px; text-align:right; font-weight:700; }
+    .ai { background:#f0f7f1; border-radius:12px; padding:12px 14px; font-size:12.5px; line-height:1.7; color:#3b5b40; }
+    .ai b { color:var(--green-d); }
+    .cta { position:fixed; left:0; right:0; bottom:0; padding:12px 14px calc(12px + env(safe-area-inset-bottom,0)); background:linear-gradient(180deg,rgba(245,247,245,0),var(--bg) 24%); }
+    .cta button { width:100%; border:none; background:var(--green); color:#fff; font-size:15px; font-weight:700; padding:14px; border-radius:12px; box-shadow:0 4px 14px rgba(29,180,70,.35); }
+    .loading,.error { text-align:center; color:var(--sub); padding:60px 20px; }
+    .error { color:var(--red); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="ttl">📈 <span id="month">先月</span>の月次レポート（全店）</div>
+    <div class="sub" id="brand">読み込み中…</div>
+  </header>
+  <div id="app"><div class="loading">読み込み中…</div></div>
+  <div class="cta"><button id="ctaBtn">🔍 あなたのお店の数字で見る（無料診断）</button></div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="../vendor/chart.umd.min.js"></script>
+  <script>
+    const LIFF_ID = "";
+    const SHINDAN_URL = "../shindan/";
+    const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+    const pct = n => (n*100).toFixed(1) + "%";
+    let DATA, charts = {};
+
+    function prevMonthLabel(){ const d=new Date(); d.setMonth(d.getMonth()-1); return (d.getMonth()+1)+"月"; }
+
+    async function boot(){
+      try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
+      try {
+        const res = await fetch("../../data/demo-data.json", {cache:"no-store"});
+        if(!res.ok) throw new Error(res.status);
+        DATA = await res.json();
+      } catch(e){
+        document.getElementById("app").innerHTML = `<div class="error">データを読み込めませんでした（${e.message}）</div>`; return;
+      }
+      document.getElementById("month").textContent = prevMonthLabel();
+      document.getElementById("brand").textContent = DATA.company.brand;
+      render();
+    }
+
+    function render(){
+      const m = DATA.monthly_report, t = m.total;
+      let html = "";
+      // hero
+      html += `<div class="wrap"><div class="card hero">
+        <div class="lbl">全店 純売上（税抜）</div><div class="val">${yen(t.net_sales)}</div>
+        <div class="herorow">
+          <div class="b"><div class="l">営業利益</div><div class="v up">${yen(t.operating_profit)}</div></div>
+          <div class="b"><div class="l">営業利益率</div><div class="v">${pct(t.operating_profit_rate)}</div></div>
+          <div class="b"><div class="l">FL率</div><div class="v ${t.fl_rate>t.fl_target?'down':'up'}">${pct(t.fl_rate)}</div></div>
+        </div>
+        <div style="margin-top:12px"><div style="font-size:11px;color:#8c8c8c">FL率 ${pct(t.fl_rate)}（目標 ${pct(t.fl_target)}）</div>
+          <div class="fl"><i style="width:${Math.min(t.fl_rate*100,100)}%"></i><div class="tgt" style="left:${t.fl_target*100}%"></div></div>
+        </div>
+      </div>`;
+      // PL table
+      html += `<div class="card"><h2>損益（PL）</h2>` +
+        t.costs.map(c=>`<div class="plrow"><div class="l">${c.label}</div><div class="a">${yen(c.amount)}</div><div class="p">${pct(c.rate)}</div><div class="d ${c.vs_prev.startsWith('+')?'down':(c.vs_prev.startsWith('-')?'up':'')}">${c.vs_prev}</div></div>`).join("") +
+        `<div class="plrow total"><div class="l">営業利益</div><div class="a">${yen(t.operating_profit)}</div><div class="p">${pct(t.operating_profit_rate)}</div><div class="d"></div></div></div>`;
+      // dept donut
+      html += `<div class="card"><h2>部門別 売上構成</h2><div class="chartbox"><canvas id="dcv"></canvas></div></div>`;
+      // 12m trend
+      html += `<div class="card"><h2>売上・営業利益 12ヶ月推移</h2><div class="chartbox"><canvas id="tcv"></canvas></div></div>`;
+      // store comparison
+      const maxSales = Math.max(...m.by_store.map(s=>s.net_sales));
+      html += `<div class="card"><h2>店舗比較（売上バー・利益率・廃棄率）</h2>` +
+        m.by_store.map(s=>{ const st=DATA.stores.find(x=>x.id===s.store); const warn=s.profit_rate<0.18;
+          return `<div class="cmp"><div class="nm">${st.name}</div>
+            <div class="barwrap"><i class="${warn?'warn':''}" style="width:${Math.round(s.net_sales/maxSales*100)}%"></i></div>
+            <div class="v">${pct(s.profit_rate)}</div><div class="v" style="color:${s.waste_rate>0.04?'#d9534f':'#8c8c8c'}">廃${pct(s.waste_rate)}</div></div>`;
+        }).join("") + `</div>`;
+      // AI
+      html += `<div class="card"><div class="ai"><b>💬 AIのひとこと</b><br>${m.ai_comment}</div></div></div>`;
+
+      document.getElementById("app").innerHTML = html;
+      drawDept(m.dept_mix);
+      drawTrend(m.trend_12m);
+    }
+
+    function drawDept(mix){
+      const palette = ["#1DB446","#4CAF50","#81C784","#A5D6A7","#C8E6C9","#66BB6A","#2E7D32"];
+      charts.d = new Chart(document.getElementById("dcv"), {
+        type:"doughnut",
+        data:{ labels:mix.map(x=>x.dept), datasets:[{ data:mix.map(x=>Math.round(x.rate*100)), backgroundColor:palette, borderWidth:0 }] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:"58%",
+          plugins:{ legend:{ position:"right", labels:{ font:{size:10}, boxWidth:12 } },
+            tooltip:{ callbacks:{ label:c=> c.label+" "+c.parsed+"%" } } } }
+      });
+    }
+    function drawTrend(rows){
+      charts.t = new Chart(document.getElementById("tcv"), {
+        data:{ labels:rows.map(r=>r.month),
+          datasets:[
+            { type:"bar", label:"売上", data:rows.map(r=>r.sales), backgroundColor:"#C8E6C9", borderRadius:3, yAxisID:"y" },
+            { type:"line", label:"営業利益", data:rows.map(r=>r.profit), borderColor:"#1DB446", backgroundColor:"#1DB446", tension:.35, pointRadius:2, yAxisID:"y" }
+          ]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{ labels:{ font:{size:10}, boxWidth:12 } },
+            tooltip:{ callbacks:{ label:c=> c.dataset.label+" ¥"+Number(c.parsed.y).toLocaleString("ja-JP") } } },
+          scales:{ x:{ grid:{display:false}, ticks:{font:{size:9},color:"#999"} },
+            y:{ grid:{color:"#f0f0f0"}, ticks:{ font:{size:9}, color:"#999", callback:v=> v>=10000?(v/10000)+"万":v } } } }
+      });
+    }
+
+    document.getElementById("ctaBtn").addEventListener("click",()=>{ location.href = SHINDAN_URL; });
+    boot();
+  </script>
+</body>
+</html>
