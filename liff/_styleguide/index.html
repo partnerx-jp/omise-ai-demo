@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../shared.css">
+  <title>デザインシステム｜お店のAIワーカー</title>
+  <style>
+    .sg { padding: 8px 14px 40px; }
+    .sg h3 { font-size: 12px; color: var(--muted); margin: 18px 4px 8px; text-transform: uppercase; letter-spacing: .04em; }
+    .sw { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sw div { width: 88px; }
+    .sw i { display: block; height: 44px; border-radius: 8px; border: 1px solid var(--line); }
+    .sw span { font-size: 10px; color: var(--sub); display: block; margin-top: 3px; }
+    .type p { margin: 4px 0; }
+    .chips i { display: inline-block; width: 22px; height: 22px; border-radius: 5px; margin-right: 4px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="ow-header">
+    <div class="ttl">🎨 デザインシステム</div>
+    <div class="sub">お店のAIワーカー デモ ・ 統一トークン</div>
+  </div>
+
+  <div class="sg">
+    <h3>ブランド / テキスト / セマンティック</h3>
+    <div class="sw">
+      <div><i style="background:var(--brand)"></i><span>brand</span></div>
+      <div><i style="background:var(--brand-dark)"></i><span>brand-dark</span></div>
+      <div><i style="background:var(--brand-tint)"></i><span>brand-tint</span></div>
+      <div><i style="background:var(--ink)"></i><span>ink</span></div>
+      <div><i style="background:var(--sub)"></i><span>sub</span></div>
+      <div><i style="background:var(--pos)"></i><span>pos</span></div>
+      <div><i style="background:var(--neg)"></i><span>neg</span></div>
+      <div><i style="background:var(--warn-ink)"></i><span>warn</span></div>
+    </div>
+
+    <h3>グラフ配色</h3>
+    <div class="chips">
+      <i style="background:var(--c1)"></i><i style="background:var(--c2)"></i><i style="background:var(--c3)"></i><i style="background:var(--c4)"></i><i style="background:var(--c5)"></i><i style="background:var(--c6)"></i><i style="background:var(--c7)"></i>
+    </div>
+
+    <h3>タイポ</h3>
+    <div class="ow-card type">
+      <p class="ow-hero-val">¥690,520</p>
+      <p style="font-size:16px;font-weight:700">見出し 16 Bold</p>
+      <p style="font-size:13px">本文 13 Regular — 数字を読んで、一言そえる。</p>
+      <p style="font-size:11px;color:var(--sub)">キャプション 11 / sub色</p>
+    </div>
+
+    <h3>部品プレビュー</h3>
+    <div class="ow-wrap" style="padding:0">
+      <!-- ヒーロー＋KPI -->
+      <div class="ow-card">
+        <div class="ow-hero-lbl">全店 純売上（税抜）</div>
+        <div class="ow-hero-val">¥690,520</div>
+        <div class="ow-kpis" style="margin-top:12px">
+          <div class="ow-kpi"><div class="l">前日比</div><div class="v ow-up">+5.4%</div></div>
+          <div class="ow-kpi"><div class="l">客数</div><div class="v">747人</div></div>
+          <div class="ow-kpi"><div class="l">客単価</div><div class="v">¥924</div></div>
+        </div>
+      </div>
+      <!-- タブ -->
+      <div style="margin:0 0 12px"><span class="ow-tab on">全店</span> <span class="ow-tab">梅田店</span> <span class="ow-tab">難波店</span></div>
+      <!-- テーブル＋バー -->
+      <div class="ow-card">
+        <h2>売れ筋 TOP3</h2>
+        <table class="ow-table"><tbody>
+          <tr><td style="text-align:left">クロワッサン</td><td>168個</td><td style="text-align:right;font-weight:700">¥47,040</td></tr>
+          <tr><td style="text-align:left">生食パン</td><td>48個</td><td style="text-align:right;font-weight:700">¥42,240</td></tr>
+        </tbody></table>
+        <div class="ow-bar" style="margin-top:10px"><i style="width:78%"></i></div>
+      </div>
+      <!-- 進捗 -->
+      <div class="ow-card">
+        <h2>今月の進捗</h2>
+        <div class="ow-prog"><i style="width:92%"></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ¥5,480,000</span><span class="ow-down">目標比 -0.8%</span></div>
+      </div>
+      <!-- バッジ・注意・AI -->
+      <div class="ow-card">
+        <div style="margin-bottom:10px">状態: <span class="ow-badge">計算済</span> <span class="ow-badge" style="color:var(--star);background:#FFF6E5">★4.3</span></div>
+        <div class="ow-warn" style="margin-bottom:10px">⚠️ FL率 59.0%（目標57%を2pt超過）</div>
+        <div class="ow-ai"><b>💬 AIのひとこと</b><br>難波店はクロワッサンが16時台に完売。夕方の機会損失が出ています。焼成の後ろ倒しで拾える可能性があります。</div>
+      </div>
+      <!-- ボタン -->
+      <button class="ow-btn" style="margin-bottom:10px">詳しく見る（分析グラフ）</button>
+      <button class="ow-btn" style="background:#fff;color:var(--brand);box-shadow:none;border:1px solid var(--line)">🔍 無料診断</button>
+    </div>
+  </div>
+</body>
+</html>

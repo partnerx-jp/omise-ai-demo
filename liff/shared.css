@@ -1,0 +1,100 @@
+/* お店のAIワーカー デモ — 共通デザインシステム（全LIFF共通）
+   トークンを1か所で管理し、各ページはこれをimportするだけ。色/余白の変更はここで一括。 */
+
+:root {
+  /* ブランド */
+  --brand:      #1DB446;   /* 主色（LINE調和の緑・お店のAIワーカーの識別色） */
+  --brand-dark: #178A38;   /* ヘッダー・押下 */
+  --brand-tint: #EAF7EE;   /* 薄い緑の面 */
+
+  /* テキスト */
+  --ink:   #1F2937;        /* 主テキスト（やや温かい黒） */
+  --sub:   #6B7280;        /* 副次テキスト */
+  --muted: #9CA3AF;        /* キャプション */
+
+  /* 面・線 */
+  --bg:    #F4F6F5;        /* 背景 */
+  --card:  #FFFFFF;
+  --line:  #EDEFF1;        /* 境界線 */
+
+  /* セマンティック */
+  --pos:      #15803D;     /* 良化・上昇 */
+  --neg:      #DC2626;     /* 悪化・下降 */
+  --warn-bg:  #FFF7ED;     /* 注意の面 */
+  --warn-ink: #9A5A1A;     /* 注意の文字 */
+  --info-bg:  #F0F7F1;     /* AIひとことの面 */
+  --star:     #E6A817;     /* 評価★ */
+
+  /* かたち */
+  --radius: 14px;
+  --radius-sm: 8px;
+  --pad: 16px;
+  --gap: 12px;
+  --shadow: 0 1px 6px rgba(0,0,0,.05);
+
+  /* グラフ配色（緑スケール＋補助） */
+  --c1:#1DB446; --c2:#4CAF50; --c3:#7CC98A; --c4:#A8DCB4; --c5:#CDEBD4; --c6:#2E7D32; --c7:#9CA3AF;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ヘッダー帯 */
+.ow-header { background: var(--brand); color: #fff; padding: 16px 18px calc(16px + env(safe-area-inset-top,0)); }
+.ow-header .ttl { font-weight: 700; font-size: 16px; }
+.ow-header .sub { font-size: 12px; opacity: .92; margin-top: 3px; }
+
+/* カード */
+.ow-wrap { padding: 8px 14px; }
+.ow-card { background: var(--card); border-radius: var(--radius); padding: var(--pad); margin-bottom: var(--gap); box-shadow: var(--shadow); }
+.ow-card h2 { font-size: 13px; color: var(--sub); margin: 0 0 10px; font-weight: 700; }
+
+/* ヒーロー数値 */
+.ow-hero-lbl { font-size: 12px; color: var(--sub); }
+.ow-hero-val { font-size: 30px; font-weight: 800; letter-spacing: -.5px; color: var(--ink); }
+
+/* KPI 3列 */
+.ow-kpis { display: flex; gap: 10px; }
+.ow-kpi { flex: 1; text-align: center; }
+.ow-kpi .l { font-size: 11px; color: var(--sub); }
+.ow-kpi .v { font-size: 18px; font-weight: 800; margin-top: 2px; }
+
+/* 増減 */
+.ow-up { color: var(--pos); } .ow-down { color: var(--neg); }
+
+/* ピルタブ */
+.ow-tabs { display: flex; gap: 6px; padding: 12px 14px 4px; overflow-x: auto; }
+.ow-tab { flex: 0 0 auto; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 13px; color: var(--sub); }
+.ow-tab.on { background: var(--brand); color: #fff; border-color: var(--brand); font-weight: 700; }
+
+/* バッジ・注意・AIひとこと */
+.ow-badge { display: inline-block; font-size: 10px; color: var(--pos); background: var(--brand-tint); border-radius: 4px; padding: 1px 6px; }
+.ow-warn  { background: var(--warn-bg); border: 1px solid #FDE3C4; border-radius: var(--radius-sm); padding: 10px 12px; font-size: 12px; color: var(--warn-ink); }
+.ow-ai    { background: var(--info-bg); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 12.5px; line-height: 1.7; color: #34513A; }
+.ow-ai b  { color: var(--pos); }
+
+/* テーブル */
+.ow-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ow-table th, .ow-table td { padding: 8px 4px; text-align: center; border-top: 1px solid var(--line); }
+.ow-table th { color: var(--sub); font-size: 11px; font-weight: 700; border-top: none; }
+
+/* バー（進捗・構成比） */
+.ow-bar  { height: 6px; border-radius: 4px; background: var(--brand-tint); overflow: hidden; }
+.ow-bar > i { display: block; height: 100%; background: var(--brand); }
+.ow-prog { height: 10px; border-radius: 6px; background: #E9EBED; overflow: hidden; }
+.ow-prog > i { display: block; height: 100%; background: var(--brand); }
+
+/* CTA固定バー */
+.ow-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 14px calc(12px + env(safe-area-inset-bottom,0)); background: linear-gradient(180deg, rgba(244,246,245,0), var(--bg) 24%); }
+.ow-cta button, .ow-btn { width: 100%; border: none; background: var(--brand); color: #fff; font-size: 15px; font-weight: 700; padding: 14px; border-radius: 12px; box-shadow: 0 4px 14px rgba(29,180,70,.32); }
+
+/* 状態 */
+.ow-loading, .ow-error { text-align: center; color: var(--sub); padding: 60px 20px; font-size: 14px; }
+.ow-error { color: var(--neg); }
+
+/* 本文の下パディング（固定CTA分） */
+.ow-hasbottom { padding-bottom: 88px; }
