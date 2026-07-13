@@ -108,3 +108,39 @@ body {
 .ow-loading, .ow-error { text-align: center; color: var(--sub); padding: 60px 20px; font-size: 14px; }
 .ow-error { color: var(--neg); }
 .ow-hasbottom { padding-bottom: 92px; }
+
+/* リスト行（ラベル｜値） */
+.ow-row { display: flex; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.ow-row:first-child { border-top: none; }
+.ow-row .k { color: var(--sub); }
+.ow-row .v { margin-left: auto; font-weight: 600; }
+
+/* フォーム部品 */
+.ow-field { margin-bottom: 14px; }
+.ow-field > label { display: block; font-size: 12px; color: var(--sub); margin-bottom: 6px; }
+.ow-input, .ow-select, .ow-textarea { width: 100%; font-size: 15px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 12px; font-family: inherit; }
+.ow-textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+.ow-input:focus, .ow-select:focus, .ow-textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-tint); }
+
+/* 選択チップ */
+.ow-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ow-chip { font-size: 13px; color: var(--sub); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; }
+.ow-chip.on { color: #fff; background: var(--brand); border-color: var(--brand); font-weight: 700; }
+
+/* シフト表（スタッフ×日付・横スクロール） */
+.ow-shift-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.ow-shift { border-collapse: collapse; font-size: 12px; white-space: nowrap; width: 100%; }
+.ow-shift th, .ow-shift td { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 7px 8px; text-align: center; }
+.ow-shift thead th { background: var(--head-bg); color: var(--sub); font-weight: 600; font-size: 11px; }
+.ow-shift th.name, .ow-shift td.name { position: sticky; left: 0; background: #fff; text-align: left; z-index: 1; font-weight: 600; color: var(--ink); border-right: 1px solid var(--line); }
+.ow-shift thead th.name { background: var(--head-bg); }
+.ow-shift td.name small { color: var(--sub); font-weight: 400; margin-left: 4px; }
+.ow-shift .sat { color: #2E7BC4; } .ow-shift .sun { color: var(--neg); }
+.ow-shift td.total { font-weight: 700; color: var(--brand-dark); background: #FAFBFC; }
+
+/* シフト種別ブロック（早番/中番/遅番/休） */
+.sh { display: inline-block; border-radius: 4px; padding: 3px 7px; font-size: 11px; font-weight: 700; }
+.sh-am  { background: #E3F2FB; color: #1E88C5; }
+.sh-mid { background: #EAF6E1; color: #4E9E39; }
+.sh-pm  { background: #FDEFE0; color: #D9822B; }
+.sh-off { background: #F2F3F4; color: #9AA0A6; }
