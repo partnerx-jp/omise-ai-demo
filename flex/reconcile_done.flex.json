@@ -1,0 +1,28 @@
+{
+  "type": "flex",
+  "altText": "レジ締めを承認しました：全店 差異¥0・freeeへ売上計上済み",
+  "contents": {
+    "type": "bubble",
+    "size": "kilo",
+    "body": {
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
+      "contents": [
+        { "type": "text", "text": "レジ締めを承認しました", "size": "md", "weight": "bold", "color": "#1A1A1A" },
+        { "type": "text", "text": "全店・差異¥0", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
+        { "type": "separator", "margin": "md", "color": "#ECECEC" },
+        { "type": "box", "layout": "horizontal", "margin": "lg", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "3店舗のレジ締めを確定", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]},
+        { "type": "box", "layout": "horizontal", "margin": "sm", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "freee へ売上計上（現金 / 売掛金）", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]},
+        { "type": "box", "layout": "horizontal", "margin": "sm", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "日次レポート・資金繰り表に反映", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]}
+      ]
+    }
+  }
+}

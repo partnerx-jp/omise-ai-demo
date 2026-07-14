@@ -1,0 +1,31 @@
+{
+  "type": "flex",
+  "altText": "消込・記帳しました：入金 ¥312,540（売掛金の消込・freee起票済）",
+  "contents": {
+    "type": "bubble",
+    "size": "kilo",
+    "body": {
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
+      "contents": [
+        { "type": "text", "text": "消込・記帳しました", "size": "md", "weight": "bold", "color": "#1A1A1A" },
+        { "type": "separator", "margin": "md", "color": "#ECECEC" },
+        { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "入金元", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "ネクストペイ株式会社", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "入金額", "size": "sm", "color": "#9AA0A6", "flex": 4, "gravity": "center" }, { "type": "text", "text": "¥312,540", "size": "lg", "weight": "bold", "color": "#00A0E9", "align": "end", "flex": 6, "gravity": "center" } ]},
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "消込先", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "売掛金（キャッシュレス未収）", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
+        { "type": "separator", "margin": "lg", "color": "#ECECEC" },
+        { "type": "box", "layout": "horizontal", "margin": "lg", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "freee に記帳（普通預金 / 支払手数料 ⇄ 売掛金）", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]},
+        { "type": "box", "layout": "horizontal", "margin": "sm", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "売掛金 AR-2026-0705 を消込（残高 ¥0）", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]},
+        { "type": "box", "layout": "horizontal", "margin": "sm", "spacing": "sm", "contents": [
+          { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "flex": 0 },
+          { "type": "text", "text": "資金繰り表に自動反映", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
+        ]}
+      ]
+    }
+  }
+}

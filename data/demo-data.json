@@ -13,7 +13,9 @@
       "monthly_report": "表示月 = 実行日の前月",
       "shift_notice": "表示日付 = 実行日 + 1 = 明日",
       "invoice": "発行日=当月 issue_day / 支払期限=翌月末",
-      "shift_request": "対象=来月1〜15日 / 締切=今月20日"
+      "shift_request": "対象=来月1〜15日 / 締切=今月20日",
+      "payment": "入金日 = 実行日（本日入金）",
+      "reconcile": "対象日 = 実行日 + date_offset(-1) = 昨日（前日レジ締めの照合）"
     }
   },
   "company": {
@@ -811,6 +813,43 @@
         "value": 0.1
       }
     ]
+  },
+  "payment": {
+    "deposit_date_hint": "実行日（本日入金）",
+    "source": "ネクストペイ株式会社（キャッシュレス決済代行・架空）",
+    "period": "7/1〜7/5 締め分",
+    "gross": 322300,
+    "fee": 9760,
+    "fee_rate": 0.0303,
+    "net_deposit": 312540,
+    "bank": "近畿みらい銀行 梅田支店 普通 1234567（架空）",
+    "match": {
+      "target": "売掛金（キャッシュレス未収）",
+      "matched_ref": "AR-2026-0705",
+      "status": "自動照合・一致"
+    },
+    "journal": [
+      { "dr": "普通預金", "amount": 312540 },
+      { "dr": "支払手数料", "amount": 9760 },
+      { "cr": "売掛金（キャッシュレス未収）", "amount": 322300 }
+    ],
+    "stores": "梅田・心斎橋・難波 3店舗合算",
+    "note": "決済代行からの入金を売掛金と自動照合し、消込・記帳するデモ（差引前 gross − fee = net_deposit）"
+  },
+  "reconcile": {
+    "date_offset": -1,
+    "store_scope": "全店（梅田・心斎橋・難波）",
+    "pos_net_sales": 690520,
+    "pos_total_incl_tax": 745762,
+    "by_method": [
+      { "method": "現金", "pos": 223700, "actual": 223700, "diff": 0 },
+      { "method": "クレジット", "pos": 318900, "actual": 318900, "diff": 0 },
+      { "method": "QR・電子マネー", "pos": 203162, "actual": 203162, "diff": 0 }
+    ],
+    "total_diff": 0,
+    "result": "一致（差異なし）",
+    "ai_flag": "心斎橋店 14時台に返品1件（¥480）を検知。売上に正しく反映済み。",
+    "note": "POS売上と現金実査・キャッシュレス実績を突合。by_method合計(税込)=pos_total_incl_tax、pos_net_sales×1.08≒税込。差異ゼロを確認してレジ締めを承認するデモ"
   },
   "shift_notice": {
     "store": "umeda",

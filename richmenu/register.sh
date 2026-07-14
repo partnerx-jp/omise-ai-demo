@@ -13,7 +13,7 @@ done
 # 作成用JSON（8ボタン postback demo={key}）
 python3 - > /tmp/richmenu_obj.json <<'PY'
 import json
-keys=[["daily","monthly","invoice","shift_notice"],["shift_request","attendance","review","map_rank"]]
+keys=[["daily","monthly","invoice","payment"],["reconcile","shift_notice","shift_request","review"]]
 areas=[{"bounds":{"x":c*625,"y":300+r*693,"width":625,"height":693},
         "action":{"type":"postback","data":f"demo={k}"}}
        for r,row in enumerate(keys) for c,k in enumerate(row)]

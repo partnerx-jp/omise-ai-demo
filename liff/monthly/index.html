@@ -15,24 +15,35 @@
     .ow-plrow { display: flex; padding: 9px 0; border-top: 1px solid var(--line); font-size: 13px; }
     .ow-plrow:first-child { border-top: none; }
     .ow-plrow .l { flex: 5; color: var(--sub); }
-    .ow-plrow .a { flex: 4; text-align: right; color: var(--ink); }
-    .ow-plrow .p { flex: 2; text-align: right; color: var(--sub); }
+    .ow-plrow .a { flex: 4; text-align: right; color: var(--ink); padding-right: 8px; }
+    .ow-plrow .p { flex: 2; text-align: right; color: var(--sub); min-width: 44px; }
     .ow-plrow .d { flex: 3; text-align: right; font-size: 11px; }
     .ow-plrow.total { border-top: 2px solid #ddd; font-weight: 700; margin-top: 2px; }
     .ow-plrow.total .l { color: var(--ink); }
     .ow-plrow.total .a, .ow-plrow.total .p { color: var(--brand); }
-    /* FL率バー（目標マーカー付き） */
-    .ow-fltrack { height: 12px; border-radius: 6px; background: #EEF1F2; position: relative; overflow: hidden; margin-top: 6px; }
-    .ow-fltrack > i { display: block; height: 100%; background: var(--neg); }
-    .ow-fltrack .tgt { position: absolute; top: -3px; width: 2px; height: 18px; background: #333; }
     .chartbox.tall { height: 220px; }
+    /* 月ピッカー（Airトンマナ：丸みなし・線と余白で区切る・2行グリッド） */
+    #monthPicker { display: none; border-bottom: 1px solid var(--line); background: #fff; }
+    #monthPicker.open { display: block; }
+    .mgrid { display: grid; grid-template-columns: repeat(6, 1fr); }
+    .mgrid .mi { text-align: center; padding: 7px 0; font-size: 12px; color: var(--sub); border-top: 1px solid var(--line); border-left: 1px solid var(--line); cursor: pointer; }
+    .mgrid .mi:nth-child(-n+6) { border-top: none; }
+    .mgrid .mi:nth-child(6n+1) { border-left: none; }
+    .mgrid .mi.on { color: var(--brand); font-weight: 700; background: var(--brand-tint); }
   </style>
 </head>
 <body class="ow-hasbottom">
   <div class="ow-header">
-    <div class="ttl" id="ttl">月次レポート（全店）</div>
+    <div class="ttl" id="ttl">PL（全店）</div>
     <div class="sub" id="sub">読み込み中…</div>
   </div>
+  <div class="ow-tabs" id="periodTabs">
+    <span class="ow-tab on" data-mode="last">先月</span>
+    <span class="ow-tab" data-mode="current">今月</span>
+    <span class="ow-tab" data-mode="pick">選択</span>
+  </div>
+  <div id="monthPicker"><div class="mgrid" id="mgrid"></div></div>
+  <div class="ow-tabs" id="storeTabs" style="position:static;box-shadow:none"></div>
   <div id="app"><div class="ow-loading">読み込み中…</div></div>
   <div class="ow-cta"><button class="ow-btn" id="cta" style="background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;color:#fff;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">あなたのお店でお試し（無料相談）</button></div>
 
@@ -47,8 +58,107 @@
     const grid = { grid:{color:"#F0F0F0"}, ticks:{font:{size:9},color:"#999"} };
     const gridX = { grid:{display:false}, ticks:{font:{size:9},color:"#999"} };
     let DATA, charts = {};
+    let MODE = "last", PICK_IDX = null, STORE = "all";
 
-    function monthLabel(){ const d=new Date(); d.setMonth(d.getMonth()-1); return (d.getMonth()+1)+"月度"; }
+    function nextMonthNum(){ return new Date().getMonth()+1; }
+    function storeInfo(id){ return DATA.monthly_report.by_store.find(x=>x.store===id); }
+
+    // 選択中の期間×店舗のPL相当データを算出する。
+    // 期間：「先月」＝実データそのまま。「今月」＝進行中の累計売上に先月の原価率を適用して概算。
+    // 「選択」（先月以外）＝trend_12mの売上・営業利益は実データ、原価内訳は先月の構成比を保ったまま概算。
+    // 店舗：先月時点の売上シェア（by_store）で期間合計を按分。利益率は店舗ごとの実際値（先月データ）を維持して適用。
+    function computeView(){
+      const m = DATA.monthly_report, t = m.total, trend = m.trend_12m;
+      const baseTotalRate = t.costs.reduce((s,c)=>s+c.rate,0);
+      const estimateCosts = (sales, profitRate) => {
+        const totalCostRate = 1 - profitRate;
+        return t.costs.map(c => { const rate = (c.rate/baseTotalRate)*totalCostRate; return { label:c.label, rate, amount:Math.round(sales*rate), vs_prev:null }; });
+      };
+
+      // ① 期間（全店ベース）を決定
+      let base;
+      if (MODE === "current"){
+        const mp = DATA.daily_report.month_progress;
+        base = { sales: mp.cum_sales, profit_rate: t.operating_profit_rate, label: `${nextMonthNum()}月度（進行中）`,
+          achAll: mp.achievement, achByStore: mp.store_achievement, exact:false, storesExact:false };
+      } else {
+        let idx = (MODE === "pick" && PICK_IDX!=null) ? PICK_IDX : trend.length-1;
+        const isLast = idx === trend.length-1;
+        const row = trend[idx];
+        const profit_rate = isLast ? t.operating_profit_rate : row.profit/row.sales;
+        const prev = idx>0 ? trend[idx-1] : null;
+        const mom = prev ? (row.sales-prev.sales)/prev.sales : null;
+        base = { sales: row.sales, profit_rate, label: `${row.month}度`, mom, exact:isLast, storesExact:isLast, trendIdx:idx };
+      }
+
+      // ② 店舗スコープを適用（全店ならそのまま／店舗なら売上シェアで按分し、利益率はその店舗の実績値を使う）
+      let sales = base.sales, profit_rate = base.profit_rate, deltaObj = null, exact = base.exact;
+      if (STORE === "all"){
+        if (MODE === "current") deltaObj = { label:"目標達成率", value:`${Math.round(base.achAll*100)}%`, up: base.achAll>=0.8 };
+        else if (base.mom!=null) deltaObj = { label:"前月比", value:pctSigned(base.mom), up:base.mom>=0 };
+      } else {
+        const info = storeInfo(STORE);
+        const ratio = info ? info.net_sales/t.net_sales : 1;
+        sales = Math.round(base.sales*ratio);
+        profit_rate = info ? info.profit_rate : base.profit_rate;
+        exact = false;
+        if (MODE === "current"){
+          const ach = (base.achByStore && base.achByStore[STORE]!=null) ? base.achByStore[STORE] : base.achAll;
+          deltaObj = { label:"目標達成率", value:`${Math.round(ach*100)}%`, up: ach>=0.8 };
+        } else if (base.mom!=null) deltaObj = { label:"前月比", value:pctSigned(base.mom), up:base.mom>=0 };
+      }
+
+      const profit = exact ? t.operating_profit : Math.round(sales*profit_rate);
+      const costs = exact ? t.costs : estimateCosts(sales, profit_rate);
+      const fl_rate = costs.find(c=>c.label==="原材料費").rate + costs.find(c=>c.label==="人件費").rate;
+
+      return { sales, profit, profit_rate, fl_rate, costs, label: base.label, delta: deltaObj,
+        exact, storesExact: base.storesExact, trendIdx: base.trendIdx };
+    }
+
+    function buildPeriodTabs(){
+      const picker = document.getElementById("monthPicker");
+      document.querySelectorAll("#periodTabs .ow-tab").forEach(t=>t.addEventListener("click",()=>{
+        const mode = t.dataset.mode;
+        if (mode === "pick"){
+          // 「選択」はピッカーの開閉トグル。選択済みなら選択状態を維持したまま開閉。
+          document.querySelectorAll("#periodTabs .ow-tab").forEach(x=>x.classList.remove("on"));
+          t.classList.add("on");
+          MODE = "pick"; if (PICK_IDX==null) PICK_IDX = DATA.monthly_report.trend_12m.length-1;
+          picker.classList.toggle("open");
+          buildMonthPicker();
+          render();
+          return;
+        }
+        document.querySelectorAll("#periodTabs .ow-tab").forEach(x=>x.classList.remove("on"));
+        t.classList.add("on");
+        picker.classList.remove("open");
+        MODE = mode; PICK_IDX = null;
+        render();
+      }));
+    }
+    function buildMonthPicker(){
+      const trend = DATA.monthly_report.trend_12m;
+      const sel = PICK_IDX==null ? trend.length-1 : PICK_IDX;
+      const el = document.getElementById("mgrid");
+      el.innerHTML = trend.map((r,i)=>`<div class="mi${MODE==='pick'&&sel===i?' on':''}" data-i="${i}">${r.month}</div>`).join("");
+      el.querySelectorAll(".mi").forEach(c=>c.addEventListener("click",()=>{
+        el.querySelectorAll(".mi").forEach(x=>x.classList.remove("on"));
+        c.classList.add("on");
+        MODE = "pick"; PICK_IDX = +c.dataset.i;
+        render();
+      }));
+    }
+
+    function buildStoreTabs(){
+      const tabs = [{id:"all",name:"全店"}].concat(DATA.stores.map(s=>({id:s.id,name:s.name})));
+      const el = document.getElementById("storeTabs");
+      el.innerHTML = tabs.map(t=>`<span class="ow-tab${t.id===STORE?' on':''}" data-id="${t.id}">${t.name}</span>`).join("");
+      el.querySelectorAll(".ow-tab").forEach(t=>t.addEventListener("click",()=>{
+        el.querySelectorAll(".ow-tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
+        STORE = t.dataset.id; render();
+      }));
+    }
 
     async function boot(){
       try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
@@ -56,62 +166,64 @@
       let lastErr;
       for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); lastErr=null; break; } catch(e){ lastErr=e; } }
       if (!DATA){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${lastErr&&lastErr.message}）</div>`; return; }
-      document.getElementById("ttl").innerHTML = `月次レポート（全店）<span class="ttl-date">${monthLabel()}</span>`;
       document.getElementById("sub").textContent = DATA.company.brand;
+      buildPeriodTabs();
+      buildStoreTabs();
       render();
     }
 
     function render(){
-      const m = DATA.monthly_report, t = m.total;
-      const trend = m.trend_12m, prev = trend[trend.length-2];
-      const mom = prev ? (t.net_sales - prev.sales) / prev.sales : 0;
+      const m = DATA.monthly_report;
+      const v = computeView();
+      const storeName = STORE === "all" ? "全店" : ((DATA.stores.find(s=>s.id===STORE)||{}).name || STORE);
+      document.getElementById("ttl").innerHTML = `PL（${storeName}）<span class="ttl-date">${v.label}</span>`;
       let h = `<div class="ow-wrap">`;
 
-      // ① ヒーロー（純売上＋前月比／営業利益・利益率・FL率）
+      // ① ヒーロー（上段=売上/営業利益、下段=原材料費/人件費/広告宣伝費、それぞれ%付き。さらにFL率/MFL率）
+      const findCost = label => v.costs.find(c=>c.label===label);
+      const material = findCost("原材料費"), labor = findCost("人件費"), ad = findCost("広告宣伝費");
+      const mfl = v.fl_rate + (ad ? ad.rate : 0);
+      const deltaHtml = v.delta ? `<div style="font-size:11px;margin-top:2px" class="${v.delta.up?'ow-up':'ow-down'}">${v.delta.label} ${v.delta.value}</div>` : "";
       h += `<div class="ow-card">
-        <div class="ow-hero-lbl">全店 純売上（税抜）</div>
-        <div class="ow-hero-main">
-          <span class="ow-hero-val">${yen(t.net_sales)}</span>
-          <span class="ow-hero-delta"><span class="dl">前月比</span><span class="dv ${mom>=0?'ow-up':'ow-down'}">${pctSigned(mom)}</span></span>
+        <div class="ow-kpi2" style="border-top:none;margin-top:0;padding-top:0">
+          <div><div class="l">純売上（税抜）</div><div class="v" style="color:var(--brand)">${yen(v.sales)}</div>${deltaHtml}</div>
+          <div><div class="l">営業利益</div><div class="v" style="color:var(--pos)">${yen(v.profit)}</div><div style="font-size:11px;margin-top:2px;color:var(--sub)">利益率 ${pct(v.profit_rate)}</div></div>
         </div>
-        <div class="ow-kpis" style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
-          <div class="ow-kpi"><div class="l">営業利益</div><div class="v ow-up">${yen(t.operating_profit)}</div></div>
-          <div class="ow-kpi"><div class="l">営業利益率</div><div class="v">${pct(t.operating_profit_rate)}</div></div>
-          <div class="ow-kpi"><div class="l">FL率</div><div class="v ${t.fl_rate>t.fl_target?'ow-down':'ow-up'}">${pct(t.fl_rate)}</div></div>
+        <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:6px">
+          <div class="ow-row"><div class="k">原材料費</div><div class="v">${pct(material.rate)}</div></div>
+          <div class="ow-row"><div class="k">人件費</div><div class="v">${pct(labor.rate)}</div></div>
+          <div class="ow-row"><div class="k">広告宣伝費</div><div class="v">${pct(ad.rate)}</div></div>
         </div>
-        <div style="margin-top:14px">
-          <div style="font-size:11px;color:var(--sub)">FL率 ${pct(t.fl_rate)}（目標 ${pct(t.fl_target)}）</div>
-          <div class="ow-fltrack"><i style="width:${Math.min(t.fl_rate*100,100)}%"></i><div class="tgt" style="left:${t.fl_target*100}%"></div></div>
+        <div class="ow-kpis" style="margin-top:4px;border-top:1px solid var(--line);padding-top:10px">
+          <div class="ow-kpi"><div class="l">FL率</div><div class="v">${pct(v.fl_rate)}</div></div>
+          <div class="ow-kpi"><div class="l">MFL率</div><div class="v">${pct(mfl)}</div></div>
         </div>
       </div>`;
 
-      // ② 損益（PL）明細
-      h += `<div class="ow-card"><h2>損益（PL）</h2>` +
-        t.costs.map(c=>`<div class="ow-plrow"><div class="l">${c.label}</div><div class="a">${yen(c.amount)}</div><div class="p">${pct(c.rate)}</div><div class="d ${c.vs_prev.startsWith('+')?'ow-down':(c.vs_prev.startsWith('-')?'ow-up':'')}">${c.vs_prev}</div></div>`).join("") +
-        `<div class="ow-plrow total"><div class="l">営業利益</div><div class="a">${yen(t.operating_profit)}</div><div class="p">${pct(t.operating_profit_rate)}</div><div class="d"></div></div></div>`;
+      // ② 損益（PL）明細（概算値の月はpt差分を非表示）
+      h += `<div class="ow-card"><h2>損益（PL）${v.exact?"":"（概算）"}</h2>` +
+        v.costs.map(c=>`<div class="ow-plrow"><div class="l">${c.label}</div><div class="a">${yen(c.amount)}</div><div class="p">${pct(c.rate)}</div><div class="d ${c.vs_prev&&c.vs_prev.startsWith('+')?'ow-down':(c.vs_prev&&c.vs_prev.startsWith('-')?'ow-up':'')}">${c.vs_prev||""}</div></div>`).join("") +
+        `<div class="ow-plrow total"><div class="l">営業利益</div><div class="a">${yen(v.profit)}</div><div class="p">${pct(v.profit_rate)}</div><div class="d"></div></div></div>`;
 
-      // ③ FL率の注意
-      if (t.fl_rate > t.fl_target)
-        h += `<div class="ow-card"><div class="ow-warn">⚠️ FL率 ${pct(t.fl_rate)}（目標 ${pct(t.fl_target)} を ${((t.fl_rate-t.fl_target)*100).toFixed(1)}pt 超過）</div></div>`;
-
-      // ④ 12ヶ月推移（折れ線＝営業利益を主役に・独立の右軸で見せる）
+      // ③ 12ヶ月推移（折れ線＝営業利益を主役に・独立の右軸で見せる／選択中の月をハイライト）
       h += `<div class="ow-card"><h2>売上・営業利益 12ヶ月推移</h2><div class="chartbox tall"><canvas id="tcv"></canvas></div></div>`;
 
-      // ⑤ 店舗比較（縦棒グラフ）
-      h += `<div class="ow-card"><h2>店舗比較（売上）</h2><div class="chartbox"><canvas id="scv"></canvas></div></div>`;
+      // ④ 店舗比較（縦棒グラフ・店舗別データは先月分のみ保持）
+      h += `<div class="ow-card"><h2>店舗比較（売上）${v.storesExact?"":"（先月データ）"}</h2><div class="chartbox"><canvas id="scv"></canvas></div></div>`;
 
       h += `</div>`;
       document.getElementById("app").innerHTML = h;
-      drawTrend(trend);
+      drawTrend(m.trend_12m, v.trendIdx);
       drawStores(m.by_store);
     }
 
-    function drawTrend(rows){
+    function drawTrend(rows, highlightIdx){
+      const barBg = rows.map((r,i)=> i===highlightIdx ? "#CFE9F9" : "#EEF1F2");
       charts.t = new Chart(document.getElementById("tcv"), {
         data:{ labels:rows.map(r=>r.month),
           datasets:[
-            { type:"bar", label:"売上", data:rows.map(r=>r.sales), backgroundColor:"#EEF1F2", borderRadius:3, yAxisID:"y", order:2 },
-            { type:"line", label:"営業利益", data:rows.map(r=>r.profit), borderColor:BRAND, backgroundColor:BRAND, borderWidth:3, tension:.35, pointRadius:3, pointBackgroundColor:BRAND, yAxisID:"y1", order:1 }
+            { type:"bar", label:"売上", data:rows.map(r=>r.sales), backgroundColor:barBg, borderRadius:3, yAxisID:"y", order:2 },
+            { type:"line", label:"営業利益", data:rows.map(r=>r.profit), borderColor:BRAND, backgroundColor:BRAND, borderWidth:3, tension:.35, pointRadius:rows.map((r,i)=> i===highlightIdx?5:3), pointBackgroundColor:BRAND, yAxisID:"y1", order:1 }
           ]},
         options:{ responsive:true, maintainAspectRatio:false,
           plugins:{ legend:{ labels:{ font:{size:10}, boxWidth:12 } },
@@ -126,9 +238,11 @@
     function drawStores(byStore){
       const labels = byStore.map(s=> (DATA.stores.find(x=>x.id===s.store)||{}).name || s.store);
       const bg = byStore.map(s=> s.profit_rate<0.18 ? NEG : BRAND);
+      const bw = byStore.map(s=> s.store===STORE ? 3 : 0);
+      const bc = byStore.map(()=> "#1A1A1A");
       charts.s = new Chart(document.getElementById("scv"), {
         type:"bar",
-        data:{ labels, datasets:[{ data: byStore.map(s=>s.net_sales), backgroundColor: bg, borderRadius:4, barPercentage:.55 }] },
+        data:{ labels, datasets:[{ data: byStore.map(s=>s.net_sales), backgroundColor: bg, borderColor:bc, borderWidth:bw, borderRadius:4, barPercentage:.55 }] },
         options:{ responsive:true, maintainAspectRatio:false,
           plugins:{ legend:{display:false},
             tooltip:{ enabled:true, displayColors:false, callbacks:{ title:c=> c[0].label,
