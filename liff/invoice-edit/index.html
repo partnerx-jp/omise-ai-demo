@@ -121,7 +121,7 @@
     function submit(){
       // LIFF実機: ユーザー発言として送信 → botが完了Flexをreply（Phase D0のLIFF ID登録後に有効）
       if (inLiff && window.liff && liff.sendMessages){
-        liff.sendMessages([{ type:"text", text:`🧾 この内容で請求書を登録します（${state.vendor} / ${yen(state.total)}）` }])
+        liff.sendMessages([{ type:"text", text:`この内容で請求書を登録します（${state.vendor} / ${yen(state.total)}）` }])
           .then(()=> liff.closeWindow())
           .catch(()=> showDone());
       } else {

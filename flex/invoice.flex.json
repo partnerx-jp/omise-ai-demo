@@ -4,20 +4,27 @@
     "text": "例として、製粉会社からこんな請求書が届いたとします。\nこの画像をAIが読み取ります。"
   },
   {
-    "type": "image",
-    "originalContentUrl": "{{invoice_image_url}}",
-    "previewImageUrl": "{{invoice_image_url}}",
-    "size": "full",
-    "aspectRatio": "1000:1414",
-    "aspectMode": "fit",
-    "backgroundColor": "#EEEEEE"
+    "type": "flex",
+    "altText": "請求書が届きました（株式会社ナニワ製粉）",
+    "contents": {
+      "type": "bubble",
+      "size": "kilo",
+      "hero": {
+        "type": "image",
+        "url": "{{invoice_image_url}}",
+        "size": "full",
+        "aspectRatio": "1000:1414",
+        "aspectMode": "fit",
+        "backgroundColor": "#EEEEEE"
+      }
+    }
   },
   {
     "type": "flex",
     "altText": "請求書を読み取りました：株式会社ナニワ製粉 ¥133,920（この内容で登録できます）",
     "contents": {
       "type": "bubble",
-      "size": "mega",
+      "size": "kilo",
       "body": {
         "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
         "contents": [
@@ -40,8 +47,8 @@
       "footer": {
         "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px", "paddingTop": "4px",
         "contents": [
-          { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "postback", "label": "この内容で登録", "data": "demo=invoice&act=done", "displayText": "この内容で登録" } },
-          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "{{liff_invoice_url}}" } }
+          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "{{liff_invoice_url}}" } },
+          { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "postback", "label": "この内容で登録", "data": "demo=invoice&act=done", "displayText": "この内容で登録" } }
         ]
       }
     }
