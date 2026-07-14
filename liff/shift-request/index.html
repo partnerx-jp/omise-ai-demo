@@ -21,28 +21,24 @@
 
     .lf-body { padding-bottom: 96px; }
 
-    /* ロール選択・かんたん入力（パレットの .ow-chips を使用） */
-    .lf-lbl { font-size: 12px; color: var(--sub); font-weight: 700; margin: 0 0 8px; display: flex; justify-content: space-between; align-items: baseline; }
+    .lf-lbl { font-size: 12px; color: var(--sub); font-weight: 700; margin: 0 0 8px; }
     .quick { display: flex; gap: 7px; flex-wrap: wrap; }
     .quick button { flex: 1; min-width: 0; white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--brand-dark);
       background: var(--brand-tint); border: 1px solid #BFE3F3; border-radius: 8px; padding: 9px 4px; }
     .quick button.clr { color: var(--sub); background: #fff; border-color: var(--line); flex: 0 0 auto; padding: 9px 14px; }
     .quick button:active { transform: translateY(1px); }
 
-    /* 15日ぶんの .ow-req（パレット部品）を 7列で折り返す */
-    .ow-req.req15 { flex-wrap: wrap; gap: 10px 3px; }
-    .ow-req.req15 .d { flex: 0 0 calc((100% - 18px) / 7); min-width: 0; }
+    /* シフト表（§8 .ow-shift）を入力に流用：セルをタップで選択 */
+    .ow-shift td.tc, .ow-shift td.off { cursor: pointer; }
+    .ow-shift td.tc:active, .ow-shift td.off:active { background: #F0F4F7; }
+    .ow-shift td.off { color: var(--muted); font-weight: 400; }
+    .tblk.tc-any { background: #EEF1F3; color: #5B6672; }
+    .shift-hint { margin-top: 10px; font-size: 11px; color: var(--sub); display: flex; align-items: center; gap: 6px; }
+    .shift-hint .tap { color: var(--brand-dark); font-weight: 700; }
+    .leg { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .leg .sh { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
 
-    /* 時間帯の希望（パレット .dayin / .ow-row / .ow-chips） */
-    .bandrow { display: flex; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
-    .bandrow:first-child { border-top: none; }
-    .bandrow .k { flex: 0 0 78px; font-size: 13px; font-weight: 600; color: var(--ink); }
-    .bandrow .k.sat { color: #2E7BC4; } .bandrow .k.sun { color: var(--neg); }
-    .bandrow .ow-chips { flex: 1; justify-content: flex-end; }
-    .bandrow .ow-chip { padding: 5px 11px; font-size: 12.5px; }
-    .band-empty { font-size: 12px; color: var(--muted); padding: 8px 2px; }
-
-    /* 送信CTA（緑立体・固定） */
+    /* CTA（緑立体・固定） */
     .lf-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 11px 16px calc(11px + env(safe-area-inset-bottom,0));
       background: linear-gradient(180deg, rgba(255,255,255,0), #fff 26%); }
     .lf-cta .info { text-align: center; font-size: 11px; color: var(--sub); margin-bottom: 9px; }
@@ -53,6 +49,26 @@
     .lf-submit:active { transform: translateY(2px); box-shadow: 0 1px 0 #05993F; }
     .lf-submit:disabled { background: #C4CDD5; border-color: #AEB7BF; box-shadow: 0 3px 0 #AEB7BF; }
 
+    /* ボトムシート（日ごとの選択） */
+    #sheetBg { position: fixed; inset: 0; z-index: 50; background: rgba(20,24,28,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    #sheetBg.on { opacity: 1; pointer-events: auto; }
+    #sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 51; background: #fff;
+      border-radius: 16px 16px 0 0; padding: 8px 16px calc(18px + env(safe-area-inset-bottom,0));
+      transform: translateY(100%); transition: transform .26s cubic-bezier(.22,.61,.36,1); }
+    #sheet.on { transform: none; }
+    #sheet .grip { width: 38px; height: 4px; border-radius: 999px; background: #D7DBDF; margin: 6px auto 12px; }
+    #sheet .sh-ttl { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    #sheet .sh-sub { font-size: 12px; color: var(--sub); margin-bottom: 12px; }
+    .opt { display: flex; align-items: center; gap: 12px; width: 100%; padding: 13px 12px; border: 1px solid var(--line);
+      border-radius: 10px; background: #fff; margin-bottom: 8px; text-align: left; }
+    .opt:active { background: #F5F7F8; }
+    .opt.on { border-color: var(--brand); background: var(--brand-tint); }
+    .opt .dot { width: 10px; height: 10px; border-radius: 999px; flex: 0 0 auto; }
+    .opt .nm { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .opt .tm { margin-left: auto; font-size: 13px; color: var(--sub); font-variant-numeric: tabular-nums; }
+    .opt.on .nm { color: var(--brand-dark); }
+    .opt.off .nm { color: #6B7178; }
+
     /* 送信中 */
     #sending { position: fixed; inset: 0; z-index: 60; background: rgba(20,24,28,.42);
       display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; color: #fff; }
@@ -61,7 +77,7 @@
     #sending .msg { font-size: 14px; font-weight: 700; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* 申請完了（LIFFを閉じられないブラウザ時のフォールバック通知） */
+    /* 申請完了（ブラウザ時のフォールバック通知） */
     #done { position: fixed; inset: 0; z-index: 70; background: var(--bg); display: none;
       flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px 26px; }
     #done.on { display: flex; }
@@ -93,25 +109,30 @@
       </div>
 
       <div class="ow-card">
-        <div class="lf-lbl"><span>ポジション</span></div>
+        <div class="lf-lbl">ポジション</div>
         <div class="ow-chips" id="roleChips" style="margin-bottom:16px"></div>
 
-        <div class="lf-lbl"><span>かんたん入力</span></div>
+        <div class="lf-lbl">かんたん入力</div>
         <div class="quick" id="quick">
-          <button data-q="weekday-work">平日すべて出勤OK</button>
+          <button data-q="weekday-work">平日すべて早番</button>
           <button data-q="weekend-off">土日すべて休み</button>
           <button data-q="reset" class="clr">リセット</button>
         </div>
       </div>
 
       <div class="ow-card">
-        <h2>勤務できる日（◯希望あり ／ ✕希望なし）</h2>
-        <div class="ow-req req15" id="reqGrid"></div>
-      </div>
-
-      <div class="ow-card">
-        <h2 id="bandHd">希望の時間帯（◯の日）</h2>
-        <div class="dayin" id="bandList"></div>
+        <h2 id="tblHd">希望シフトを入力（来月 上旬）</h2>
+        <div class="ow-shift-scroll">
+          <table class="ow-shift" id="shiftTbl"></table>
+        </div>
+        <div class="shift-hint"><span class="tap">タップ</span>で各日の希望を選べます（早番／中番／遅番／休み）</div>
+        <div class="leg">
+          <span class="sh" style="background:#E9F3D9;color:#61903A">早番</span>
+          <span class="sh" style="background:#DCECF9;color:#2C74AA">中番</span>
+          <span class="sh" style="background:#FCEFD6;color:#B87A22">遅番</span>
+          <span class="sh" style="background:#EEF1F3;color:#5B6672">どちらでも可</span>
+          <span class="sh" style="background:#F2F3F4;color:#9AA0A6">休み</span>
+        </div>
       </div>
 
       <div class="ow-card">
@@ -127,6 +148,15 @@
     <button class="lf-submit ow-btn" id="submitBtn">この内容で提出する</button>
   </div>
 
+  <!-- ボトムシート -->
+  <div id="sheetBg"></div>
+  <div id="sheet">
+    <div class="grip"></div>
+    <div class="sh-ttl" id="shTtl">希望を選択</div>
+    <div class="sh-sub" id="shSub">—</div>
+    <div id="shOpts"></div>
+  </div>
+
   <!-- 送信中 -->
   <div id="sending"><div class="sp"></div><div class="msg">提出しています…</div></div>
 
@@ -136,7 +166,7 @@
     <div class="ttl">シフト希望を申請しました</div>
     <div class="period" id="donePeriod">—</div>
     <div class="meta" id="doneMeta">—</div>
-    <div class="note" id="doneNote">未提出の方には締切前日にAIが自動でお声がけします。<br>全員そろい次第、AIがシフト原案を作成して店長に共有します。</div>
+    <div class="note">未提出の方には締切前日にAIが自動でお声がけします。<br>全員そろい次第、AIがシフト原案を作成して店長に共有します。</div>
     <button class="cta" id="doneCta">あなたのお店でお試し（無料相談）</button>
   </div>
 
@@ -145,15 +175,15 @@
     const LIFF_ID = "", SHINDAN = "../shindan/";
     const WD = ["日","月","火","水","木","金","土"];
     const STAFF_NAME = "藤田 かおる"; // liff.getProfile() の代わり（架空・梅田店 製造リーダー）
-    let DATA, SR, ROLE, IN_LIFF = false;
-    const REQ = {};   // REQ[day] = true(◯希望あり) / false(✕希望なし)
-    const BAND = {};  // BAND[day] = 早番|中番|遅番|どちらでも可（◯の日のみ）
+    const OFF = "休み";
+    let DATA, SR, ROLE, IN_LIFF = false, sheetDay = null;
+    const SEL = {}; // SEL[day] = 早番|中番|遅番|どちらでも可|休み
 
     const $ = id => document.getElementById(id);
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
     const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-    // 来月1〜15日を実日付で生成（体験日から自動計算）
+    // 来月1〜15日を実日付で生成
     const now = new Date();
     const first = new Date(now.getFullYear(), now.getMonth() + 1, 1);
     const NM = first.getMonth() + 1;
@@ -167,12 +197,26 @@
     const deadlineText = `${DL.getMonth() + 1}/20（${WD[DL.getDay()]}）まで`;
     const wdCls = wd => wd === 6 ? "sat" : wd === 0 ? "sun" : "";
 
+    // 開始時刻→時間帯カラー（早番緑/中番青/遅番橙）
+    function bandColor(start){
+      const h = parseInt(String(start).split(":")[0], 10);
+      if (h < 7)  return "tc-am";
+      if (h < 10) return "tc-day";
+      return "tc-pm";
+    }
+    // 現ロールの枠 [{key,start,end}]
+    function slots(){
+      return ((SR.slot_options && SR.slot_options[ROLE]) || []).map(s => {
+        const [key, span] = s.split(" ");
+        const [start, end] = (span || "").split("-");
+        return { key, start, end };
+      });
+    }
+    const slotOf = key => slots().find(s => s.key === key);
+
     async function boot(){
       try {
-        if (LIFF_ID && window.liff) {
-          await liff.init({ liffId: LIFF_ID }).catch(()=>{});
-          IN_LIFF = !!(liff.isInClient && liff.isInClient());
-        }
+        if (LIFF_ID && window.liff) { await liff.init({ liffId: LIFF_ID }).catch(()=>{}); IN_LIFF = !!(liff.isInClient && liff.isInClient()); }
       } catch(e){}
       const SRC = ["../../data/demo-data.json", "https://partnerx-jp.github.io/omise-ai-demo/data/demo-data.json"];
       for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(r.ok){ DATA = await r.json(); break; } } catch(e){} }
@@ -191,20 +235,17 @@
 
       prefill();
       buildRoleChips();
-      buildReq();
-      buildBand();
+      buildTable();
 
       $("submitBtn").addEventListener("click", submit);
       $("quick").querySelectorAll("button").forEach(b => b.addEventListener("click", () => quick(b.dataset.q)));
       $("doneCta").addEventListener("click", () => { location.href = SHINDAN; });
+      $("sheetBg").addEventListener("click", closeSheet);
     }
 
-    const slotKeys = () => ((SR.slot_options && SR.slot_options[ROLE]) || []).map(s => s.split(" ")[0]);
-    const bandKeys = () => slotKeys().concat(["どちらでも可"]);
-
     function prefill(){
-      const yes = { 1:"早番",2:"早番",3:"中番",4:"早番",5:"早番",8:"早番",9:"中番",10:"早番",11:"早番",12:"どちらでも可" };
-      DAYS.forEach(d => { REQ[d.day] = !!yes[d.day]; if (yes[d.day]) BAND[d.day] = yes[d.day]; });
+      const plan = { 1:"早番",2:"早番",3:"中番",4:"早番",5:"早番",8:"早番",9:"中番",10:"早番",11:"早番",12:"どちらでも可",6:OFF,7:OFF,13:OFF,14:OFF,15:OFF };
+      DAYS.forEach(d => { SEL[d.day] = plan[d.day] || OFF; });
     }
 
     function buildRoleChips(){
@@ -212,57 +253,69 @@
       $("roleChips").querySelectorAll(".ow-chip").forEach(c => c.addEventListener("click", () => {
         ROLE = c.dataset.r;
         $("roleChips").querySelectorAll(".ow-chip").forEach(x => x.classList.toggle("on", x === c));
-        const valid = new Set(bandKeys());
-        Object.keys(BAND).forEach(d => { if (!valid.has(BAND[d])) BAND[d] = slotKeys()[0]; });
-        buildBand();
+        // その枠に無い時間帯（例: 販売で中番）は既定の枠へ寄せる
+        const valid = new Set(slots().map(s => s.key).concat(["どちらでも可", OFF]));
+        DAYS.forEach(d => { if (!valid.has(SEL[d.day])) SEL[d.day] = slots()[0].key; });
+        buildTable();
       }));
     }
 
-    function buildReq(){
-      $("reqGrid").innerHTML = DAYS.map(d => {
-        const yes = REQ[d.day];
-        return `<div class="d ${yes?'yes':'no'} ${wdCls(d.wd)}" data-d="${d.day}">
-          <div class="dl">${d.day}<small>${d.label}</small></div>
-          <div class="mk">${yes?'◯':'✕'}</div>
-          <div class="st">${yes?'希望あり':'希望なし'}</div>
-        </div>`;
-      }).join("");
-      $("reqGrid").querySelectorAll(".d").forEach(el => el.addEventListener("click", () => {
-        const day = +el.dataset.d;
-        REQ[day] = !REQ[day];
-        if (REQ[day] && !BAND[day]) BAND[day] = slotKeys()[0];
-        buildReq(); buildBand();
-      }));
+    // §8 .ow-shift テーブル（1行＝本人）。各セルをタップで選択
+    function buildTable(){
+      const head = `<thead><tr><th class="name">スタッフ</th>` +
+        DAYS.map(d => `<th class="${wdCls(d.wd)}">${d.day}<br>${d.label}</th>`).join("") + `</tr></thead>`;
+      const cells = DAYS.map(d => cellHtml(d.day)).join("");
+      const fam = STAFF_NAME.split(" ")[0];
+      const body = `<tbody><tr><td class="name"><span class="av">${esc(fam.charAt(0))}</span>${esc(fam)}</td>${cells}</tr></tbody>`;
+      $("shiftTbl").innerHTML = head + body;
+      $("shiftTbl").querySelectorAll("td[data-d]").forEach(td => td.addEventListener("click", () => openSheet(+td.dataset.d)));
       updateCount();
     }
-
-    function buildBand(){
-      const yesDays = DAYS.filter(d => REQ[d.day]);
-      $("bandHd").textContent = `希望の時間帯（◯の日・${yesDays.length}日）`;
-      if (!yesDays.length){ $("bandList").innerHTML = `<div class="band-empty">上で「◯希望あり」にした日がここに並びます。</div>`; return; }
-      const keys = bandKeys();
-      $("bandList").innerHTML = yesDays.map(d => {
-        const chips = keys.map(k => {
-          const label = k === "どちらでも可" ? "可" : k;
-          return `<span class="ow-chip${BAND[d.day]===k?' on':''}" data-d="${d.day}" data-v="${esc(k)}">${esc(label)}</span>`;
-        }).join("");
-        return `<div class="bandrow"><span class="k ${wdCls(d.wd)}">${NM}/${d.day}（${d.label}）</span><div class="ow-chips">${chips}</div></div>`;
-      }).join("");
-      $("bandList").querySelectorAll(".ow-chip").forEach(c => c.addEventListener("click", () => {
-        BAND[+c.dataset.d] = c.dataset.v; buildBand();
-      }));
+    function cellHtml(day){
+      const v = SEL[day];
+      if (!v || v === OFF) return `<td class="off" data-d="${day}">-</td>`;
+      if (v === "どちらでも可") return `<td class="tc" data-d="${day}"><span class="tblk tc-any">どちら<br>でも</span></td>`;
+      const s = slotOf(v);
+      if (!s) return `<td class="off" data-d="${day}">-</td>`;
+      return `<td class="tc" data-d="${day}"><span class="tblk ${bandColor(s.start)}">${esc(s.start)}<br>${esc(s.end)}</span></td>`;
     }
 
+    // ボトムシート
+    function openSheet(day){
+      sheetDay = day;
+      const d = DAYS.find(x => x.day === day);
+      $("shTtl").textContent = `${NM}/${day}（${d.label}）の希望`;
+      $("shSub").textContent = `${esc(ROLE)}・タップで選択`;
+      const cur = SEL[day];
+      const rows = slots().map(s => {
+        const col = bandColor(s.start);
+        const dot = col === "tc-am" ? "#6FA23E" : col === "tc-day" ? "#2C74AA" : "#C4831F";
+        return optHtml(s.key, s.key, `${s.start}–${s.end}`, dot, cur === s.key);
+      });
+      rows.push(optHtml("どちらでも可", "どちらでも可", "時間はおまかせ", "#5B6672", cur === "どちらでも可"));
+      rows.push(optHtml(OFF, "休み", "この日は休み希望", "#9AA0A6", cur === OFF, true));
+      $("shOpts").innerHTML = rows.join("");
+      $("shOpts").querySelectorAll(".opt").forEach(o => o.addEventListener("click", () => {
+        SEL[sheetDay] = o.dataset.v; buildTable(); closeSheet();
+      }));
+      $("sheetBg").classList.add("on"); $("sheet").classList.add("on");
+    }
+    function optHtml(val, name, tm, dot, on, isOff){
+      return `<button class="opt${on?' on':''}${isOff?' off':''}" data-v="${esc(val)}">
+        <span class="dot" style="background:${dot}"></span><span class="nm">${esc(name)}</span><span class="tm">${esc(tm)}</span></button>`;
+    }
+    function closeSheet(){ $("sheetBg").classList.remove("on"); $("sheet").classList.remove("on"); sheetDay = null; }
+
     function quick(q){
-      if (q === "reset") { Object.keys(REQ).forEach(k=>delete REQ[k]); Object.keys(BAND).forEach(k=>delete BAND[k]); prefill(); }
-      else if (q === "weekday-work") { DAYS.forEach(d => { if (d.wd>=1 && d.wd<=5){ REQ[d.day]=true; if(!BAND[d.day]) BAND[d.day]=slotKeys()[0]; } }); }
-      else if (q === "weekend-off") { DAYS.forEach(d => { if (d.wd===0 || d.wd===6) REQ[d.day]=false; }); }
-      buildReq(); buildBand();
+      if (q === "reset") { prefill(); }
+      else if (q === "weekday-work") { DAYS.forEach(d => { if (d.wd>=1 && d.wd<=5) SEL[d.day] = slots()[0].key; }); }
+      else if (q === "weekend-off") { DAYS.forEach(d => { if (d.wd===0 || d.wd===6) SEL[d.day] = OFF; }); }
+      buildTable();
     }
 
     function counts(){
       let work = 0, off = 0;
-      DAYS.forEach(d => { REQ[d.day] ? work++ : off++; });
+      DAYS.forEach(d => { (SEL[d.day] && SEL[d.day] !== OFF) ? work++ : off++; });
       return { work, off };
     }
     function updateCount(){ $("submitBtn").disabled = counts().work === 0; }
@@ -270,17 +323,12 @@
     async function submit(){
       const c = counts();
       const notif = `${periodShort} のシフト希望を申請しました（出勤可${c.work}日・休み希望${c.off}日）`;
-
       $("sending").classList.add("on");
       await sleep(850);
-
-      // 本物のLIFF（LINE内）: トークに申請メッセージを流して、LIFFを閉じる
       if (IN_LIFF) {
         try { await liff.sendMessages([{ type: "text", text: notif }]); } catch(e){}
         try { liff.closeWindow(); return; } catch(e){}
       }
-
-      // ブラウザ等（閉じられない）: 申請完了の通知画面を表示
       $("sending").classList.remove("on");
       $("donePeriod").textContent = periodShort + " で申請しました";
       $("doneMeta").textContent = `${STAFF_NAME}／${ROLE} ・ 出勤可 ${c.work}日・休み希望 ${c.off}日`;
