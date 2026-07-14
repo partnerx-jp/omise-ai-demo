@@ -81,7 +81,7 @@
       for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); lastErr=null; break; } catch(e){ lastErr=e; } }
       if (!DATA){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${lastErr&&lastErr.message}）</div>`; return; }
       const dr = DATA.daily_report;
-      document.getElementById("ttl").innerHTML = `昨日の実績<span class="ttl-date">${mdLabel(dr.date_offset)}</span>`;
+      document.getElementById("ttl").innerHTML = `昨日の売上実績<span class="ttl-date">${mdLabel(dr.date_offset)}</span>`;
       document.getElementById("sub").textContent = DATA.company.brand;
       buildTabs();
       render("all");
@@ -126,7 +126,6 @@
 
       // ① 売上ボックス
       h += `<div class="ow-card">
-        <div class="ow-scope">${scope==="all"?"全店":storeName(scope)}</div>
         <div class="ow-hero-lbl">純売上（税抜）</div>
         <div class="ow-hero-main">
           <span class="ow-hero-val">${yen(net)}</span>
@@ -177,6 +176,7 @@
       // 直近7日 / 完売アラート / AIひとこと（維持）
       const wkScale = FILT.week ? bandNet(FILT.week)/net : 1;
       const week = dr.last7days.map(r=>({dow:r.dow, sales:Math.round(r.sales*ratio*wkScale)}));
+      const weekMax = Math.max(...dr.last7days.map(r=>r.sales*ratio));   // 全時間帯の最大でY軸を固定
       h += `<div class="ow-card">${cardHead("直近7日間の売上"+(scope==="all"?"（全店）":""),"week")}<div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
       if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store))
         h += `<div class="ow-card"><div class="ow-warn">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div></div>`;
@@ -190,7 +190,7 @@
       drawDonut(dep.labels, deptPct(), deptNet());
       drawHourly(hours, FILT.hourly);
       drawBands(dr.time_bands, key, FILT.bands);
-      drawWeek(week);
+      drawWeek(week, weekMax);
 
       document.querySelectorAll(".xf .pill").forEach(el=>el.addEventListener("click",()=>{
         const b=el.dataset.box, dp=el.dataset.dp; FILT[b] = dp ? dp : null; render(CUR, true);
@@ -224,11 +224,11 @@
         options:{ responsive:true, maintainAspectRatio:false, animation:anim(), plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
           scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
     }
-    function drawWeek(rows){
+    function drawWeek(rows, ymax){
       charts.w = new Chart(document.getElementById("wcv"), { type:"line",
         data:{ labels:rows.map(r=>r.dow), datasets:[{ data:rows.map(r=>r.sales), borderColor:BLUE, backgroundColor:"rgba(0,160,233,.10)", fill:true, tension:.35, pointRadius:3, pointBackgroundColor:BLUE }] },
         options:{ responsive:true, maintainAspectRatio:false, animation:anim(), plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
-          scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
+          scales:{x:gridX,y:{...grid, min:0, suggestedMax:ymax, ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
     }
     function drawDonut(labels, pcts, net){
       const sales = pcts.map(p=>Math.round(net*p/100));
