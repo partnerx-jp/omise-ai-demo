@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://partnerx-jp.github.io; connect-src 'self' https://partnerx-jp.github.io https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <link rel="stylesheet" href="../shared.css?v=20260714">
+  <title>お店のAIワーカー</title>
+  <style>
+    .ow-wrap { padding: 10px 16px; }
+    .thumb { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm); display: block; }
+    .thumb-cap { font-size: 11px; color: var(--muted); margin: 6px 2px 0; }
+    .sumbox { background: var(--info-bg); border-radius: var(--radius-sm); padding: 12px 14px; }
+    .sumrow { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--sub); }
+    .sumrow.total { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 8px; }
+    .sumrow.total .v { color: var(--brand-dark); font-weight: 700; font-size: 16px; }
+    .sumrow .v { color: var(--ink); font-weight: 600; }
+    .ok-mark { text-align: center; padding: 40px 20px; }
+    .ok-mark .circle { width: 64px; height: 64px; border-radius: 999px; background: #2E7D32; color: #fff; font-size: 34px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .ok-mark h2 { font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+    .ok-mark p { font-size: 13px; color: var(--sub); line-height: 1.7; margin: 0; }
+  </style>
+</head>
+<body class="ow-hasbottom">
+  <div class="ow-header">
+    <div class="ttl">請求書の内容を編集</div>
+    <div class="sub" id="sub">読み込み中…</div>
+  </div>
+  <div id="app"><div class="ow-loading">読み込み中…</div></div>
+  <div class="ow-cta" id="ctabar" style="display:none">
+    <button class="ow-btn" id="submit" style="background:#1DB446;border:1.5px solid #17913A;box-shadow:0 3px 0 #17913A,0 4px 6px rgba(0,0,0,.16)">この内容で登録する</button>
+  </div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    // LIFFアプリ登録後にIDを入れると liff.sendMessages() が有効化される（Phase D0ゲート）。
+    // 空のあいだはブラウザ/アプリ内プレビューとして完結表示する。
+    const LIFF_ID = "";
+    const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
+    const SHINDAN = "../shindan/";
+    const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+    let DATA, inLiff = false;
+    const state = { vendor:"", items:"", subtotal:0, tax_rate:0.08, account_item:"" };
+
+    async function boot(){
+      try { if (LIFF_ID && window.liff) { await liff.init({liffId:LIFF_ID}); inLiff = liff.isInClient(); } } catch(e){}
+      const SRC = ["../../data/demo-data.json", PAGES + "/data/demo-data.json"];
+      let lastErr;
+      for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); lastErr=null; break; } catch(e){ lastErr=e; } }
+      if (!DATA){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${lastErr&&lastErr.message}）</div>`; return; }
+      const iv = DATA.invoice, ex = iv.extracted;
+      state.vendor = ex.vendor; state.items = ex.items; state.subtotal = ex.subtotal;
+      state.tax_rate = ex.tax_rate; state.account_item = ex.account_item;
+      document.getElementById("sub").textContent = "AIが読み取った内容を確認・修正できます";
+      renderForm(iv);
+    }
+
+    function renderForm(iv){
+      const ex = iv.extracted;
+      const acctOpts = iv.account_item_options.map(o => `<option value="${o}"${o===state.account_item?" selected":""}>${o}</option>`).join("");
+      const rateChips = iv.tax_rate_options.map(o =>
+        `<span class="ow-chip${o.value===state.tax_rate?" on":""}" data-rate="${o.value}">${o.label}</span>`).join("");
+      document.getElementById("app").innerHTML = `
+        <div class="ow-wrap">
+          <div class="ow-card" style="padding:12px">
+            <img class="thumb" src="../../assets/invoice-sample.png" alt="読み取り元の請求書">
+            <div class="thumb-cap">読み取り元：${ex.invoice_no}（タップで拡大）</div>
+          </div>
+
+          <div class="ow-card">
+            <div class="ow-field">
+              <label>取引先</label>
+              <input class="ow-input" id="f_vendor" value="${ex.vendor}">
+            </div>
+            <div class="ow-field">
+              <label>品目</label>
+              <input class="ow-input" id="f_items" value="${ex.items}">
+            </div>
+            <div class="ow-field">
+              <label>税抜金額（円）</label>
+              <input class="ow-input" id="f_subtotal" type="number" inputmode="numeric" value="${ex.subtotal}">
+            </div>
+            <div class="ow-field">
+              <label>税区分</label>
+              <div class="ow-chips" id="f_rate">${rateChips}</div>
+            </div>
+            <div class="ow-field">
+              <label>勘定科目</label>
+              <select class="ow-select" id="f_acct">${acctOpts}</select>
+            </div>
+            <div class="ow-field" style="margin-bottom:0">
+              <label>メモ（任意）</label>
+              <textarea class="ow-textarea" id="f_memo" placeholder="例：8月分の小麦仕入。梅田・心斎橋・難波の3店舗共通。"></textarea>
+            </div>
+          </div>
+
+          <div class="ow-card">
+            <h2>登録内容</h2>
+            <div class="sumbox">
+              <div class="sumrow"><span>税抜</span><span class="v" id="s_sub">${yen(state.subtotal)}</span></div>
+              <div class="sumrow"><span id="s_taxlbl">消費税（軽減8%）</span><span class="v" id="s_tax"></span></div>
+              <div class="sumrow total"><span>合計（税込）</span><span class="v" id="s_total"></span></div>
+            </div>
+            <div class="ow-row" style="border-top:none;padding-top:12px"><span class="k">保存先</span><span class="v" style="font-weight:400;color:var(--sub)">${ex.drive_folder}</span></div>
+            <div class="ow-row"><span class="k">会計ソフト</span><span class="v" style="font-weight:400;color:var(--sub)">freee に起票</span></div>
+          </div>
+        </div>`;
+      document.getElementById("ctabar").style.display = "";
+      bindForm();
+      recalc();
+    }
+
+    function bindForm(){
+      document.getElementById("f_vendor").addEventListener("input", e => state.vendor = e.target.value);
+      document.getElementById("f_items").addEventListener("input", e => state.items = e.target.value);
+      document.getElementById("f_subtotal").addEventListener("input", e => { state.subtotal = Number(e.target.value)||0; recalc(); });
+      document.getElementById("f_acct").addEventListener("change", e => state.account_item = e.target.value);
+      document.querySelectorAll("#f_rate .ow-chip").forEach(c => c.addEventListener("click", () => {
+        document.querySelectorAll("#f_rate .ow-chip").forEach(x => x.classList.remove("on"));
+        c.classList.add("on"); state.tax_rate = Number(c.dataset.rate); recalc();
+      }));
+      document.getElementById("submit").addEventListener("click", submit);
+    }
+
+    function recalc(){
+      const tax = Math.round(state.subtotal * state.tax_rate);
+      const total = state.subtotal + tax;
+      const pct = Math.round(state.tax_rate*100);
+      document.getElementById("s_sub").textContent = yen(state.subtotal);
+      document.getElementById("s_taxlbl").textContent = `消費税（${state.tax_rate===0.08?"軽減":"標準"}${pct}%）`;
+      document.getElementById("s_tax").textContent = yen(tax);
+      document.getElementById("s_total").textContent = yen(total);
+    }
+
+    function submit(){
+      const tax = Math.round(state.subtotal * state.tax_rate);
+      const total = state.subtotal + tax;
+      // LIFF実機: ユーザー発言として送信 → botが完了Flexをreply（Phase D0のLIFF ID登録後に有効）
+      if (inLiff && window.liff && liff.sendMessages){
+        liff.sendMessages([{ type:"text", text:`🧾 この内容で請求書を登録します（${state.vendor} / ${yen(total)}）` }])
+          .then(()=> liff.closeWindow())
+          .catch(()=> showDone(total));
+      } else {
+        showDone(total);
+      }
+    }
+
+    function showDone(total){
+      document.getElementById("ctabar").style.display = "none";
+      document.getElementById("app").innerHTML = `
+        <div class="ok-mark">
+          <div class="circle">✓</div>
+          <h2>この内容で登録しました</h2>
+          <p>${state.vendor}／${yen(total)}<br>
+          freee に起票し、Google Drive（${DATA.invoice.extracted.drive_folder}）へ保存しました。<br>
+          月末の支払一覧にも自動で反映されます。</p>
+          <div style="margin-top:28px"><a class="ow-btn sub" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;padding:12px 22px">🔍 あなたのお店の数字で見る（無料診断）</a></div>
+        </div>`;
+    }
+
+    boot();
+  </script>
+</body>
+</html>
