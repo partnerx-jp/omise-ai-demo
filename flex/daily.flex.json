@@ -3,7 +3,7 @@
   "altText": "昨日の売上 ¥690,520（前日比+5.4%）｜全店。タップで詳細レポート",
   "contents": {
     "type": "bubble",
-    "size": "mega",
+    "size": "kilo",
     "body": {
       "type": "box",
       "layout": "vertical",
@@ -14,20 +14,65 @@
           "type": "box",
           "layout": "baseline",
           "contents": [
-            { "type": "text", "text": "昨日の売上実績", "size": "md", "weight": "bold", "color": "#1A1A1A", "flex": 0 },
-            { "type": "text", "text": "7/13", "size": "xs", "color": "#9AA0A6", "margin": "sm", "flex": 0 }
+            {
+              "type": "text",
+              "text": "昨日の売上実績",
+              "size": "md",
+              "weight": "bold",
+              "color": "#1A1A1A",
+              "flex": 0
+            },
+            {
+              "type": "text",
+              "text": "7月13日",
+              "size": "xs",
+              "color": "#9AA0A6",
+              "margin": "sm",
+              "flex": 0
+            }
           ]
         },
-        { "type": "text", "text": "ベーカリーこむぎ堂・全店", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
-        { "type": "separator", "margin": "md", "color": "#ECECEC" },
-        { "type": "text", "text": "純売上（税抜）", "size": "xs", "color": "#9AA0A6", "margin": "md" },
+        {
+          "type": "text",
+          "text": "ベーカリーこむぎ堂・全店",
+          "size": "xxs",
+          "color": "#9AA0A6",
+          "margin": "xs"
+        },
+        {
+          "type": "separator",
+          "margin": "md",
+          "color": "#ECECEC"
+        },
+        {
+          "type": "text",
+          "text": "純売上（税抜）",
+          "size": "xs",
+          "color": "#9AA0A6",
+          "margin": "md"
+        },
         {
           "type": "box",
           "layout": "horizontal",
           "margin": "xs",
           "contents": [
-            { "type": "text", "text": "¥690,520", "size": "xxl", "weight": "bold", "color": "#00A0E9", "flex": 0 },
-            { "type": "text", "text": "+5.4%↑", "size": "sm", "weight": "bold", "color": "#5AAE43", "align": "end", "gravity": "bottom" }
+            {
+              "type": "text",
+              "text": "¥690,520",
+              "size": "xxl",
+              "weight": "bold",
+              "color": "#00A0E9",
+              "flex": 0
+            },
+            {
+              "type": "text",
+              "text": "+5.4%↑",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#5AAE43",
+              "align": "end",
+              "gravity": "bottom"
+            }
           ]
         },
         {
@@ -43,8 +88,19 @@
               "cornerRadius": "8px",
               "paddingAll": "9px",
               "contents": [
-                { "type": "text", "text": "客数", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "747人", "size": "sm", "weight": "bold", "color": "#1A1A1A" }
+                {
+                  "type": "text",
+                  "text": "客数",
+                  "size": "xxs",
+                  "color": "#9AA0A6"
+                },
+                {
+                  "type": "text",
+                  "text": "747人",
+                  "size": "sm",
+                  "weight": "bold",
+                  "color": "#1A1A1A"
+                }
               ]
             },
             {
@@ -54,8 +110,19 @@
               "cornerRadius": "8px",
               "paddingAll": "9px",
               "contents": [
-                { "type": "text", "text": "客単価", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "¥924", "size": "sm", "weight": "bold", "color": "#1A1A1A" }
+                {
+                  "type": "text",
+                  "text": "客単価",
+                  "size": "xxs",
+                  "color": "#9AA0A6"
+                },
+                {
+                  "type": "text",
+                  "text": "¥924",
+                  "size": "sm",
+                  "weight": "bold",
+                  "color": "#1A1A1A"
+                }
               ]
             }
           ]
@@ -65,8 +132,20 @@
           "layout": "horizontal",
           "margin": "lg",
           "contents": [
-            { "type": "text", "text": "今月の目標 達成率", "size": "xxs", "color": "#9AA0A6", "flex": 0 },
-            { "type": "text", "text": "78%", "size": "xxs", "color": "#5C6169", "align": "end" }
+            {
+              "type": "text",
+              "text": "今月の目標 達成率",
+              "size": "xxs",
+              "color": "#9AA0A6",
+              "flex": 0
+            },
+            {
+              "type": "text",
+              "text": "78%",
+              "size": "xxs",
+              "color": "#5C6169",
+              "align": "end"
+            }
           ]
         },
         {
@@ -83,7 +162,12 @@
               "backgroundColor": "#00A0E9",
               "cornerRadius": "10px",
               "width": "78%",
-              "contents": [ { "type": "filler" } ]
+              "contents": [
+                {
+                  "type": "filler"
+                }
+              ],
+              "height": "20px"
             }
           ]
         }
@@ -100,7 +184,11 @@
           "style": "primary",
           "color": "#06C755",
           "height": "sm",
-          "action": { "type": "uri", "label": "売上実績の詳細を見る", "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/daily/" }
+          "action": {
+            "type": "uri",
+            "label": "売上実績の詳細を見る",
+            "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/daily/"
+          }
         }
       ]
     }
