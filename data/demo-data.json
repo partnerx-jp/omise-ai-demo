@@ -572,6 +572,23 @@
         2.2,
         1.8
       ]
+    },
+    "segment_daypart": {
+      "morning": {
+        "new_repeat": -6,
+        "gender": 6,
+        "nationality": 4
+      },
+      "lunch": {
+        "new_repeat": -1,
+        "gender": 2,
+        "nationality": 1
+      },
+      "cafe": {
+        "new_repeat": 10,
+        "gender": -8,
+        "nationality": -8
+      }
     }
   },
   "monthly_report": {
