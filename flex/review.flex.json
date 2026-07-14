@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "⭐ 難波店に新しい口コミ（★3）が届きました。返信文面案を編集・確認できます",
+  "altText": "難波店に新しい口コミ（★3）が届きました。返信文面案を編集・確認できます",
   "contents": {
     "type": "bubble",
     "size": "kilo",
@@ -9,7 +9,7 @@
       "contents": [
         { "type": "box", "layout": "vertical", "paddingStart": "16px", "paddingEnd": "16px", "paddingTop": "14px", "paddingBottom": "12px", "contents": [
           { "type": "text", "text": "{{date_ja}}", "size": "xs", "color": "#888888" },
-          { "type": "text", "text": "⭐ 新しい口コミが届きました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm" },
+          { "type": "text", "text": "新しい口コミが届きました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm" },
           { "type": "text", "text": "Google マップ｜難波店｜17:24", "size": "xxs", "color": "#888888", "margin": "sm" }
         ]},
         { "type": "separator", "color": "#E7E7E7" },
