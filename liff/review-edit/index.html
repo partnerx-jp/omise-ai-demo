@@ -105,10 +105,10 @@
 
     // トークに出す完了カード（Flex）。テキストではなくFlexで送るのでbotの既定応答を誘発しない。
     function completionFlex(){
-      return { type:"flex", altText:"この内容で口コミを返信しました", contents:{
+      return { type:"flex", altText:"口コミの返信を完了しました", contents:{
         type:"bubble", size:"kilo",
         body:{ type:"box", layout:"vertical", paddingAll:"18px", spacing:"sm", contents:[
-          { type:"text", text:"この内容で口コミを返信しました", weight:"bold", size:"md", color:"#2F9E44", wrap:true },
+          { type:"text", text:"口コミの返信を完了しました", weight:"bold", size:"md", color:"#2F9E44", wrap:true },
           { type:"text", text:"Google マップ｜難波店｜T.K さんの口コミへ返信を投稿しました。", size:"xxs", color:"#888888", wrap:true },
           { type:"separator", margin:"md", color:"#E7E7E7" },
           { type:"box", layout:"vertical", backgroundColor:"#F5F7F8", cornerRadius:"10px", paddingAll:"12px", margin:"md", contents:[
@@ -140,7 +140,7 @@
       document.getElementById("app").innerHTML = `
         <div class="ok-mark">
           <div class="circle">✓</div>
-          <h2>この内容で口コミを返信しました</h2>
+          <h2>口コミの返信を完了しました</h2>
           <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Google マップ｜${esc(REVIEW.store)}｜${esc(REVIEW.reviewer)} さんの口コミへ返信を投稿しました。</p>
           <div style="background:var(--info-bg);border-radius:10px;padding:12px 14px;text-align:left;font-size:12.5px;line-height:1.8;color:#444;white-space:pre-wrap">${esc(state.reply)}</div>
           <div style="margin-top:24px"><a class="ow-btn" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;font-size:14px;padding:12px 20px;background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">あなたのお店でお試し（無料相談）</a></div>
