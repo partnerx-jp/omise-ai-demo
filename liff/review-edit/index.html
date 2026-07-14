@@ -42,10 +42,12 @@
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    // LIFF_ID を登録後にここへ設定すると「送信→LINEを閉じる→botが完了カードを返信」になる。
+    // LIFF_ID を登録後にここへ設定すると「投稿→トークに完了カードが出て自動で閉じる」になる。
     // 空のままでも動作（この画面内に完了表示＋CTAを出すフォールバック）。
     const LIFF_ID = "";
+    const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
     const SHINDAN = "../shindan/";
+    const SHINDAN_ABS = PAGES + "/liff/shindan/";
     const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     let inLiff = false;
 
@@ -101,11 +103,27 @@
       document.getElementById("ctabar").style.display = "";
     }
 
+    // トークに出す完了カード（Flex）。テキストではなくFlexで送るのでbotの既定応答を誘発しない。
+    function completionFlex(){
+      return { type:"flex", altText:"この内容で口コミを返信しました", contents:{
+        type:"bubble", size:"kilo",
+        body:{ type:"box", layout:"vertical", paddingAll:"18px", spacing:"sm", contents:[
+          { type:"text", text:"✅ この内容で口コミを返信しました", weight:"bold", size:"md", color:"#2F9E44", wrap:true },
+          { type:"text", text:"Google マップ｜難波店｜T.K さんの口コミへ返信を投稿しました。", size:"xxs", color:"#888888", wrap:true },
+          { type:"separator", margin:"md", color:"#E7E7E7" },
+          { type:"text", text:"承認した文面だけが公開されます。返信率・評価の推移もまとめてレポートします。", size:"xs", color:"#444444", wrap:true, margin:"md" }
+        ]},
+        footer:{ type:"box", layout:"vertical", paddingAll:"12px", contents:[
+          { type:"button", style:"primary", color:"#06C755", height:"sm", action:{ type:"uri", label:"あなたのお店でお試し（無料相談）", uri: SHINDAN_ABS } }
+        ]}
+      }};
+    }
+
     function submit(){
       if (!state.reply.trim()) { return; }
-      // 実機LIFF: ユーザー発言として送信 → LINEを閉じる → botが完了カードを返信
+      // 実機LIFF: 完了カードをトークへ送信 → LIFFを自動で閉じる → 通常トーク画面に戻る
       if (inLiff && window.liff && liff.sendMessages){
-        liff.sendMessages([{ type:"text", text:"この内容で口コミに返信します" }])
+        liff.sendMessages([ completionFlex() ])
           .then(()=> liff.closeWindow())
           .catch(()=> showDone());
       } else {
