@@ -72,6 +72,7 @@
       if (scope==="all"){ const t=dr.total; net=t.net_sales; cust=t.customers; avg=t.avg_spend; vd=t.vs_prev_day; }
       else { const b=dr.by_store.find(x=>x.store===scope); net=b.net_sales; cust=b.customers; avg=b.avg_spend; vd=b.vs_prev_day; }
       const hours = scope==="all" ? sumHourly(dr.hourly_sales) : dr.hourly_sales[scope].map(h=>({hour:h.hour,sales:h.sales}));
+      const ratio = net / dr.total.net_sales;   // 店舗の売上シェアで各セクションを連動
 
       let h = `<div class="ow-wrap">`;
       h += `<div class="ow-card">
@@ -86,23 +87,27 @@
           <div><div class="l">客単価</div><div class="v">${yen(avg)}</div></div>
         </div></div>`;
       h += `<div class="ow-card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
-      const tp = dr.top_products, mx = Math.max(...tp.map(p=>p.sales));
-      h += `<div class="ow-card"><h2>売れ筋 TOP5${scope==="all"?"":"（全店）"}</h2>` +
+      const tp = dr.top_products.map(p=>({...p, qty: Math.round(p.qty*ratio), sales: Math.round(p.sales*ratio)})), mx = Math.max(...tp.map(p=>p.sales));
+      h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` +
         tp.map(p=>`<div class="rankrow"><div class="rk">${p.rank}</div>
           <div class="nm">${p.name} <small class="${p.vs_prev>=0?'ow-up':'ow-down'}">${p.vs_prev>=0?'+':''}${p.vs_prev}${arrow(p.vs_prev)}</small>
             <div class="ow-bar"><i style="width:${Math.round(p.sales/mx*100)}%"></i></div></div>
           <div class="qty">${p.qty}個</div><div class="amt">${yen(p.sales)}</div></div>`).join("") + `</div>`;
-      h += `<div class="ow-card"><h2>直近7日間の全店売上</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
+      const week = dr.last7days.map(r=>({dow:r.dow, sales: Math.round(r.sales*ratio)}));
+      h += `<div class="ow-card"><h2>直近7日間の売上${scope==="all"?"（全店）":""}</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
       const mp = dr.month_progress;
+      const cum = Math.round(mp.cum_sales*ratio);
+      const vsT = scope==="all" ? mp.vs_target : (dr.store_month_vs_target && dr.store_month_vs_target[scope]!=null ? dr.store_month_vs_target[scope] : mp.vs_target);
       h += `<div class="ow-card"><h2>今月の進捗（経過${mp.elapsed_days}日）</h2>
-        <div class="ow-prog"><i style="width:${Math.min(mp.cum_sales/mp.cum_target*100,100)}%"></i></div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ${yen(mp.cum_sales)}</span><span class="${mp.vs_target>=0?'ow-up':'ow-down'}">目標比 ${pct(mp.vs_target)}</span></div></div>`;
+        <div class="ow-prog"><i style="width:${Math.min((1+vsT)*100,100)}%"></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ${yen(cum)}</span><span class="${vsT>=0?'ow-up':'ow-down'}">目標比 ${pct(vsT)}</span></div></div>`;
       if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store))
         h += `<div class="ow-card"><div class="ow-warn">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div></div>`;
-      h += `<div class="ow-card"><div class="ow-ai"><b>💬 AIのひとこと</b><br>${dr.ai_comment}</div></div>`;
+      const ai = scope==="all" ? dr.ai_comment : (dr.store_comment && dr.store_comment[scope] ? dr.store_comment[scope] : dr.ai_comment);
+      h += `<div class="ow-card"><div class="ow-ai"><b>💬 AIのひとこと</b><br>${ai}</div></div>`;
       h += `</div>`;
       document.getElementById("app").innerHTML = h;
-      drawHourly(hours); drawWeek(dr.last7days);
+      drawHourly(hours); drawWeek(week);
     }
 
     function sumHourly(hs){ const m={}; Object.values(hs).forEach(a=>a.forEach(x=>m[x.hour]=(m[x.hour]||0)+x.sales));
