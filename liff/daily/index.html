@@ -5,7 +5,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://partnerx-jp.github.io https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
   <link rel="stylesheet" href="../shared.css">
   <title>日次実績レポート｜お店AI</title>
   <style>
@@ -60,8 +60,10 @@
 
     async function boot(){
       try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
-      try { const r = await fetch("../../data/demo-data.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); }
-      catch(e){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${e.message}）</div>`; return; }
+      const SRC = ["../../data/demo-data.json", "https://partnerx-jp.github.io/omise-ai-demo/data/demo-data.json"];
+      let lastErr;
+      for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); lastErr=null; break; } catch(e){ lastErr=e; } }
+      if (!DATA){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${lastErr&&lastErr.message}）</div>`; return; }
       const dr = DATA.daily_report;
       document.getElementById("ttl").innerHTML = `昨日の実績<span class="ttl-date">${mdLabel(dr.date_offset)}</span>`;
       document.getElementById("sub").textContent = DATA.company.brand;
