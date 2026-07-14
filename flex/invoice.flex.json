@@ -11,7 +11,7 @@
       "size": "kilo",
       "hero": {
         "type": "image",
-        "url": "{{invoice_image_url}}",
+        "url": "https://partnerx-jp.github.io/omise-ai-demo/assets/invoice-sample.png",
         "size": "full",
         "aspectRatio": "1000:1414",
         "aspectMode": "fit",
@@ -47,7 +47,7 @@
       "footer": {
         "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px", "paddingTop": "4px",
         "contents": [
-          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "{{liff_invoice_url}}" } },
+          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "https://liff.line.me/2010700075-z7KIjDGr" } },
           { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "postback", "label": "この内容で登録", "data": "demo=invoice&act=done", "displayText": "この内容で登録" } }
         ]
       }
