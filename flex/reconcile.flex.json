@@ -1,31 +1,814 @@
 {
   "type": "flex",
-  "altText": "{{date}} 売上照合：POS ¥745,762 と入金実績が一致（差異¥0）",
+  "altText": "{{date}} 売上照合：梅田店は一致、心斎橋店・難波店で差異あり（要確認）",
   "contents": {
     "type": "bubble",
     "size": "kilo",
     "body": {
-      "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
+      "type": "box",
+      "layout": "vertical",
+      "paddingAll": "16px",
+      "spacing": "none",
       "contents": [
-        { "type": "text", "text": "{{date}}", "size": "xs", "color": "#9AA0A6" },
-        { "type": "text", "text": "売上照合チェック", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "xs" },
-        { "type": "text", "text": "ベーカリーこむぎ堂・全店（税込）", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
-        { "type": "separator", "margin": "md", "color": "#ECECEC" },
-        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "POS売上（税込）", "size": "sm", "color": "#9AA0A6", "flex": 5, "gravity": "center" }, { "type": "text", "text": "¥745,762", "size": "lg", "weight": "bold", "color": "#00A0E9", "align": "end", "flex": 5, "gravity": "center" } ]},
-        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "現金", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "¥223,700", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 4 }, { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "align": "end", "flex": 2 } ]},
-        { "type": "box", "layout": "horizontal", "margin": "sm", "contents": [ { "type": "text", "text": "クレジット", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "¥318,900", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 4 }, { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "align": "end", "flex": 2 } ]},
-        { "type": "box", "layout": "horizontal", "margin": "sm", "contents": [ { "type": "text", "text": "QR・電子マネー", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "¥203,162", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 4 }, { "type": "text", "text": "✓", "size": "sm", "color": "#5AAE43", "weight": "bold", "align": "end", "flex": 2 } ]},
-        { "type": "separator", "margin": "lg", "color": "#ECECEC" },
-        { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "差異", "size": "sm", "weight": "bold", "color": "#1A1A1A", "flex": 4 }, { "type": "text", "text": "¥0 一致", "size": "sm", "weight": "bold", "color": "#5AAE43", "align": "end", "flex": 6 } ]},
-        { "type": "box", "layout": "vertical", "margin": "lg", "paddingAll": "12px", "backgroundColor": "#F5F7F8", "cornerRadius": "8px", "contents": [
-          { "type": "text", "text": "気づき：心斎橋店 14時台に返品1件（¥480）を検知。売上に正しく反映済みです。", "size": "xs", "color": "#5C6169", "wrap": true }
-        ]}
+        {
+          "type": "text",
+          "text": "{{date}}",
+          "size": "xs",
+          "color": "#9AA0A6"
+        },
+        {
+          "type": "text",
+          "text": "売上照合チェック",
+          "size": "md",
+          "weight": "bold",
+          "color": "#1A1A1A",
+          "margin": "xs"
+        },
+        {
+          "type": "text",
+          "text": "ベーカリーこむぎ堂",
+          "size": "xxs",
+          "color": "#9AA0A6",
+          "margin": "xs"
+        },
+        {
+          "type": "text",
+          "text": "心斎橋店・難波店で差異を検知（要確認）",
+          "size": "xxs",
+          "color": "#C77700",
+          "weight": "bold",
+          "margin": "xs"
+        },
+        {
+          "type": "separator",
+          "margin": "md",
+          "color": "#ECECEC"
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "梅田店",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#1A1A1A",
+              "flex": 5,
+              "gravity": "center"
+            },
+            {
+              "type": "text",
+              "text": "¥298,300",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#00A0E9",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "現金",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥86,800",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "クレジット",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥130,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "電子マネー",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥48,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "コード決済",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥32,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "その他",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥1,500",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "差異",
+              "size": "xs",
+              "color": "#9AA0A6",
+              "flex": 3,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "¥0 一致",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#5AAE43",
+              "align": "end",
+              "flex": 7,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "separator",
+          "margin": "xl",
+          "color": "#ECECEC"
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "xl",
+          "contents": [
+            {
+              "type": "text",
+              "text": "心斎橋店",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#1A1A1A",
+              "flex": 5,
+              "gravity": "center"
+            },
+            {
+              "type": "text",
+              "text": "¥265,140",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#00A0E9",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "現金",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥83,140",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "⚠️",
+              "size": "sm",
+              "color": "#C77700",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "クレジット",
+              "size": "sm",
+              "color": "#C77700",
+              "weight": "bold",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥110,000",
+              "size": "sm",
+              "color": "#C77700",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "電子マネー",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥43,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "コード決済",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥28,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "その他",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥1,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "差異",
+              "size": "xs",
+              "color": "#9AA0A6",
+              "flex": 3,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "＋¥2,400（要確認）",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#C77700",
+              "align": "end",
+              "flex": 7,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "md",
+          "paddingAll": "10px",
+          "backgroundColor": "#FFF7E8",
+          "cornerRadius": "8px",
+          "contents": [
+            {
+              "type": "text",
+              "text": "⚠️ レジと決済端末で取引件数が一致せず、クレジットが¥2,400多い状態です。決済端末では販売処理が完了していますが、通信エラー等でレジ側に取引が連携されていない可能性があります。該当取引の有無をご確認ください。",
+              "size": "xxs",
+              "color": "#9A6A00",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "separator",
+          "margin": "xl",
+          "color": "#ECECEC"
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "xl",
+          "contents": [
+            {
+              "type": "text",
+              "text": "難波店",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#1A1A1A",
+              "flex": 5,
+              "gravity": "center"
+            },
+            {
+              "type": "text",
+              "text": "¥182,322",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#00A0E9",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "⚠️",
+              "size": "sm",
+              "color": "#C77700",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "現金",
+              "size": "sm",
+              "color": "#C77700",
+              "weight": "bold",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥53,760",
+              "size": "sm",
+              "color": "#C77700",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "クレジット",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥78,900",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "電子マネー",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥30,000",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "コード決済",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥18,900",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "✓",
+              "size": "sm",
+              "color": "#5AAE43",
+              "weight": "bold",
+              "flex": 0,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "その他",
+              "size": "sm",
+              "color": "#5C6169",
+              "weight": "regular",
+              "flex": 5,
+              "gravity": "center",
+              "margin": "xs"
+            },
+            {
+              "type": "text",
+              "text": "¥762",
+              "size": "sm",
+              "color": "#1A1A1A",
+              "align": "end",
+              "flex": 5,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "差異",
+              "size": "xs",
+              "color": "#9AA0A6",
+              "flex": 3,
+              "gravity": "center",
+              "margin": "md"
+            },
+            {
+              "type": "text",
+              "text": "−¥2,000（要確認）",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#C77700",
+              "align": "end",
+              "flex": 7,
+              "gravity": "center"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "md",
+          "paddingAll": "10px",
+          "backgroundColor": "#FFF7E8",
+          "cornerRadius": "8px",
+          "contents": [
+            {
+              "type": "text",
+              "text": "⚠️ 現金が¥2,000不足しています。レジの精算（点検）にズレはないため、釣銭準備金やキャッシュドロワーに¥2,000が残っていないか、入出金の記録もあわせてご確認ください。",
+              "size": "xxs",
+              "color": "#9A6A00",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "separator",
+          "margin": "xl",
+          "color": "#ECECEC"
+        }
       ]
     },
     "footer": {
-      "type": "box", "layout": "vertical", "paddingAll": "12px", "paddingTop": "4px",
+      "type": "box",
+      "layout": "vertical",
+      "paddingAll": "12px",
+      "paddingTop": "4px",
       "contents": [
-        { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "postback", "label": "このレジ締めを承認", "data": "demo=reconcile&act=done", "displayText": "このレジ締めを承認" } }
+        {
+          "type": "button",
+          "style": "primary",
+          "color": "#06C755",
+          "height": "sm",
+          "adjustMode": "shrink-to-fit",
+          "action": {
+            "type": "uri",
+            "label": "あなたのお店でお試し（無料相談）",
+            "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/shindan/"
+          }
+        }
       ]
     }
   }
