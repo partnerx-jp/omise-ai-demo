@@ -32,12 +32,12 @@
 </head>
 <body class="ow-hasbottom">
   <div class="ow-header">
-    <div class="ttl">昨日の実績</div>
+    <div class="ttl" id="ttl">昨日の実績</div>
     <div class="sub" id="sub">読み込み中…</div>
   </div>
   <div class="ow-tabs" id="tabs"></div>
   <div id="app"><div class="ow-loading">読み込み中…</div></div>
-  <div class="ow-cta"><button class="ow-btn" id="cta">🔍 あなたのお店の数字で見る（無料診断）</button></div>
+  <div class="ow-cta"><button class="ow-btn" id="cta" style="background:#BC562B;border-color:#BC562B;color:#fff;box-shadow:none">あなたのお店でお試し（無料相談）</button></div>
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script src="../vendor/chart.umd.min.js"></script>
@@ -55,12 +55,14 @@
     let DATA, charts = {};
 
     function dLabel(off){ const d=new Date(); d.setDate(d.getDate()+(off||-1)); return `${d.getMonth()+1}/${d.getDate()}(${WD[d.getDay()]})`; }
+    function mdLabel(off){ const d=new Date(); d.setDate(d.getDate()+(off||-1)); return `${d.getMonth()+1}/${d.getDate()}`; }
 
     async function boot(){
       try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
       try { const r = await fetch("../../data/demo-data.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); }
       catch(e){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${e.message}）</div>`; return; }
       const dr = DATA.daily_report;
+      document.getElementById("ttl").textContent = `昨日の実績（${mdLabel(dr.date_offset)}）`;
       document.getElementById("sub").textContent = `${dLabel(dr.date_offset)} ・ ${DATA.company.brand}`;
       buildTabs();
       render("all");
