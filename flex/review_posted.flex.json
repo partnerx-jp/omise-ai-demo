@@ -1,0 +1,16 @@
+{
+  "type": "flex",
+  "altText": "✅ Googleマップに返信を投稿しました",
+  "contents": {
+    "type": "bubble",
+    "size": "kilo",
+    "body": {
+      "type": "box", "layout": "vertical", "paddingAll": "18px", "spacing": "sm", "contents": [
+        { "type": "text", "text": "✅ 返信を投稿しました", "size": "md", "weight": "bold", "color": "#2F9E44" },
+        { "type": "text", "text": "Google マップ｜難波店｜T.K さんの口コミへ返信済み", "size": "xxs", "color": "#888888", "wrap": true },
+        { "type": "separator", "color": "#E7E7E7", "margin": "md" },
+        { "type": "text", "text": "承認された返信だけが投稿されます。文面の調整や却下もワンタップ。大事な操作は必ずあなたの承認を通して進みます。", "size": "xs", "color": "#444444", "wrap": true, "margin": "md" }
+      ]
+    }
+  }
+}

@@ -1,33 +1,39 @@
 {
   "type": "flex",
-  "altText": "⭐ 難波店に新しい口コミ（★3）とAI返信案が届きました",
+  "altText": "⭐ 難波店に新しい口コミ（★3）が届きました。AI返信案を確認して承認できます",
   "contents": {
     "type": "bubble",
-    "size": "mega",
-    "header": {
-      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
-      "contents": [
-        { "type": "text", "text": "⭐ 新しい口コミが届きました", "color": "#ffffff", "weight": "bold", "size": "md" },
-        { "type": "text", "text": "Google マップ ・ 難波店 ・ 1時間前", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
-      ]
-    },
+    "size": "kilo",
     "body": {
-      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "0px",
       "contents": [
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "★★★☆☆ 3.0", "size": "sm", "color": "#e6a817", "flex": 5 }, { "type": "text", "text": "T.K さん", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 5 } ]},
-        { "type": "text", "text": "「クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。」", "size": "sm", "color": "#333333", "wrap": true, "margin": "sm" },
-        { "type": "separator", "margin": "md" },
-        { "type": "text", "text": "🤖 AIが返信文を用意しました", "size": "xs", "color": "#2E7D32", "margin": "md", "weight": "bold" },
-        { "type": "box", "layout": "vertical", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "margin": "sm", "contents": [
-          { "type": "text", "text": "T.K様、ご投稿ありがとうございます。クロワッサンをお褒めいただき嬉しく思います。夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きも承っておりますので、ぜひご利用ください。 難波店 店長 花岡", "size": "xs", "color": "#555555", "wrap": true }
+        { "type": "box", "layout": "vertical", "paddingStart": "16px", "paddingEnd": "16px", "paddingTop": "14px", "paddingBottom": "12px", "contents": [
+          { "type": "text", "text": "{{date_ja}}", "size": "xs", "color": "#888888" },
+          { "type": "text", "text": "⭐ 新しい口コミが届きました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm" },
+          { "type": "text", "text": "Google マップ｜難波店｜1時間前", "size": "xxs", "color": "#888888", "margin": "sm" }
         ]},
-        { "type": "text", "text": "💬 感謝＋お詫び＋次回来店の導線（2回目焼成・取り置き）まで入った返信を自動生成。ワンタップで投稿できます。", "size": "xs", "color": "#8c8c8c", "wrap": true, "margin": "md" }
+        { "type": "separator", "color": "#E7E7E7" },
+        { "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none", "contents": [
+          { "type": "box", "layout": "horizontal", "alignItems": "center", "contents": [
+            { "type": "text", "text": "★★★☆☆", "size": "md", "color": "#F5A623", "flex": 0 },
+            { "type": "text", "text": "3.0", "size": "sm", "weight": "bold", "color": "#333333", "margin": "sm", "flex": 0 },
+            { "type": "text", "text": "T.K さん", "size": "xs", "color": "#888888", "align": "end", "gravity": "center" }
+          ]},
+          { "type": "text", "text": "クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。", "size": "sm", "color": "#333333", "wrap": true, "margin": "md" },
+          { "type": "text", "text": "🤖 AIが返信文を用意しました", "size": "xs", "color": "#06C755", "weight": "bold", "margin": "lg" },
+          { "type": "box", "layout": "vertical", "backgroundColor": "#F5F7F8", "cornerRadius": "10px", "paddingAll": "12px", "margin": "sm", "contents": [
+            { "type": "text", "text": "T.K様、ご投稿ありがとうございます。クロワッサンをお褒めいただき嬉しく思います。夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きも承っておりますので、ぜひご利用ください。", "size": "xs", "color": "#444444", "wrap": true },
+            { "type": "text", "text": "難波店 店長 花岡", "size": "xxs", "color": "#888888", "align": "end", "margin": "md" }
+          ]},
+          { "type": "text", "text": "💬 感謝＋お詫び＋次回来店の導線（2回目焼成・取り置き）まで自動で作成。内容を確認して承認するだけで投稿できます。", "size": "xxs", "color": "#888888", "wrap": true, "margin": "md" }
+        ]}
       ]
     },
     "footer": {
-      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "type": "box", "layout": "vertical", "spacing": "sm", "paddingStart": "16px", "paddingEnd": "16px", "paddingBottom": "14px", "paddingTop": "0px",
       "contents": [
-        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+        { "type": "button", "style": "secondary", "height": "sm", "color": "#EAF7EE", "action": { "type": "postback", "label": "承認して投稿", "data": "demo=review&act=posted", "displayText": "この返信で承認します" } },
+        { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "uri", "label": "あなたのお店でお試し（無料相談）", "uri": "{{liff_shindan_url}}" } }
       ]
     }
   }
