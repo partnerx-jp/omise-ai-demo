@@ -331,7 +331,13 @@
       "elapsed_days": 8,
       "cum_sales": 5480000,
       "cum_target": 5525000,
-      "vs_target": -0.008
+      "vs_target": -0.008,
+      "achievement": 0.78,
+      "store_achievement": {
+        "umeda": 0.84,
+        "shinsaibashi": 0.75,
+        "namba": 0.66
+      }
     },
     "ai_comment": "全店とも前日比プラス。ただし難波店はクロワッサンが16時台に完売しており、夕方の機会損失が出ています。焼成の後ろ倒しで拾える可能性があります。",
     "store_comment": {
