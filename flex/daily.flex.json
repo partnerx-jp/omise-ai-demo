@@ -12,7 +12,7 @@
       "contents": [
         {
           "type": "text",
-          "text": "7月13日",
+          "text": "{{date_ja}}",
           "size": "xs",
           "color": "#9AA0A6"
         },
