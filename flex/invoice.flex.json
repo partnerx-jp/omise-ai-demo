@@ -1,7 +1,7 @@
 [
   {
     "type": "text",
-    "text": "例として、製粉会社からこんな請求書が届いたとします 👇\nこの画像をAIが読み取ります。"
+    "text": "例として、製粉会社からこんな請求書が届いたとします。\nこの画像をAIが読み取ります。"
   },
   {
     "type": "image",
@@ -14,39 +14,34 @@
   },
   {
     "type": "flex",
-    "altText": "🧾 請求書を読み取りました：株式会社ナニワ製粉 ¥133,920（この内容で登録できます）",
+    "altText": "請求書を読み取りました：株式会社ナニワ製粉 ¥133,920（この内容で登録できます）",
     "contents": {
       "type": "bubble",
       "size": "mega",
-      "header": {
-        "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
-        "contents": [
-          { "type": "text", "text": "🧾 請求書を読み取りました", "color": "#ffffff", "weight": "bold", "size": "md" },
-          { "type": "text", "text": "この内容で登録していいですか？", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
-        ]
-      },
       "body": {
-        "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+        "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
         "contents": [
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "取引先", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "株式会社ナニワ製粉", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "品目", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "強力粉 25kg×20袋 ほか", "size": "sm", "align": "end", "flex": 6, "wrap": true } ]},
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "税込金額", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "¥133,920", "size": "md", "weight": "bold", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
-          { "type": "separator", "margin": "md" },
-          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "税区分", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "軽減税率8%（食品仕入）", "size": "sm", "align": "end", "flex": 6 } ]},
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "勘定科目", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "仕入高（原材料）", "size": "sm", "align": "end", "flex": 6 } ]},
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "支払期日", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "2026/8/31", "size": "sm", "align": "end", "flex": 6 } ]},
-          { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "メモ", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "8月分 小麦粉仕入（3店舗共通）", "size": "sm", "align": "end", "flex": 6, "wrap": true } ]},
-          { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
-            { "type": "text", "text": "💬 AIが金額・税区分（軽減8%）・勘定科目まで判定しました。「登録」でfreee起票＋Google Drive保存（経理>請求書>2026年7月）まで自動で完了します。", "size": "xs", "color": "#555555", "wrap": true }
+          { "type": "text", "text": "請求書を読み取りました", "size": "md", "weight": "bold", "color": "#1A1A1A" },
+          { "type": "text", "text": "この内容で登録できます", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
+          { "type": "separator", "margin": "md", "color": "#ECECEC" },
+          { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "取引先", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "株式会社ナニワ製粉", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
+          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "品目", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "強力粉 25kg×20袋 ほか", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
+          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "税込金額", "size": "sm", "color": "#9AA0A6", "flex": 4, "gravity": "center" }, { "type": "text", "text": "¥133,920", "size": "lg", "weight": "bold", "color": "#00A0E9", "align": "end", "flex": 6, "gravity": "center" } ]},
+          { "type": "separator", "margin": "lg", "color": "#ECECEC" },
+          { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "税区分", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "軽減税率8%（食品仕入）", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
+          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "勘定科目", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "仕入高（原材料）", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
+          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "支払期日", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "2026/8/31", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
+          { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "メモ", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "8月分 小麦粉仕入（3店舗共通）", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
+          { "type": "box", "layout": "vertical", "margin": "lg", "paddingAll": "12px", "backgroundColor": "#F5F7F8", "cornerRadius": "8px", "contents": [
+            { "type": "text", "text": "AIが金額・税区分（軽減8%）・勘定科目まで判定しました。「登録」でfreee起票とGoogle Drive保存（経理>請求書>2026年7月）まで自動で完了します。", "size": "xs", "color": "#5C6169", "wrap": true }
           ]}
         ]
       },
       "footer": {
-        "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+        "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px", "paddingTop": "4px",
         "contents": [
-          { "type": "button", "style": "primary", "color": "#1DB446", "height": "sm", "action": { "type": "postback", "label": "✅ この内容で登録", "data": "demo=invoice&act=done", "displayText": "この内容で登録して" } },
-          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "✏️ 編集する", "uri": "{{liff_invoice_url}}" } },
-          { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{liff_shindan_url}}" } }
+          { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "postback", "label": "この内容で登録", "data": "demo=invoice&act=done", "displayText": "この内容で登録" } },
+          { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "{{liff_invoice_url}}" } }
         ]
       }
     }

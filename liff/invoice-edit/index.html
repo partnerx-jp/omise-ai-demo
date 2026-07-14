@@ -25,7 +25,7 @@
   </div>
   <div id="app"><div class="ow-loading">読み込み中…</div></div>
   <div class="ow-cta" id="ctabar" style="display:none">
-    <button class="ow-btn" id="submit" style="background:#1DB446;border:1.5px solid #17913A;box-shadow:0 3px 0 #17913A,0 4px 6px rgba(0,0,0,.16)">この内容で登録する</button>
+    <button class="ow-btn" id="submit" style="background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">この内容で登録する</button>
   </div>
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -138,7 +138,7 @@
           <p>${esc(state.vendor)}／${yen(state.total)}<br>
           freee に起票し、Google Drive（${esc(DATA.invoice.extracted.drive_folder)}）へ保存しました。<br>
           支払期日 ${jpDate(state.due_date)}・月末の支払一覧にも自動で反映されます。</p>
-          <div style="margin-top:28px"><a class="ow-btn sub" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;padding:12px 22px">🔍 あなたのお店の数字で見る（無料診断）</a></div>
+          <div style="margin-top:28px"><a class="ow-btn" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;padding:12px 22px;background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">あなたのお店でお試し（無料相談）</a></div>
         </div>`;
     }
 
