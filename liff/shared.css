@@ -64,7 +64,7 @@ body {
 .ow-scope { font-size: 13px; color: var(--sub); font-weight: 600; }
 .ow-hero-lbl { font-size: 12px; color: var(--sub); margin-top: 2px; }
 .ow-hero-main { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
-.ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; padding-left: .4em; }
+.ow-hero-val { font-size: 34px; font-weight: 500; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; padding-left: .4em; }
 .ow-hero-delta { text-align: right; }
 .ow-hero-delta .dl { display: block; font-size: 11px; color: var(--sub); }
 .ow-hero-delta .dv { display: block; font-size: 16px; font-weight: 700; margin-top: 1px; }
