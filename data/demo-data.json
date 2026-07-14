@@ -785,6 +785,12 @@
       "account_item": "仕入高（原材料）",
       "payment_method": "銀行振込",
       "memo": "8月分 小麦粉仕入（梅田・心斎橋・難波 3店舗共通）",
+      "line_items": [
+        { "name": "強力粉 25kg", "amount": 64000, "tax_rate": 0.08 },
+        { "name": "準強力粉 25kg", "amount": 30000, "tax_rate": 0.08 },
+        { "name": "全粒粉 5kg", "amount": 18000, "tax_rate": 0.08 },
+        { "name": "ライ麦粉 5kg", "amount": 12000, "tax_rate": 0.08 }
+      ],
       "drive_folder": "経理 > 請求書 > 2026年7月"
     },
     "account_item_options": [

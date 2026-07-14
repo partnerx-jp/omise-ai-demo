@@ -11,7 +11,22 @@
   <style>
     .ow-wrap { padding: 10px 16px; }
     .thumb { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm); display: block; }
-    .thumb-cap { font-size: 11px; color: var(--muted); margin: 6px 2px 0; }
+    /* 明細（品目ごと） */
+    .li { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+    .li .r1 { display: flex; gap: 8px; align-items: center; }
+    .li .r2 { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+    .li-name { flex: 1; }
+    .li-del { flex: 0 0 auto; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--sub); font-size: 18px; line-height: 1; }
+    .li-amt-wrap { display: flex; align-items: center; gap: 4px; }
+    .li-yen { color: var(--sub); font-size: 14px; }
+    .li-amt { width: 118px; }
+    .li-chips { gap: 6px; }
+    .li-chip { padding: 5px 12px; font-size: 12px; }
+    .addli { width: 100%; border: 1px dashed #C9CED3; border-radius: 8px; background: #fff; color: var(--brand-dark); padding: 11px; font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .addli:active { background: var(--brand-tint); }
+    .totalbox { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; background: #FAFBFC; }
+    .totalbox #f_total { font-size: 20px; font-weight: 700; color: var(--brand); }
+    .totalbox small { display: block; margin-top: 3px; font-size: 11px; color: var(--sub); }
     .ok-mark { text-align: center; padding: 40px 20px; }
     .ok-mark .circle { width: 64px; height: 64px; border-radius: 999px; background: #2E7D32; color: #fff; font-size: 34px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
     .ok-mark h2 { font-size: 18px; margin: 0 0 8px; color: var(--ink); }
@@ -20,7 +35,7 @@
 </head>
 <body class="ow-hasbottom">
   <div class="ow-header">
-    <div class="ttl">請求書の内容を編集</div>
+    <div class="ttl">請求書読み取り内容の修正</div>
     <div class="sub" id="sub">読み込み中…</div>
   </div>
   <div id="app"><div class="ow-loading">読み込み中…</div></div>
@@ -30,16 +45,14 @@
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    // LIFFアプリ登録後にIDを入れると liff.sendMessages() が有効化される（Phase D0ゲート）。
-    // 空のあいだはブラウザ/アプリ内プレビューとして完結表示する。
     const LIFF_ID = "2010700075-z7KIjDGr";
     const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
     const SHINDAN = "../shindan/";
     const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
-    // 2026-08-31 → 2026/8/31
     const jpDate = s => { if(!s) return ""; const [y,m,d]=s.split("-"); return `${Number(y)}/${Number(m)}/${Number(d)}`; };
-    let DATA, inLiff = false;
-    const state = { vendor:"", items:"", total:0, tax_rate:0.08, account_item:"", due_date:"", memo:"" };
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    let DATA, RATE_OPTS = [], inLiff = false;
+    const state = { vendor:"", items:[], account_item:"", due_date:"", memo:"" };
 
     async function boot(){
       try { if (LIFF_ID && window.liff) { await liff.init({liffId:LIFF_ID}); inLiff = liff.isInClient(); } } catch(e){}
@@ -48,25 +61,22 @@
       for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); lastErr=null; break; } catch(e){ lastErr=e; } }
       if (!DATA){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${lastErr&&lastErr.message}）</div>`; return; }
       const ex = DATA.invoice.extracted;
-      state.vendor = ex.vendor; state.items = ex.items; state.total = ex.total;
-      state.tax_rate = ex.tax_rate; state.account_item = ex.account_item;
-      state.due_date = ex.due_date; state.memo = ex.memo || "";
-      document.getElementById("sub").textContent = "AIが読み取った内容を確認・修正できます";
-      renderForm(DATA.invoice);
+      RATE_OPTS = DATA.invoice.tax_rate_options;
+      state.vendor = ex.vendor;
+      state.items = (ex.line_items || []).map(it => ({ name: it.name, amount: it.amount, tax_rate: it.tax_rate }));
+      state.account_item = ex.account_item;
+      state.due_date = ex.due_date;
+      state.memo = ex.memo || "";
+      document.getElementById("sub").textContent = "読み取った内容を確認・修正できます";
+      renderForm(ex);
     }
 
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-    function renderForm(iv){
-      const ex = iv.extracted;
-      const acctOpts = iv.account_item_options.map(o => `<option value="${esc(o)}"${o===state.account_item?" selected":""}>${esc(o)}</option>`).join("");
-      const rateChips = iv.tax_rate_options.map(o =>
-        `<span class="ow-chip${o.value===state.tax_rate?" on":""}" data-rate="${o.value}">${esc(o.label)}</span>`).join("");
+    function renderForm(ex){
+      const acctOpts = DATA.invoice.account_item_options.map(o => `<option value="${esc(o)}"${o===state.account_item?" selected":""}>${esc(o)}</option>`).join("");
       document.getElementById("app").innerHTML = `
         <div class="ow-wrap">
           <div class="ow-card" style="padding:12px">
             <img class="thumb" src="../../assets/invoice-sample.png" alt="読み取り元の請求書">
-            <div class="thumb-cap">読み取り元：${esc(ex.invoice_no)}（タップで拡大）</div>
           </div>
 
           <div class="ow-card">
@@ -74,18 +84,18 @@
               <label>取引先</label>
               <input class="ow-input" id="f_vendor" value="${esc(state.vendor)}">
             </div>
+
             <div class="ow-field">
-              <label>品目</label>
-              <input class="ow-input" id="f_items" value="${esc(state.items)}">
+              <label>品目（税区分は品目ごとに設定）</label>
+              <div id="f_items"></div>
+              <button class="addli" id="addItem">＋ 品目を追加</button>
             </div>
+
             <div class="ow-field">
-              <label>税込金額（円）</label>
-              <input class="ow-input" id="f_total" type="number" inputmode="numeric" value="${state.total}">
+              <label>税込金額（自動計算）</label>
+              <div class="totalbox"><span id="f_total">¥0</span><small id="f_breakdown"></small></div>
             </div>
-            <div class="ow-field">
-              <label>税区分</label>
-              <div class="ow-chips" id="f_rate">${rateChips}</div>
-            </div>
+
             <div class="ow-field">
               <label>勘定科目</label>
               <select class="ow-select" id="f_acct">${acctOpts}</select>
@@ -100,28 +110,66 @@
             </div>
           </div>
         </div>`;
-      document.getElementById("ctabar").style.display = "";
-      bindForm();
-    }
-
-    function bindForm(){
+      renderItems();
       document.getElementById("f_vendor").addEventListener("input", e => state.vendor = e.target.value);
-      document.getElementById("f_items").addEventListener("input", e => state.items = e.target.value);
-      document.getElementById("f_total").addEventListener("input", e => state.total = Number(e.target.value)||0);
       document.getElementById("f_acct").addEventListener("change", e => state.account_item = e.target.value);
       document.getElementById("f_due").addEventListener("change", e => state.due_date = e.target.value);
       document.getElementById("f_memo").addEventListener("input", e => state.memo = e.target.value);
-      document.querySelectorAll("#f_rate .ow-chip").forEach(c => c.addEventListener("click", () => {
-        document.querySelectorAll("#f_rate .ow-chip").forEach(x => x.classList.remove("on"));
-        c.classList.add("on"); state.tax_rate = Number(c.dataset.rate);
-      }));
+      document.getElementById("addItem").addEventListener("click", () => { state.items.push({ name:"", amount:0, tax_rate: (RATE_OPTS[0]||{value:0.08}).value }); renderItems(); });
       document.getElementById("submit").addEventListener("click", submit);
+      document.getElementById("ctabar").style.display = "";
+    }
+
+    function itemRowHTML(it, i){
+      const chips = RATE_OPTS.map(o => `<span class="ow-chip li-chip${o.value===it.tax_rate?" on":""}" data-i="${i}" data-rate="${o.value}">${esc(o.label)}</span>`).join("");
+      return `<div class="li">
+        <div class="r1">
+          <input class="ow-input li-name" data-i="${i}" value="${esc(it.name)}" placeholder="品目名">
+          <button class="li-del" data-i="${i}" aria-label="この品目を削除">×</button>
+        </div>
+        <div class="r2">
+          <div class="li-amt-wrap"><span class="li-yen">¥</span><input class="ow-input li-amt" data-i="${i}" type="number" inputmode="numeric" value="${it.amount}" placeholder="税抜金額"></div>
+          <div class="ow-chips li-chips">${chips}</div>
+        </div>
+      </div>`;
+    }
+
+    function renderItems(){
+      const box = document.getElementById("f_items");
+      box.innerHTML = state.items.map((it,i)=>itemRowHTML(it,i)).join("");
+      box.querySelectorAll(".li-name").forEach(el => el.addEventListener("input", e => { state.items[+e.target.dataset.i].name = e.target.value; }));
+      box.querySelectorAll(".li-amt").forEach(el => el.addEventListener("input", e => { state.items[+e.target.dataset.i].amount = Number(e.target.value)||0; recalc(); }));
+      box.querySelectorAll(".li-chip").forEach(el => el.addEventListener("click", e => {
+        const i = +e.target.dataset.i;
+        state.items[i].tax_rate = Number(e.target.dataset.rate);
+        e.target.parentElement.querySelectorAll(".li-chip").forEach(x => x.classList.remove("on"));
+        e.target.classList.add("on");
+        recalc();
+      }));
+      box.querySelectorAll(".li-del").forEach(el => el.addEventListener("click", e => {
+        if (state.items.length <= 1) return; // 最低1行は残す
+        state.items.splice(+e.target.dataset.i, 1);
+        renderItems();
+      }));
+      recalc();
+    }
+
+    function calcTotal(){
+      let sub=0, tax=0;
+      state.items.forEach(it => { const a=Number(it.amount)||0; sub+=a; tax+=Math.round(a*it.tax_rate); });
+      return { sub, tax, total: sub+tax };
+    }
+
+    function recalc(){
+      const { sub, tax, total } = calcTotal();
+      document.getElementById("f_total").textContent = yen(total);
+      document.getElementById("f_breakdown").textContent = `税抜 ${yen(sub)} ・ 消費税 ${yen(tax)}`;
     }
 
     function submit(){
-      // LIFF実機: ユーザー発言として送信 → botが完了Flexをreply（Phase D0のLIFF ID登録後に有効）
+      // LIFF実機: ユーザー発言として送信 → botが完了Flexをreply
       if (inLiff && window.liff && liff.sendMessages){
-        liff.sendMessages([{ type:"text", text:`この内容で請求書を登録します（${state.vendor} / ${yen(state.total)}）` }])
+        liff.sendMessages([{ type:"text", text:"この内容で請求書を登録します" }])
           .then(()=> liff.closeWindow())
           .catch(()=> showDone());
       } else {
@@ -130,12 +178,13 @@
     }
 
     function showDone(){
+      const { total } = calcTotal();
       document.getElementById("ctabar").style.display = "none";
       document.getElementById("app").innerHTML = `
         <div class="ok-mark">
           <div class="circle">✓</div>
           <h2>この内容で登録しました</h2>
-          <p>${esc(state.vendor)}／${yen(state.total)}<br>
+          <p>${esc(state.vendor)}／${yen(total)}<br>
           freee に起票し、Google Drive（${esc(DATA.invoice.extracted.drive_folder)}）へ保存しました。<br>
           支払期日 ${jpDate(state.due_date)}・月末の支払一覧にも自動で反映されます。</p>
           <div style="margin-top:28px"><a class="ow-btn" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;padding:12px 22px;background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">あなたのお店でお試し（無料相談）</a></div>
