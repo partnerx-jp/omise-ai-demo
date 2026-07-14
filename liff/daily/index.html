@@ -20,11 +20,19 @@
     .rankrow .nm .ow-bar { margin-top: 5px; }
     .rankrow .qty { font-size: 12px; color: var(--sub); width: 44px; text-align: right; }
     .rankrow .amt { font-size: 13px; font-weight: 700; width: 74px; text-align: right; }
+    .rankrow .ow-bar.neg i { background: var(--neg); opacity: .5; }
+    .chartbox.donut { height: 172px; }
+    .h2sub { font-size: 11px; font-weight: 400; color: var(--sub); margin-left: 4px; }
+    .seg { padding: 8px 0; }
+    .seg:first-of-type { padding-top: 2px; }
+    .seg-lbl { font-size: 11px; color: var(--sub); margin-bottom: 5px; }
+    .seg-bar { display: flex; height: 30px; border-radius: 7px; overflow: hidden; }
+    .seg-bar i { display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; color: #4A4A4A; font-style: normal; white-space: nowrap; }
   </style>
 </head>
 <body class="ow-hasbottom">
   <div class="ow-header">
-    <div class="ttl">📊 昨日の実績</div>
+    <div class="ttl">昨日の実績</div>
     <div class="sub" id="sub">読み込み中…</div>
   </div>
   <div class="ow-tabs" id="tabs"></div>
@@ -35,7 +43,8 @@
   <script src="../vendor/chart.umd.min.js"></script>
   <script>
     const LIFF_ID = "", SHINDAN = "../shindan/";
-    const BLUE = "#00A0E9";
+    const BLUE = "#00A0E9", GRAY = "#C9CDD1";
+    const PAL = ["#ABD17E","#93C0E6","#F1A9C4","#F5BE73","#B6A2DA","#83CBC0","#BFC4C9"];
     const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
     const pct = n => (n>=0?"+":"") + (n*100).toFixed(1) + "%";
     const arrow = n => n>=0 ? "↑" : "↓";
@@ -70,13 +79,15 @@
     function render(scope){
       const dr = DATA.daily_report;
       Object.values(charts).forEach(c=>c&&c.destroy()); charts = {};
+      const key = scope==="all" ? "all" : scope;
       let net,cust,avg,vd;
       if (scope==="all"){ const t=dr.total; net=t.net_sales; cust=t.customers; avg=t.avg_spend; vd=t.vs_prev_day; }
       else { const b=dr.by_store.find(x=>x.store===scope); net=b.net_sales; cust=b.customers; avg=b.avg_spend; vd=b.vs_prev_day; }
-      const hours = scope==="all" ? sumHourly(dr.hourly_sales) : dr.hourly_sales[scope].map(h=>({hour:h.hour,sales:h.sales}));
       const ratio = net / dr.total.net_sales;   // 店舗の売上シェアで各セクションを連動
 
       let h = `<div class="ow-wrap">`;
+
+      // ① 売上ボックス
       h += `<div class="ow-card">
         <div class="ow-scope">${scope==="all"?"全店":storeName(scope)}</div>
         <div class="ow-hero-lbl">純売上（税抜）</div>
@@ -88,15 +99,8 @@
           <div><div class="l">客数</div><div class="v">${cust}人</div></div>
           <div><div class="l">客単価</div><div class="v">${yen(avg)}</div></div>
         </div></div>`;
-      h += `<div class="ow-card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
-      const tp = dr.top_products.map(p=>({...p, qty: Math.round(p.qty*ratio), sales: Math.round(p.sales*ratio)})), mx = Math.max(...tp.map(p=>p.sales));
-      h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` +
-        tp.map(p=>`<div class="rankrow"><div class="rk">${p.rank}</div>
-          <div class="nm"><div class="pline"><span class="pn">${p.name}</span><small class="${p.vs_prev>=0?'ow-up':'ow-down'}">${p.vs_prev>=0?'+':''}${p.vs_prev}${arrow(p.vs_prev)}</small></div>
-            <div class="ow-bar"><i style="width:${Math.round(p.sales/mx*100)}%"></i></div></div>
-          <div class="qty">${p.qty}個</div><div class="amt">${yen(p.sales)}</div></div>`).join("") + `</div>`;
-      const week = dr.last7days.map(r=>({dow:r.dow, sales: Math.round(r.sales*ratio)}));
-      h += `<div class="ow-card"><h2>直近7日間の売上${scope==="all"?"（全店）":""}</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
+
+      // ② 目標達成率
       const mp = dr.month_progress;
       const cum = Math.round(mp.cum_sales*ratio);
       const ach = scope==="all" ? mp.achievement : (mp.store_achievement && mp.store_achievement[scope]!=null ? mp.store_achievement[scope] : mp.achievement);
@@ -104,13 +108,62 @@
       h += `<div class="ow-card"><h2>今月の目標 達成率（経過${mp.elapsed_days}日）</h2>
         <div class="ow-prog"><i style="width:${achPct}%"></i></div>
         <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ${yen(cum)}</span><span class="${achPct>=80?'ow-up':''}">達成率 ${achPct}%</span></div></div>`;
+
+      // ③ 部門別売上（ドーナツ）
+      h += `<div class="ow-card"><h2>部門別 売上構成</h2><div class="chartbox donut"><canvas id="dcv"></canvas></div></div>`;
+
+      // ④ 売れ筋 TOP5
+      const tp = dr.top_products.map(p=>({...p, qty:Math.round(p.qty*ratio), sales:Math.round(p.sales*ratio)})), mxT=Math.max(...tp.map(p=>p.sales));
+      h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` + rankHTML(tp,mxT,"pos") + `</div>`;
+
+      // ⑤ 死に筋 TOP5
+      const wp = dr.worst_products.map(p=>({...p, qty:Math.max(1,Math.round(p.qty*ratio)), sales:Math.round(p.sales*ratio)})), mxW=Math.max(...wp.map(p=>p.sales));
+      h += `<div class="ow-card"><h2>死に筋 TOP5<small class="h2sub">見直し候補</small></h2>` + rankHTML(wp,mxW,"neg") + `</div>`;
+
+      // ⑥ 時間帯別売上
+      h += `<div class="ow-card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
+
+      // ⑦ 時間帯グループ別売上
+      h += `<div class="ow-card"><h2>時間帯グループ別 売上</h2><div class="chartbox"><canvas id="bcv"></canvas></div></div>`;
+
+      // ⑧ 客層
+      const sg = dr.segments;
+      h += `<div class="ow-card"><h2>客層</h2>`
+        + segRow("会員", sg.new_repeat, key, ["#93C0E6","#ABD17E"])
+        + segRow("性別", sg.gender, key, ["#93C0E6","#F1A9C4"])
+        + segRow("国籍", sg.nationality, key, ["#B6A2DA","#F5BE73"])
+        + `</div>`;
+
+      // 直近7日 / 完売アラート / AIひとこと（維持）
+      const week = dr.last7days.map(r=>({dow:r.dow, sales:Math.round(r.sales*ratio)}));
+      h += `<div class="ow-card"><h2>直近7日間の売上${scope==="all"?"（全店）":""}</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
       if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store))
         h += `<div class="ow-card"><div class="ow-warn">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div></div>`;
       const ai = scope==="all" ? dr.ai_comment : (dr.store_comment && dr.store_comment[scope] ? dr.store_comment[scope] : dr.ai_comment);
       h += `<div class="ow-card"><div class="ow-ai"><b>💬 AIのひとこと</b><br>${ai}</div></div>`;
+
       h += `</div>`;
       document.getElementById("app").innerHTML = h;
-      drawHourly(hours); drawWeek(week);
+
+      const hours = scope==="all" ? sumHourly(dr.hourly_sales) : dr.hourly_sales[scope].map(x=>({hour:x.hour,sales:x.sales}));
+      drawDonut(dr.departments, key, net);
+      drawHourly(hours);
+      drawBands(dr.time_bands, key);
+      drawWeek(week);
+    }
+
+    function rankHTML(list,mx,tone){
+      return list.map(p=>`<div class="rankrow"><div class="rk">${p.rank}</div>
+        <div class="nm"><div class="pline"><span class="pn">${p.name}</span><small class="${p.vs_prev>=0?'ow-up':'ow-down'}">${p.vs_prev>=0?'+':''}${p.vs_prev}${arrow(p.vs_prev)}</small></div>
+          <div class="ow-bar ${tone==='neg'?'neg':''}"><i style="width:${Math.round(p.sales/mx*100)}%"></i></div></div>
+        <div class="qty">${p.qty}個</div><div class="amt">${yen(p.sales)}</div></div>`).join("");
+    }
+
+    function segRow(label, grp, key, colors){
+      const [a,b] = grp[key] || grp.all;
+      const seg=(w,lab,col)=>`<i style="width:${w}%;background:${col}">${w>=18?lab+" ":""}${w}%</i>`;
+      return `<div class="seg"><div class="seg-lbl">${label}</div>
+        <div class="seg-bar">${seg(a,grp.labels[0],colors[0])}${seg(b,grp.labels[1],colors[1])}</div></div>`;
     }
 
     function sumHourly(hs){ const m={}; Object.values(hs).forEach(a=>a.forEach(x=>m[x.hour]=(m[x.hour]||0)+x.sales));
@@ -127,6 +180,22 @@
         data:{ labels:rows.map(r=>r.dow), datasets:[{ data:rows.map(r=>r.sales), borderColor:BLUE, backgroundColor:"rgba(0,160,233,.10)", fill:true, tension:.35, pointRadius:3, pointBackgroundColor:BLUE }] },
         options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
           scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
+    }
+    function drawDonut(dep, key, net){
+      const pcts = dep[key] || dep.all;
+      const sales = pcts.map(p=>Math.round(net*p/100));
+      charts.d = new Chart(document.getElementById("dcv"), { type:"doughnut",
+        data:{ labels:dep.labels, datasets:[{ data:pcts, backgroundColor:PAL, borderWidth:0 }] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:"58%",
+          plugins:{ legend:{position:"right",labels:{font:{size:10},boxWidth:12,padding:7}},
+            tooltip:tip(c=>`${c.label} ${yen(sales[c.dataIndex])}（${c.parsed}%）`) } } });
+    }
+    function drawBands(tb, key){
+      const data = tb[key] || tb.all;
+      charts.b = new Chart(document.getElementById("bcv"), { type:"bar",
+        data:{ labels:tb.labels, datasets:[{ data, backgroundColor:["#ABD17E","#93C0E6","#F5BE73"], borderRadius:4, barPercentage:.6 }] },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
+          scales:{x:{...gridX,ticks:{...gridX.ticks,font:{size:10}}},y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
     }
 
     document.getElementById("cta").addEventListener("click",()=>{ location.href = SHINDAN; });
