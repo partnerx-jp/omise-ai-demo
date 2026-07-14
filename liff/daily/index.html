@@ -20,6 +20,7 @@
     .rankrow .nm .ow-bar { margin-top: 5px; }
     .rankrow .qty { font-size: 12px; color: var(--sub); width: 44px; text-align: right; }
     .rankrow .amt { font-size: 13px; font-weight: 700; width: 74px; text-align: right; }
+    .rankrow .qty .sh, .rankrow .amt .sh { display: block; font-size: 10px; font-weight: 400; color: var(--sub); margin-top: 2px; }
     .rankrow .ow-bar.neg i { background: var(--neg); opacity: .5; }
     .chartbox.donut { height: 172px; }
     .h2sub { font-size: 11px; font-weight: 400; color: var(--sub); margin-left: 4px; }
@@ -120,18 +121,20 @@
       // 部門構成に連動した店舗別ウェイト（数字・並び・バーが辻褄合って動く）
       const dep = dr.departments, depCur = dep[key] || dep.all;
       const dw = d => { const i = dep.labels.indexOf(d); return (i>=0 && dep.all[i]) ? depCur[i]/dep.all[i] : 1; };
+      const storeItems = Math.round(dr.total.items * ratio);   // 構成比の分母（点数）
+      const den = { qty: storeItems, sales: net };
 
       // ④ 売れ筋 TOP5
       const tp = dr.top_products.map(p=>({...p, qty:Math.round(p.qty*ratio*dw(p.dept)), sales:Math.round(p.sales*ratio*dw(p.dept))}))
         .sort((a,b)=>b.sales-a.sales).map((p,i)=>({...p, rank:i+1}));
       const mxT = Math.max(...tp.map(p=>p.sales));
-      h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` + rankHTML(tp,mxT,"pos") + `</div>`;
+      h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` + rankHTML(tp,mxT,"pos",den) + `</div>`;
 
       // ⑤ 死に筋 TOP5
       const wp = dr.worst_products.map(p=>({...p, qty:Math.max(1,Math.round(p.qty*ratio*dw(p.dept))), sales:Math.round(p.sales*ratio*dw(p.dept))}))
         .sort((a,b)=>a.sales-b.sales).map((p,i)=>({...p, rank:i+1}));
       const mxW = Math.max(...wp.map(p=>p.sales));
-      h += `<div class="ow-card"><h2>死に筋 TOP5<small class="h2sub">見直し候補</small></h2>` + rankHTML(wp,mxW,"neg") + `</div>`;
+      h += `<div class="ow-card"><h2>死に筋 TOP5<small class="h2sub">見直し候補</small></h2>` + rankHTML(wp,mxW,"neg",den) + `</div>`;
 
       // ⑥ 時間帯別売上
       h += `<div class="ow-card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
@@ -165,11 +168,13 @@
       drawWeek(week);
     }
 
-    function rankHTML(list,mx,tone){
+    function rankHTML(list,mx,tone,den){
+      const fp = x => (x>=10 ? Math.round(x) : x.toFixed(1)) + "%";
       return list.map(p=>`<div class="rankrow"><div class="rk">${p.rank}</div>
         <div class="nm"><div class="pline"><span class="pn">${p.name}</span><small class="${p.vs_prev>=0?'ow-up':'ow-down'}">${p.vs_prev>=0?'+':''}${p.vs_prev}${arrow(p.vs_prev)}</small></div>
           <div class="ow-bar ${tone==='neg'?'neg':''}"><i style="width:${Math.round(p.sales/mx*100)}%"></i></div></div>
-        <div class="qty">${p.qty}個</div><div class="amt">${yen(p.sales)}</div></div>`).join("");
+        <div class="qty">${p.qty}個<span class="sh">(${fp(p.qty/den.qty*100)})</span></div>
+        <div class="amt">${yen(p.sales)}<span class="sh">(${fp(p.sales/den.sales*100)})</span></div></div>`).join("");
     }
 
     function segRow(label, grp, key, colors){

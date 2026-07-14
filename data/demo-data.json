@@ -53,7 +53,8 @@
       "avg_spend": 924,
       "vs_prev_day": 0.054,
       "vs_same_weekday_lastweek": 0.031,
-      "target_achievement": 1.02
+      "target_achievement": 1.02,
+      "items": 2760
     },
     "by_store": [
       {
