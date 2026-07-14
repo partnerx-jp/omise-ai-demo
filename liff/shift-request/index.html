@@ -10,94 +10,19 @@
   <title>お店のAIワーカー</title>
   <style>
     html, body { height: 100%; }
-    body { margin: 0; overflow: hidden; }
+    body { margin: 0; background: var(--bg); }
 
-    /* ============ LINEトーク画面（デモの外枠） ============ */
-    #chat { position: fixed; inset: 0; display: flex; flex-direction: column; background: #7B96BC; }
-    .ln-head { flex: 0 0 auto; background: #fff; border-bottom: 1px solid #e2e5e9;
-      padding: calc(env(safe-area-inset-top,0) + 11px) 12px 11px; display: flex; align-items: center; gap: 9px; }
-    .ln-head .bk { font-size: 22px; color: #333; line-height: 1; }
-    .ln-head .ic { width: 34px; height: 34px; border-radius: 999px; background: #EAF1F6; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-    .ln-head .nm { font-weight: 700; font-size: 16px; color: #1f2328; line-height: 1.15; }
-    .ln-head .nm small { display: block; font-weight: 400; font-size: 11px; color: #9aa0a6; margin-top: 2px; }
-    .ln-head .menu { margin-left: auto; color: #9aa0a6; font-size: 18px; letter-spacing: 2px; }
-
-    .ln-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 12px 26px; }
-    .ln-date { text-align: center; margin: 2px 0 16px; }
-    .ln-date span { background: rgba(0,0,0,.18); color: #fff; font-size: 11px; padding: 3px 12px; border-radius: 999px; }
-
-    /* 受信行（左：アイコン＋バブル＋時刻） */
-    .ln-in { display: flex; align-items: flex-end; gap: 7px; margin-bottom: 16px; }
-    .ln-in .av { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 999px; background: #EAF1F6;
-      display: flex; align-items: center; justify-content: center; font-size: 17px; }
-    .ln-in .col { max-width: 80%; }
-    .ln-in .who { font-size: 11px; color: rgba(255,255,255,.95); margin: 0 0 4px 2px; }
-    .ln-in .ti { flex: 0 0 auto; font-size: 10px; color: rgba(255,255,255,.9); align-self: flex-end; }
-
-    /* 送信行（右：LINEグリーンのバブル） */
-    .ln-out { display: flex; justify-content: flex-end; align-items: flex-end; gap: 6px; margin-bottom: 16px;
-      opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease; }
-    .ln-out.show { opacity: 1; transform: none; }
-    .ln-out .ti { font-size: 10px; color: rgba(255,255,255,.9); }
-    .ln-out .bubble { max-width: 76%; background: #06C755; color: #fff; font-size: 14px; line-height: 1.6;
-      padding: 10px 13px; border-radius: 16px 16px 4px 16px; box-shadow: 0 1px 1px rgba(0,0,0,.08); }
-
-    /* Flex風カード（白ヘッダー＝Airレジ / design-spec §3 準拠） */
-    .fx { background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.10); }
-    .fx.anim { opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
-    .fx.anim.show { opacity: 1; transform: none; }
-    .fx-h { padding: 14px 15px 12px; }
-    .fx-h .d { font-size: 10.5px; color: var(--muted); }
-    .fx-h .t { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-top: 4px; letter-spacing: .01em; }
-    .fx-h .t .ck { color: #2E9E4F; }
-    .fx-h .s { font-size: 10.5px; color: var(--sub); margin-top: 3px; }
-    .fx-sep { height: 1px; background: var(--line); }
-    .fx-b { padding: 13px 15px 15px; }
-    .fx-row { display: flex; align-items: baseline; gap: 8px; font-size: 13px; padding: 3px 0; }
-    .fx-row .k { color: var(--sub); flex: 0 0 62px; }
-    .fx-row .v { font-weight: 700; color: var(--ink); }
-    .fx-note { margin-top: 10px; padding: 10px 12px; background: var(--info-bg); border-radius: 8px;
-      font-size: 12px; color: #4a4f55; line-height: 1.7; }
-    .fx-btn { display: block; width: 100%; margin-top: 13px; padding: 13px; border-radius: 10px;
-      background: linear-gradient(180deg,#12D262,#06C755); border: 1.5px solid #05993F; color: #fff;
-      font-size: 15px; font-weight: 700; box-shadow: 0 3px 0 #05993F, 0 4px 6px rgba(0,0,0,.16); }
-    .fx-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #05993F; }
-    .fx-link { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; color: var(--sub); margin-top: 9px; }
-    .fx-link .u { width: 12px; height: 12px; }
-
-    /* 提出完了カード：店長視点の集計イメージ */
-    .agg-lbl { font-size: 11px; color: var(--sub); font-weight: 700; margin: 4px 0 8px; }
-    .agg { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; }
-    .agg:first-of-type { border-top: none; }
-    .agg .st { flex: 0 0 62px; color: var(--ink); }
-    .agg .bar { flex: 1; height: 7px; border-radius: 4px; background: #EEF1F2; overflow: hidden; }
-    .agg .bar > i { display: block; height: 100%; background: var(--brand); }
-    .agg .val { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--brand-dark); width: 62px; text-align: right; }
-    .agg .val.done { color: var(--pos); }
-    .fx-warn { margin-top: 11px; padding: 9px 12px; background: var(--warn-bg); border-radius: 8px;
-      font-size: 11.5px; color: var(--warn-ink); line-height: 1.6; }
-    .fx-ai { margin-top: 11px; padding: 11px 12px; background: var(--info-bg); border-radius: 8px;
-      font-size: 12px; color: #4a4f55; line-height: 1.7; }
-    .fx-ai b { color: var(--brand-dark); }
-    .fx-loss { margin-top: 12px; font-size: 11.5px; color: var(--sub); text-align: center; line-height: 1.6; }
-    .fx-loss b { color: var(--ink); }
-
-    /* ============ LIFF シート（希望入力・白ヘッダー＝Airレジ） ============ */
-    #liff { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column;
-      transform: translateY(100%); transition: transform .34s cubic-bezier(.22,.61,.36,1); }
-    #liff.open { transform: none; }
-    .lf-head { flex: 0 0 auto; background: #fff; border-bottom: 1px solid var(--line);
-      padding: calc(env(safe-area-inset-top,0) + 16px) 16px 13px; display: flex; align-items: flex-start; }
+    /* ヘッダー（白・Airレジ） */
+    .lf-head { background: #fff; border-bottom: 1px solid var(--line);
+      padding: calc(env(safe-area-inset-top,0) + 16px) 18px 13px; }
     .lf-head .ttl { font-weight: 700; font-size: 17px; color: var(--ink); }
     .lf-head .ttl .dt { font-size: 13px; font-weight: 400; color: var(--sub); margin-left: 8px; }
     .lf-head .sub { font-size: 12px; color: var(--sub); margin-top: 4px; }
-    .lf-head .x { margin-left: auto; font-size: 20px; color: var(--sub); line-height: 1.2; padding: 0 2px; }
 
-    .lf-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .lf-body { padding-bottom: 96px; }
 
     /* ロール選択・かんたん入力（パレットの .ow-chips を使用） */
     .lf-lbl { font-size: 12px; color: var(--sub); font-weight: 700; margin: 0 0 8px; display: flex; justify-content: space-between; align-items: baseline; }
-    .lf-lbl .cnt { color: var(--brand-dark); font-size: 11px; }
     .quick { display: flex; gap: 7px; flex-wrap: wrap; }
     .quick button { flex: 1; min-width: 0; white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--brand-dark);
       background: var(--brand-tint); border: 1px solid #BFE3F3; border-radius: 8px; padding: 9px 4px; }
@@ -117,7 +42,9 @@
     .bandrow .ow-chip { padding: 5px 11px; font-size: 12.5px; }
     .band-empty { font-size: 12px; color: var(--muted); padding: 8px 2px; }
 
-    .lf-cta { flex: 0 0 auto; padding: 11px 16px calc(11px + env(safe-area-inset-bottom,0)); background: #fff; border-top: 1px solid var(--line); }
+    /* 送信CTA（緑立体・固定） */
+    .lf-cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 11px 16px calc(11px + env(safe-area-inset-bottom,0));
+      background: linear-gradient(180deg, rgba(255,255,255,0), #fff 26%); }
     .lf-cta .info { text-align: center; font-size: 11px; color: var(--sub); margin-bottom: 9px; }
     .lf-cta .info b { color: var(--brand-dark); }
     .lf-submit { width: 100%; padding: 15px; border-radius: 12px;
@@ -133,114 +60,92 @@
     #sending .sp { width: 42px; height: 42px; border: 4px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 999px; animation: spin .8s linear infinite; }
     #sending .msg { font-size: 14px; font-weight: 700; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 申請完了（LIFFを閉じられないブラウザ時のフォールバック通知） */
+    #done { position: fixed; inset: 0; z-index: 70; background: var(--bg); display: none;
+      flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px 26px; }
+    #done.on { display: flex; }
+    #done .ck { width: 76px; height: 76px; border-radius: 999px; background: #E9F6EE; color: #12B24A;
+      display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 20px; }
+    #done .ttl { font-size: 20px; font-weight: 800; color: var(--ink); }
+    #done .period { margin-top: 12px; font-size: 17px; font-weight: 700; color: var(--brand); }
+    #done .meta { margin-top: 8px; font-size: 13px; color: var(--sub); }
+    #done .note { margin-top: 22px; font-size: 12.5px; color: var(--sub); line-height: 1.8; max-width: 300px; }
+    #done .cta { margin-top: 26px; width: 100%; max-width: 320px; padding: 15px; border-radius: 12px;
+      background: linear-gradient(180deg,#12D262,#06C755); border: 1.5px solid #05993F; color: #fff;
+      font-size: 15px; font-weight: 700; box-shadow: 0 3px 0 #05993F, 0 4px 6px rgba(0,0,0,.16); }
+    #done .cta:active { transform: translateY(2px); box-shadow: 0 1px 0 #05993F; }
   </style>
 </head>
 <body>
-  <!-- ========== LINEトーク画面 ========== -->
-  <div id="chat">
-    <div class="ln-head">
-      <span class="bk">‹</span>
-      <span class="ic">🥐</span>
-      <div class="nm">こむぎ堂 梅田店<small>スタッフ連絡 グループ</small></div>
-      <span class="menu">☰</span>
-    </div>
-    <div class="ln-body" id="lnBody">
-      <div class="ln-date"><span id="dateChip">本日</span></div>
+  <div class="lf-head">
+    <div class="ttl">シフト希望の提出<span class="dt" id="lfDt">—</span></div>
+    <div class="sub" id="lfSub">読み込み中…</div>
+  </div>
 
-      <!-- 回収依頼Flex -->
-      <div class="ln-in">
-        <span class="av">🤖</span>
-        <div class="col">
-          <div class="who">お店のAIワーカー</div>
-          <div class="fx">
-            <div class="fx-h">
-              <div class="d" id="fxDate">—</div>
-              <div class="t">📝 シフト希望の提出をお願いします</div>
-              <div class="s">梅田店 スタッフのみなさんへ</div>
-            </div>
-            <div class="fx-sep"></div>
-            <div class="fx-b">
-              <div class="fx-row"><span class="k">対象期間</span><span class="v" id="fxPeriod">—</span></div>
-              <div class="fx-row"><span class="k">提出締切</span><span class="v" id="fxDeadline">—</span></div>
-              <div class="fx-note">勤務できる日と希望の時間帯（早番／中番／遅番）を選んで提出してください。未提出の方には締切前日にAIが自動でお声がけします。</div>
-              <button class="fx-btn" id="openBtn">シフト希望を入力する</button>
-              <div class="fx-link">
-                <svg class="u" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v8H3V6h8"/></svg>
-                <span>liff.line.me/shift-request</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="ti">9:00</span>
+  <div class="lf-body">
+    <div class="ow-wrap" style="padding-top:10px">
+
+      <div class="ow-card">
+        <div class="ow-row" style="border-top:none;padding-top:2px"><span class="k">対象期間</span><span class="v" id="lfPeriod">—</span></div>
+        <div class="ow-row"><span class="k">提出締切</span><span class="v" id="lfDeadline" style="color:var(--neg)">—</span></div>
+        <div class="ow-row"><span class="k">お名前</span><span class="v" id="lfName">—</span></div>
       </div>
 
-      <div id="afterZone"></div>
+      <div class="ow-card">
+        <div class="lf-lbl"><span>ポジション</span></div>
+        <div class="ow-chips" id="roleChips" style="margin-bottom:16px"></div>
+
+        <div class="lf-lbl"><span>かんたん入力</span></div>
+        <div class="quick" id="quick">
+          <button data-q="weekday-work">平日すべて出勤OK</button>
+          <button data-q="weekend-off">土日すべて休み</button>
+          <button data-q="reset" class="clr">リセット</button>
+        </div>
+      </div>
+
+      <div class="ow-card">
+        <h2>勤務できる日（◯希望あり ／ ✕希望なし）</h2>
+        <div class="ow-req req15" id="reqGrid"></div>
+      </div>
+
+      <div class="ow-card">
+        <h2 id="bandHd">希望の時間帯（◯の日）</h2>
+        <div class="dayin" id="bandList"></div>
+      </div>
+
+      <div class="ow-card">
+        <h2>連絡事項（任意）</h2>
+        <textarea class="ow-textarea" id="memo" style="min-height:64px">お盆（13〜15日）は帰省のため休み希望です。</textarea>
+      </div>
+
     </div>
   </div>
 
-  <!-- ========== LIFF シート（希望入力・パレット部品） ========== -->
-  <div id="liff">
-    <div class="lf-head">
-      <div>
-        <div class="ttl">シフト希望の提出<span class="dt" id="lfDt">—</span></div>
-        <div class="sub" id="lfSub">読み込み中…</div>
-      </div>
-      <span class="x" id="closeBtn">✕</span>
-    </div>
-    <div class="lf-body">
-      <div class="ow-wrap" style="padding-top:10px">
-
-        <div class="ow-card">
-          <div class="ow-row" style="border-top:none;padding-top:2px"><span class="k">対象期間</span><span class="v" id="lfPeriod">—</span></div>
-          <div class="ow-row"><span class="k">提出締切</span><span class="v" id="lfDeadline" style="color:var(--neg)">—</span></div>
-          <div class="ow-row"><span class="k">お名前</span><span class="v" id="lfName">—</span></div>
-        </div>
-
-        <div class="ow-card">
-          <div class="lf-lbl"><span>ポジション</span></div>
-          <div class="ow-chips" id="roleChips" style="margin-bottom:16px"></div>
-
-          <div class="lf-lbl"><span>かんたん入力</span></div>
-          <div class="quick" id="quick">
-            <button data-q="weekday-work">平日すべて出勤OK</button>
-            <button data-q="weekend-off">土日すべて休み</button>
-            <button data-q="reset" class="clr">リセット</button>
-          </div>
-        </div>
-
-        <div class="ow-card">
-          <h2>勤務できる日（◯希望あり ／ ✕希望なし）</h2>
-          <div class="ow-req req15" id="reqGrid"></div>
-        </div>
-
-        <div class="ow-card">
-          <h2 id="bandHd">希望の時間帯（◯の日）</h2>
-          <div class="dayin" id="bandList"></div>
-        </div>
-
-        <div class="ow-card">
-          <h2>連絡事項（任意）</h2>
-          <textarea class="ow-textarea" id="memo" style="min-height:64px">お盆（13〜15日）は帰省のため休み希望です。</textarea>
-        </div>
-
-        <div style="height:6px"></div>
-      </div>
-    </div>
-    <div class="lf-cta">
-      <div class="info">選択内容は締切まで<b>何度でも修正</b>できます</div>
-      <button class="lf-submit ow-btn" id="submitBtn">この内容で提出する</button>
-    </div>
+  <div class="lf-cta">
+    <div class="info">選択内容は締切まで<b>何度でも修正</b>できます</div>
+    <button class="lf-submit ow-btn" id="submitBtn">この内容で提出する</button>
   </div>
 
   <!-- 送信中 -->
   <div id="sending"><div class="sp"></div><div class="msg">提出しています…</div></div>
+
+  <!-- 申請完了（ブラウザ時の通知フォールバック） -->
+  <div id="done">
+    <div class="ck">✓</div>
+    <div class="ttl">シフト希望を申請しました</div>
+    <div class="period" id="donePeriod">—</div>
+    <div class="meta" id="doneMeta">—</div>
+    <div class="note" id="doneNote">未提出の方には締切前日にAIが自動でお声がけします。<br>全員そろい次第、AIがシフト原案を作成して店長に共有します。</div>
+    <button class="cta" id="doneCta">あなたのお店でお試し（無料相談）</button>
+  </div>
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
     const LIFF_ID = "", SHINDAN = "../shindan/";
     const WD = ["日","月","火","水","木","金","土"];
     const STAFF_NAME = "藤田 かおる"; // liff.getProfile() の代わり（架空・梅田店 製造リーダー）
-    let DATA, SR, ROLE;
+    let DATA, SR, ROLE, IN_LIFF = false;
     const REQ = {};   // REQ[day] = true(◯希望あり) / false(✕希望なし)
     const BAND = {};  // BAND[day] = 早番|中番|遅番|どちらでも可（◯の日のみ）
 
@@ -257,49 +162,46 @@
       return { day: i + 1, wd: d.getDay(), label: WD[d.getDay()] };
     });
     const periodText = `${NM}/1（${DAYS[0].label}）〜 ${NM}/15（${DAYS[14].label}）`;
+    const periodShort = `${NM}/1〜${NM}/15`;
     const DL = new Date(now.getFullYear(), now.getMonth(), 20);
     const deadlineText = `${DL.getMonth() + 1}/20（${WD[DL.getDay()]}）まで`;
-    const todayJa = `${now.getMonth() + 1}月${now.getDate()}日（${WD[now.getDay()]}）`;
     const wdCls = wd => wd === 6 ? "sat" : wd === 0 ? "sun" : "";
 
     async function boot(){
-      try { if (LIFF_ID && window.liff) await liff.init({ liffId: LIFF_ID }).catch(()=>{}); } catch(e){}
+      try {
+        if (LIFF_ID && window.liff) {
+          await liff.init({ liffId: LIFF_ID }).catch(()=>{});
+          IN_LIFF = !!(liff.isInClient && liff.isInClient());
+        }
+      } catch(e){}
       const SRC = ["../../data/demo-data.json", "https://partnerx-jp.github.io/omise-ai-demo/data/demo-data.json"];
       for (const u of SRC){ try { const r = await fetch(u,{cache:"no-store"}); if(r.ok){ DATA = await r.json(); break; } } catch(e){} }
       SR = (DATA && DATA.shift_request) || {
         positions:["製造","販売"],
         slot_options:{ "製造":["早番 4:30-13:30","中番 5:00-14:00","遅番 8:00-17:00"], "販売":["早番 6:45-15:45","遅番 10:30-19:30"] },
-        common_options:["どちらでも可","休み希望"],
-        collection_status:{ "梅田店":"4/5","心斎橋店":"5/5","難波店":"3/5" }
+        common_options:["どちらでも可","休み希望"]
       };
       ROLE = SR.positions[0];
 
-      $("fxDate").textContent = todayJa;
-      $("fxPeriod").textContent = periodText;
-      $("fxDeadline").textContent = deadlineText;
       $("lfPeriod").textContent = periodText;
       $("lfDeadline").textContent = deadlineText;
       $("lfName").textContent = STAFF_NAME;
       $("lfDt").textContent = `${NM}月 前半`;
       $("lfSub").textContent = (DATA && DATA.company ? DATA.company.brand : "ベーカリーこむぎ堂") + "・梅田店";
-      $("dateChip").textContent = todayJa;
 
       prefill();
       buildRoleChips();
       buildReq();
       buildBand();
 
-      $("openBtn").addEventListener("click", () => { $("liff").classList.add("open"); $("liff").querySelector(".lf-body").scrollTop = 0; });
-      $("closeBtn").addEventListener("click", () => $("liff").classList.remove("open"));
       $("submitBtn").addEventListener("click", submit);
       $("quick").querySelectorAll("button").forEach(b => b.addEventListener("click", () => quick(b.dataset.q)));
+      $("doneCta").addEventListener("click", () => { location.href = SHINDAN; });
     }
 
-    // 現ロールの時間帯キー（例: ["早番","中番","遅番"]）
     const slotKeys = () => ((SR.slot_options && SR.slot_options[ROLE]) || []).map(s => s.split(" ")[0]);
     const bandKeys = () => slotKeys().concat(["どちらでも可"]);
 
-    // それっぽい初期選択（出勤可10日・休み希望5日）
     function prefill(){
       const yes = { 1:"早番",2:"早番",3:"中番",4:"早番",5:"早番",8:"早番",9:"中番",10:"早番",11:"早番",12:"どちらでも可" };
       DAYS.forEach(d => { REQ[d.day] = !!yes[d.day]; if (yes[d.day]) BAND[d.day] = yes[d.day]; });
@@ -310,14 +212,12 @@
       $("roleChips").querySelectorAll(".ow-chip").forEach(c => c.addEventListener("click", () => {
         ROLE = c.dataset.r;
         $("roleChips").querySelectorAll(".ow-chip").forEach(x => x.classList.toggle("on", x === c));
-        // その枠に無い時間帯（例: 販売で中番）は既定へ寄せる
         const valid = new Set(bandKeys());
         Object.keys(BAND).forEach(d => { if (!valid.has(BAND[d])) BAND[d] = slotKeys()[0]; });
         buildBand();
       }));
     }
 
-    // ◯/✕ グリッド（パレット .ow-req）
     function buildReq(){
       $("reqGrid").innerHTML = DAYS.map(d => {
         const yes = REQ[d.day];
@@ -330,13 +230,12 @@
       $("reqGrid").querySelectorAll(".d").forEach(el => el.addEventListener("click", () => {
         const day = +el.dataset.d;
         REQ[day] = !REQ[day];
-        if (REQ[day] && !BAND[day]) BAND[day] = slotKeys()[0]; // ◯にしたら既定の時間帯
+        if (REQ[day] && !BAND[day]) BAND[day] = slotKeys()[0];
         buildReq(); buildBand();
       }));
       updateCount();
     }
 
-    // ◯の日だけ時間帯を選ぶ（パレット .dayin / .ow-row / .ow-chips）
     function buildBand(){
       const yesDays = DAYS.filter(d => REQ[d.day]);
       $("bandHd").textContent = `希望の時間帯（◯の日・${yesDays.length}日）`;
@@ -366,83 +265,26 @@
       DAYS.forEach(d => { REQ[d.day] ? work++ : off++; });
       return { work, off };
     }
-    function updateCount(){
-      const c = counts();
-      $("submitBtn").disabled = c.work === 0;
-    }
+    function updateCount(){ $("submitBtn").disabled = counts().work === 0; }
 
     async function submit(){
-      $("sending").classList.add("on");
-      await sleep(950);
-      $("sending").classList.remove("on");
-
       const c = counts();
-      const msg = `シフト希望を提出しました（出勤可${c.work}日・休み希望${c.off}日）`;
-      let closedByLiff = false;
-      try {
-        if (LIFF_ID && window.liff && liff.isInClient && liff.isInClient()) {
-          await liff.sendMessages([{ type: "text", text: msg }]).catch(()=>{});
-          liff.closeWindow(); closedByLiff = true;
-        }
-      } catch(e){}
-      if (!closedByLiff) $("liff").classList.remove("open");
+      const notif = `${periodShort} のシフト希望を申請しました（出勤可${c.work}日・休み希望${c.off}日）`;
 
-      await sleep(360);
-      renderAfter(c, msg);
-    }
+      $("sending").classList.add("on");
+      await sleep(850);
 
-    function renderAfter(c, msg){
-      const nowT = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
-      const cs = SR.collection_status || {};
-      const stores = Object.keys(cs);
-      const memo = $("memo").value.trim();
-      const lossShift = (DATA && DATA.loss_framing && DATA.loss_framing.shift) || "3店舗15名のシフト回収・調整・催促に月12時間 ≒ 月24,000円";
+      // 本物のLIFF（LINE内）: トークに申請メッセージを流して、LIFFを閉じる
+      if (IN_LIFF) {
+        try { await liff.sendMessages([{ type: "text", text: notif }]); } catch(e){}
+        try { liff.closeWindow(); return; } catch(e){}
+      }
 
-      const aggRows = stores.map(st => {
-        const [d, t] = (cs[st] || "0/0").split("/").map(Number);
-        const pct = t ? Math.round(d / t * 100) : 0;
-        const done = d >= t;
-        return `<div class="agg"><span class="st">${esc(st)}</span><span class="bar"><i style="width:${pct}%"></i></span><span class="val${done?' done':''}">${esc(cs[st])}${done?' ✅':''}</span></div>`;
-      }).join("");
-
-      $("afterZone").innerHTML =
-        `<div class="ln-out" id="outMsg"><span class="ti">${esc(nowT)}</span><div class="bubble">${esc(msg)}</div></div>` +
-        `<div class="ln-in">
-          <span class="av">🤖</span>
-          <div class="col">
-            <div class="who">お店のAIワーカー</div>
-            <div class="fx anim" id="doneCard">
-              <div class="fx-h">
-                <div class="d">${esc(todayJa)}</div>
-                <div class="t"><span class="ck">✅</span> 提出が完了しました</div>
-                <div class="s">${esc(STAFF_NAME)}／${esc(ROLE)} ・ ${esc(periodText)}</div>
-              </div>
-              <div class="fx-sep"></div>
-              <div class="fx-b">
-                <div class="fx-row"><span class="k">出勤可</span><span class="v" style="color:var(--brand)">${c.work}日</span></div>
-                <div class="fx-row"><span class="k">休み希望</span><span class="v">${c.off}日</span></div>
-                ${memo ? `<div class="fx-warn">📌 連絡事項：${esc(memo)}</div>` : ""}
-                <div class="agg-lbl" style="margin-top:14px">店長側には、全員分がこう集計されます 👇</div>
-                ${aggRows}
-                <div class="fx-warn">未提出の方には、締切前日にAIが自動でお声がけします。全員そろい次第、AIがシフト原案を作成して店長に共有します。</div>
-                <div class="fx-ai"><b>💬 AIのひとこと</b><br>藤田さんは早番中心の希望ですね。お盆（13〜15日）の休み希望を反映し、代替の早番候補もあわせて店長に提案します。</div>
-                <div class="fx-loss">${esc(lossShift)}<br><b>あなたのお店では、この作業にどれくらい？</b></div>
-                <button class="fx-btn" id="ctaBtn">あなたのお店でお試し（無料相談）</button>
-              </div>
-            </div>
-          </div>
-          <span class="ti">${esc(nowT)}</span>
-        </div>`;
-
-      $("openBtn").textContent = "提出済み（内容を修正する）";
-      requestAnimationFrame(() => {
-        $("outMsg").classList.add("show");
-        setTimeout(() => {
-          $("doneCard").classList.add("show");
-          $("lnBody").scrollTo({ top: $("lnBody").scrollHeight, behavior: "smooth" });
-        }, 260);
-      });
-      $("ctaBtn").addEventListener("click", () => { location.href = SHINDAN; });
+      // ブラウザ等（閉じられない）: 申請完了の通知画面を表示
+      $("sending").classList.remove("on");
+      $("donePeriod").textContent = periodShort + " で申請しました";
+      $("doneMeta").textContent = `${STAFF_NAME}／${ROLE} ・ 出勤可 ${c.work}日・休み希望 ${c.off}日`;
+      $("done").classList.add("on");
     }
 
     boot();
