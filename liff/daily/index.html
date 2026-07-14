@@ -178,10 +178,6 @@
       const week = dr.last7days.map(r=>({dow:r.dow, sales:Math.round(r.sales*ratio*wkScale)}));
       const weekMax = Math.max(...dr.last7days.map(r=>r.sales*ratio));   // 全時間帯の最大でY軸を固定
       h += `<div class="ow-card">${cardHead("直近7日間の売上"+(scope==="all"?"（全店）":""),"week")}<div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
-      if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store))
-        h += `<div class="ow-card"><div class="ow-warn">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div></div>`;
-      const ai = scope==="all" ? dr.ai_comment : (dr.store_comment && dr.store_comment[scope] ? dr.store_comment[scope] : dr.ai_comment);
-      h += `<div class="ow-card"><div class="ow-ai"><b>💬 AIのひとこと</b><br>${ai}</div></div>`;
 
       h += `</div>`;
       document.getElementById("app").innerHTML = h;
