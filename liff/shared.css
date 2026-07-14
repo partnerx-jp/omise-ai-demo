@@ -165,7 +165,7 @@ body {
 /* 色は「セル全面」でなく内側ブロックに乗せ、白の余白を残す（メリハリ） */
 .ow-shift tbody td { height: 48px; }
 .ow-shift td.tc { padding: 3px; }
-.ow-shift td.tc .tblk { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; border-radius: 4px; font-size: 11.5px; font-weight: 600; line-height: 1.25; }
+.ow-shift td.tc .tblk { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; border-radius: 4px; font-size: 10.5px; font-weight: 600; line-height: 1.25; }
 .tblk.tc-am  { background: #E4F3E6; color: #3F9E4E; }   /* 早番（緑・Airシフト） */
 .tblk.tc-day { background: #E4EEF8; color: #2C77B0; }   /* 中番（青） */
 .tblk.tc-pm  { background: #FBEEDD; color: #CE7E24; }   /* 遅番（橙） */
