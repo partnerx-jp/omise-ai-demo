@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://partnerx-jp.github.io; connect-src 'self' https://partnerx-jp.github.io https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <link rel="stylesheet" href="../shared.css?v=20260714">
+  <title>お店のAIワーカー</title>
+  <style>
+    .ow-wrap { padding: 10px 16px; }
+    /* 口コミ（読み取り元・参照） */
+    .rv { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; background: #FAFBFC; }
+    .rv .top { display: flex; align-items: center; gap: 8px; }
+    .rv .stars { font-size: 15px; letter-spacing: 1px; color: var(--star); }
+    .rv .stars .off { color: #dcdfe3; }
+    .rv .score { font-size: 13px; font-weight: 700; color: var(--ink); }
+    .rv .who { margin-left: auto; font-size: 12px; color: var(--sub); }
+    .rv .meta { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .rv .body { font-size: 13px; line-height: 1.7; color: var(--ink); margin-top: 8px; }
+    /* 返信テキストエリア */
+    .reply-ta { min-height: 168px; line-height: 1.8; }
+    .cnt { text-align: right; font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .hint { font-size: 11.5px; color: var(--sub); line-height: 1.7; margin: 4px 2px 0; }
+    /* 完了画面 */
+    .ok-mark { text-align: center; padding: 44px 22px; }
+    .ok-mark .circle { width: 64px; height: 64px; border-radius: 999px; background: #06C755; color: #fff; font-size: 34px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .ok-mark h2 { font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+    .ok-mark p { font-size: 13px; color: var(--sub); line-height: 1.8; margin: 0; }
+  </style>
+</head>
+<body class="ow-hasbottom">
+  <div class="ow-header">
+    <div class="ttl">口コミ返信の編集</div>
+    <div class="sub" id="sub">読み込み中…</div>
+  </div>
+  <div id="app"><div class="ow-loading">読み込み中…</div></div>
+  <div class="ow-cta" id="ctabar" style="display:none">
+    <button class="ow-btn" id="submit" style="background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">この内容で投稿する</button>
+  </div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    // LIFF_ID を登録後にここへ設定すると「送信→LINEを閉じる→botが完了カードを返信」になる。
+    // 空のままでも動作（この画面内に完了表示＋CTAを出すフォールバック）。
+    const LIFF_ID = "";
+    const SHINDAN = "../shindan/";
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    let inLiff = false;
+
+    // 口コミ＆返信文面案（デモ・架空データ）
+    const REVIEW = {
+      store: "難波店", reviewer: "T.K", stars: 3, time: "17:24",
+      text: "クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。",
+      draft: "T.K様、ご来店ありがとうございます。せっかくお越しいただいたのに、製造個数が足りずお目当てのパンをご用意できず申し訳ございませんでした。今後はInstagramで焼き上がりのスケジュールや売り切れ状況をお知らせしてまいります。ぜひまたお立ち寄りください。スタッフ一同お待ちしております。\n\n難波店 店長 花岡"
+    };
+    const state = { reply: REVIEW.draft };
+
+    async function boot(){
+      try { if (LIFF_ID && window.liff) { await liff.init({ liffId: LIFF_ID }); inLiff = liff.isInClient(); } } catch(e){}
+      document.getElementById("sub").textContent = "AIの返信文面案を確認・編集できます";
+      render();
+    }
+
+    function starHTML(n){
+      let s = "";
+      for (let i=1;i<=5;i++) s += i<=n ? "★" : "<span class='off'>★</span>";
+      return s;
+    }
+
+    function render(){
+      document.getElementById("app").innerHTML = `
+        <div class="ow-wrap">
+          <div class="ow-card" style="padding:12px">
+            <div class="rv">
+              <div class="top">
+                <span class="stars">${starHTML(REVIEW.stars)}</span>
+                <span class="score">${REVIEW.stars.toFixed(1)}</span>
+                <span class="who">${esc(REVIEW.reviewer)} さん</span>
+              </div>
+              <div class="meta">Google マップ｜${esc(REVIEW.store)}｜${esc(REVIEW.time)}</div>
+              <div class="body">${esc(REVIEW.text)}</div>
+            </div>
+          </div>
+
+          <div class="ow-card">
+            <div class="ow-field" style="margin-bottom:0">
+              <label>返信文面案（編集できます）</label>
+              <textarea class="ow-textarea reply-ta" id="f_reply">${esc(state.reply)}</textarea>
+              <div class="cnt"><span id="cnt">0</span> 文字</div>
+              <p class="hint">Googleマップの口コミへの公開返信です。内容を確認し、必要なら書き換えてから投稿してください。</p>
+            </div>
+          </div>
+        </div>`;
+      const ta = document.getElementById("f_reply");
+      const cnt = () => document.getElementById("cnt").textContent = (ta.value || "").length;
+      ta.addEventListener("input", e => { state.reply = e.target.value; cnt(); });
+      cnt();
+      document.getElementById("submit").addEventListener("click", submit);
+      document.getElementById("ctabar").style.display = "";
+    }
+
+    function submit(){
+      if (!state.reply.trim()) { return; }
+      // 実機LIFF: ユーザー発言として送信 → LINEを閉じる → botが完了カードを返信
+      if (inLiff && window.liff && liff.sendMessages){
+        liff.sendMessages([{ type:"text", text:"この内容で口コミに返信します" }])
+          .then(()=> liff.closeWindow())
+          .catch(()=> showDone());
+      } else {
+        showDone();
+      }
+    }
+
+    function showDone(){
+      document.getElementById("ctabar").style.display = "none";
+      document.getElementById("app").innerHTML = `
+        <div class="ok-mark">
+          <div class="circle">✓</div>
+          <h2>この内容で返信が完了しました</h2>
+          <p>Google マップ｜${esc(REVIEW.store)}｜${esc(REVIEW.reviewer)} さんの口コミへ返信を投稿しました。<br>
+          承認した文面だけが公開されます。返信率・評価の推移もまとめてレポートします。</p>
+          <div style="margin-top:28px"><a class="ow-btn" href="${SHINDAN}" style="text-decoration:none;display:inline-flex;padding:12px 22px;background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">あなたのお店でお試し（無料相談）</a></div>
+        </div>`;
+    }
+
+    boot();
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "⭐ 難波店に新しい口コミ（★3）が届きました。AI返信案を確認して承認できます",
+  "altText": "⭐ 難波店に新しい口コミ（★3）が届きました。返信文面案を編集・確認できます",
   "contents": {
     "type": "bubble",
     "size": "kilo",
@@ -10,7 +10,7 @@
         { "type": "box", "layout": "vertical", "paddingStart": "16px", "paddingEnd": "16px", "paddingTop": "14px", "paddingBottom": "12px", "contents": [
           { "type": "text", "text": "{{date_ja}}", "size": "xs", "color": "#888888" },
           { "type": "text", "text": "⭐ 新しい口コミが届きました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm" },
-          { "type": "text", "text": "Google マップ｜難波店｜1時間前", "size": "xxs", "color": "#888888", "margin": "sm" }
+          { "type": "text", "text": "Google マップ｜難波店｜17:24", "size": "xxs", "color": "#888888", "margin": "sm" }
         ]},
         { "type": "separator", "color": "#E7E7E7" },
         { "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none", "contents": [
@@ -20,20 +20,18 @@
             { "type": "text", "text": "T.K さん", "size": "xs", "color": "#888888", "align": "end", "gravity": "center" }
           ]},
           { "type": "text", "text": "クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。", "size": "sm", "color": "#333333", "wrap": true, "margin": "md" },
-          { "type": "text", "text": "🤖 AIが返信文を用意しました", "size": "xs", "color": "#06C755", "weight": "bold", "margin": "lg" },
+          { "type": "text", "text": "返信文面案", "size": "xs", "color": "#06C755", "weight": "bold", "margin": "lg" },
           { "type": "box", "layout": "vertical", "backgroundColor": "#F5F7F8", "cornerRadius": "10px", "paddingAll": "12px", "margin": "sm", "contents": [
-            { "type": "text", "text": "T.K様、ご投稿ありがとうございます。クロワッサンをお褒めいただき嬉しく思います。夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きも承っておりますので、ぜひご利用ください。", "size": "xs", "color": "#444444", "wrap": true },
+            { "type": "text", "text": "T.K様、ご来店ありがとうございます。せっかくお越しいただいたのに、製造個数が足りずお目当てのパンをご用意できず申し訳ございませんでした。今後はInstagramで焼き上がりのスケジュールや売り切れ状況をお知らせしてまいります。ぜひまたお立ち寄りください。スタッフ一同お待ちしております。", "size": "xs", "color": "#444444", "wrap": true },
             { "type": "text", "text": "難波店 店長 花岡", "size": "xxs", "color": "#888888", "align": "end", "margin": "md" }
-          ]},
-          { "type": "text", "text": "💬 感謝＋お詫び＋次回来店の導線（2回目焼成・取り置き）まで自動で作成。内容を確認して承認するだけで投稿できます。", "size": "xxs", "color": "#888888", "wrap": true, "margin": "md" }
+          ]}
         ]}
       ]
     },
     "footer": {
       "type": "box", "layout": "vertical", "spacing": "sm", "paddingStart": "16px", "paddingEnd": "16px", "paddingBottom": "14px", "paddingTop": "0px",
       "contents": [
-        { "type": "button", "style": "secondary", "height": "sm", "color": "#EAF7EE", "action": { "type": "postback", "label": "承認して投稿", "data": "demo=review&act=posted", "displayText": "この返信で承認します" } },
-        { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "uri", "label": "あなたのお店でお試し（無料相談）", "uri": "{{liff_shindan_url}}" } }
+        { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "uri", "label": "編集・確認", "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/review-edit/" } }
       ]
     }
   }
