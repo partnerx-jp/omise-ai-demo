@@ -56,9 +56,9 @@
 
     <div class="glabel">4. リスト・表（売れ筋に前日比の列を追加）</div>
     <div class="ow-card"><h2>売れ筋 TOP</h2>
-      <div class="rankrow"><div class="rk">1</div><div class="nm">クロワッサン<div class="ow-bar"><i style="width:100%"></i></div></div><div class="dlt ow-up">+24 ↑</div><div class="amt">¥47,040</div></div>
-      <div class="rankrow"><div class="rk">2</div><div class="nm">生食パン「こむぎ」<div class="ow-bar"><i style="width:90%"></i></div></div><div class="dlt ow-down">-12 ↓</div><div class="amt">¥42,240</div></div>
-      <div class="rankrow"><div class="rk">3</div><div class="nm">カレーパン<div class="ow-bar"><i style="width:79%"></i></div></div><div class="dlt ow-up">+10 ↑</div><div class="amt">¥37,200</div></div>
+      <div class="rankrow"><div class="rk">1</div><div class="nm">クロワッサン <small class="ow-up" style="font-size:11px;font-weight:700">+24↑</small><div class="ow-bar"><i style="width:100%"></i></div></div><div class="amt">¥47,040</div></div>
+      <div class="rankrow"><div class="rk">2</div><div class="nm">生食パン「こむぎ」 <small class="ow-down" style="font-size:11px;font-weight:700">-12↓</small><div class="ow-bar"><i style="width:90%"></i></div></div><div class="amt">¥42,240</div></div>
+      <div class="rankrow"><div class="rk">3</div><div class="nm">カレーパン <small class="ow-up" style="font-size:11px;font-weight:700">+10↑</small><div class="ow-bar"><i style="width:79%"></i></div></div><div class="amt">¥37,200</div></div>
     </div>
     <div class="ow-card"><h2>損益表</h2>
       <table class="ow-table"><tbody>
@@ -145,28 +145,34 @@
         <div class="ow-row"><span class="k">2（火）</span><div class="ow-chips"><span class="ow-chip on">早番</span><span class="ow-chip">中番</span><span class="ow-chip">遅番</span></div></div>
         <div class="ow-row"><span class="k">4（木）</span><div class="ow-chips"><span class="ow-chip">早番</span><span class="ow-chip on">中番</span><span class="ow-chip">遅番</span></div></div>
       </div>
-      <div style="margin-top:16px"><button class="ow-btn shift">シフトを提出</button></div>
+      <div style="margin-top:16px"><button class="ow-btn">シフトを提出</button></div>
     </div>
 
     <div class="glabel">10. シフト希望入力（時間＋メモ）</div>
     <div class="ow-card">
       <h2>希望時間を入力（来月・○の日）</h2>
       <div class="ow-dayrow">
-        <div class="top"><span class="dk">6/16(火)</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm2" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="16:00"></div></div>
-        <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        <span class="dk">6/16(火)</span>
+        <div class="body">
+          <div class="top"><input type="time" class="ow-input tm2" value="10:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="16:00"></div>
+          <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        </div>
       </div>
       <div class="ow-dayrow">
-        <div class="top"><span class="dk">6/17(水)</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm2" value="17:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="22:00"></div></div>
-        <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        <span class="dk">6/17(水)</span>
+        <div class="body">
+          <div class="top"><input type="time" class="ow-input tm2" value="17:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="22:00"></div>
+          <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        </div>
       </div>
       <div class="ow-dayrow">
-        <div class="top"><span class="dk sat">6/20(土)</span>
-          <div class="tmwrap"><input type="time" class="ow-input tm2" value="09:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="15:00"></div></div>
-        <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        <span class="dk sat">6/20(土)</span>
+        <div class="body">
+          <div class="top"><input type="time" class="ow-input tm2" value="09:00"><span class="sep">〜</span><input type="time" class="ow-input tm2" value="15:00"></div>
+          <input class="ow-memo" placeholder="メモがある場合は入力してください">
+        </div>
       </div>
-      <div style="margin-top:16px"><button class="ow-btn shift">シフトを提出</button></div>
+      <div style="margin-top:16px"><button class="ow-btn">シフトを提出</button></div>
     </div>
 
     <div class="glabel">11. シフトカレンダー（Airシフト調・タップで詳細）</div>

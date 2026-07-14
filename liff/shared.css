@@ -64,15 +64,15 @@ body {
 .ow-scope { font-size: 13px; color: var(--sub); font-weight: 600; }
 .ow-hero-lbl { font-size: 12px; color: var(--sub); margin-top: 2px; }
 .ow-hero-main { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
-.ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; }
+.ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; padding-left: .7em; }
 .ow-hero-delta { text-align: right; }
 .ow-hero-delta .dl { display: block; font-size: 11px; color: var(--sub); }
 .ow-hero-delta .dv { display: block; font-size: 16px; font-weight: 700; margin-top: 1px; }
-/* 下段 2列（ラベルは各ボックス右上・数字は中央） */
+/* 下段 2列（ラベルは各ボックス左上・数字は中央） */
 .ow-kpi2 { display: flex; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
 .ow-kpi2 > div { flex: 1; padding: 0 4px; }
 .ow-kpi2 > div + div { border-left: 1px solid var(--line); }
-.ow-kpi2 .l { text-align: right; font-size: 11px; color: var(--sub); }
+.ow-kpi2 .l { text-align: left; font-size: 11px; color: var(--sub); }
 .ow-kpi2 .v { text-align: center; font-size: 20px; font-weight: 400; color: var(--brand); margin-top: 3px; }
 
 /* KPI 3列（従来・他画面互換用） */
@@ -175,17 +175,16 @@ body {
 .dayin .ow-chip { padding: 4px 12px; font-size: 12px; }
 .ow-input.tm { width: auto; padding: 7px 9px; font-size: 14px; }
 
-/* ===== シフト系＝Airシフト（緑テーマ） ===== */
-:root { --shift: #4CAF50; --shift-h: #57C167; --shift-tint: #EAF6EC; }
-.ow-btn.shift { background: var(--shift); border-color: #3E9E4C; }
-.ow-btn.shift:active { background: #3E9E4C; }
+/* ===== シフト系＝Airシフト（青テーマ） ===== */
+:root { --shift: #00A0E9; --shift-h: #1BA8E8; --shift-tint: #E5F5FC; }
 
-/* シフト時間入力＋メモ（縦幅コンパクト） */
-.ow-dayrow { padding: 10px 0; border-top: 1px solid var(--line); }
+/* シフト時間入力＋メモ（日付は上下中央・メモは時間ボックスの下の範囲に収める） */
+.ow-dayrow { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); }
 .ow-dayrow:first-child { border-top: none; }
-.ow-dayrow .top { display: flex; align-items: center; gap: 8px; }
-.ow-dayrow .dk { width: 66px; font-weight: 600; font-size: 13px; }
+.ow-dayrow .dk { flex: 0 0 66px; font-weight: 600; font-size: 13px; }
 .ow-dayrow .dk.sat { color: #2E7BC4; } .ow-dayrow .dk.sun { color: var(--neg); }
+.ow-dayrow .body { flex: 1; min-width: 0; }
+.ow-dayrow .body .top { display: flex; align-items: center; gap: 8px; }
 .ow-input.tm2 { width: auto; padding: 6px 8px; font-size: 13px; }
 .ow-memo { width: 100%; margin-top: 7px; font-size: 12px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 7px 10px; font-family: inherit; }
 .ow-memo::placeholder { color: var(--muted); }
@@ -203,11 +202,13 @@ body {
 .ow-cal .c.out .dn { color: #CCC; }
 .ow-cal .c.sel { background: var(--shift-tint); }
 .ow-cal .c.sel .dn { display: inline-flex; width: 22px; height: 22px; border-radius: 999px; background: var(--shift); color: #fff; align-items: center; justify-content: center; }
-.ow-cal .pill { display: block; margin-top: 3px; background: var(--shift-tint); color: #3B9A4A; border-radius: 3px; padding: 2px 2px; font-size: 9px; line-height: 1.2; text-align: center; overflow: hidden; }
+.ow-cal .pill { display: block; margin-top: 3px; background: var(--shift-tint); color: #0A78B5; border-radius: 3px; padding: 2px 2px; font-size: 9px; line-height: 1.2; text-align: center; overflow: hidden; }
 .ow-cal .dots { margin-top: 3px; text-align: center; }
 .ow-cal .dots i { display: inline-block; width: 5px; height: 5px; border-radius: 999px; margin: 0 1px; vertical-align: middle; }
 .ow-cal-detail { background: #F6F7F8; font-size: 12px; color: var(--sub); padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; }
-.ow-cal-shift { border: 1px solid var(--line); border-radius: 999px; padding: 11px 18px; display: flex; align-items: center; gap: 16px; margin-top: 10px; font-size: 13px; }
+/* 詳細はボックスにせず、線と余白で（Airトンマナ） */
+.ow-cal-shift { display: flex; align-items: center; gap: 18px; padding: 12px 2px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.ow-cal-shift:last-child { border-bottom: none; }
 .ow-cal-shift .tm { font-size: 12px; color: var(--sub); line-height: 1.3; white-space: nowrap; }
 
 /* シフト希望入力（smashif風・日ごとに ○希望あり / ×希望なし） */
