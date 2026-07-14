@@ -6,90 +6,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <link rel="stylesheet" href="../shared.css">
   <title>日次実績レポート｜お店AI</title>
   <style>
-    :root { --green:#1DB446; --green-d:#2E7D32; --red:#d9534f; --ink:#222; --sub:#8c8c8c; --line:#eee; --bg:#f5f7f5; }
-    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-    body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:88px; }
-    header { background:var(--green); color:#fff; padding:16px 18px calc(16px + env(safe-area-inset-top,0)); }
-    header .ttl { font-weight:700; font-size:16px; }
-    header .sub { font-size:12px; opacity:.9; margin-top:3px; }
-    .tabs { display:flex; gap:6px; padding:12px 14px 4px; overflow-x:auto; }
-    .tab { flex:0 0 auto; padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:#fff; font-size:13px; color:#555; cursor:pointer; }
-    .tab.on { background:var(--green); color:#fff; border-color:var(--green); font-weight:700; }
-    .wrap { padding:8px 14px; }
-    .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,.04); }
-    .card h2 { font-size:13px; color:var(--sub); margin:0 0 10px; font-weight:700; }
-    .kpis { display:flex; gap:10px; }
-    .kpi { flex:1; text-align:center; }
-    .kpi .lbl { font-size:11px; color:var(--sub); }
-    .kpi .val { font-size:19px; font-weight:800; margin-top:2px; }
-    .kpi .dlt { font-size:11px; margin-top:2px; font-weight:700; }
-    .up { color:var(--green-d); } .down { color:var(--red); }
-    .hero .val { font-size:30px; font-weight:800; letter-spacing:-.5px; }
-    .hero .lbl { font-size:12px; color:var(--sub); }
-    .chartbox { position:relative; height:190px; }
-    .prod { display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--line); }
-    .prod:first-child { border-top:none; }
-    .prod .rk { width:22px; height:22px; border-radius:6px; background:#eef7ef; color:var(--green-d); font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; }
-    .prod .nm { flex:1; font-size:13px; }
-    .prod .nm small { color:var(--sub); font-size:11px; margin-left:4px; }
-    .prod .qty { font-size:12px; color:var(--sub); }
-    .prod .amt { font-size:13px; font-weight:700; width:74px; text-align:right; }
-    .bar { height:5px; border-radius:3px; background:#eef7ef; margin-top:5px; overflow:hidden; }
-    .bar > i { display:block; height:100%; background:var(--green); }
-    .prog { height:10px; border-radius:6px; background:#eee; overflow:hidden; }
-    .prog > i { display:block; height:100%; background:var(--green); }
-    .row { display:flex; justify-content:space-between; font-size:12px; margin-top:8px; color:#555; }
-    .ai { background:#f0f7f1; border-radius:12px; padding:12px 14px; font-size:12.5px; line-height:1.7; color:#3b5b40; }
-    .ai b { color:var(--green-d); }
-    .alert { background:#fff7ed; border:1px solid #fde3c4; border-radius:12px; padding:10px 12px; font-size:12px; color:#8a5a1a; margin-top:10px; }
-    .cta { position:fixed; left:0; right:0; bottom:0; padding:12px 14px calc(12px + env(safe-area-inset-bottom,0)); background:linear-gradient(180deg,rgba(245,247,245,0),var(--bg) 24%); }
-    .cta button { width:100%; border:none; background:var(--green); color:#fff; font-size:15px; font-weight:700; padding:14px; border-radius:12px; box-shadow:0 4px 14px rgba(29,180,70,.35); cursor:pointer; }
-    .loading,.error { text-align:center; color:var(--sub); padding:60px 20px; font-size:14px; }
-    .error { color:var(--red); }
+    .chartbox { position: relative; height: 190px; }
+    .rankrow { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); }
+    .rankrow:first-child { border-top: none; }
+    .rankrow .rk { width: 20px; color: var(--sub); font-size: 12px; font-weight: 700; }
+    .rankrow .nm { flex: 1; font-size: 13px; }
+    .rankrow .nm small { font-size: 11px; font-weight: 700; }
+    .rankrow .nm .ow-bar { margin-top: 5px; }
+    .rankrow .qty { font-size: 12px; color: var(--sub); width: 44px; text-align: right; }
+    .rankrow .amt { font-size: 13px; font-weight: 700; width: 74px; text-align: right; }
   </style>
 </head>
-<body>
-  <header>
-    <div class="ttl">📊 昨日の実績（<span id="scope">全店</span>）</div>
-    <div class="sub" id="datebrand">読み込み中…</div>
-  </header>
-  <div class="tabs" id="tabs"></div>
-  <div id="app"><div class="loading">読み込み中…</div></div>
-  <div class="cta"><button id="ctaBtn">🔍 あなたのお店の数字で見る（無料診断）</button></div>
+<body class="ow-hasbottom">
+  <div class="ow-header">
+    <div class="ttl">📊 昨日の実績</div>
+    <div class="sub" id="sub">読み込み中…</div>
+  </div>
+  <div class="ow-tabs" id="tabs"></div>
+  <div id="app"><div class="ow-loading">読み込み中…</div></div>
+  <div class="ow-cta"><button class="ow-btn" id="cta">🔍 あなたのお店の数字で見る（無料診断）</button></div>
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script src="../vendor/chart.umd.min.js"></script>
   <script>
-    // A-2でLIFF登録後にIDを差し込む。空でもローカル/ブラウザ単体で動く（graceful）。
-    const LIFF_ID = "";
-    const SHINDAN_URL = "../shindan/";
-
+    const LIFF_ID = "", SHINDAN = "../shindan/";
+    const BLUE = "#00A0E9";
     const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
     const pct = n => (n>=0?"+":"") + (n*100).toFixed(1) + "%";
+    const arrow = n => n>=0 ? "↑" : "↓";
     const WD = ["日","月","火","水","木","金","土"];
+    const grid = { grid:{color:"#F0F0F0"}, ticks:{font:{size:10},color:"#999"} };
+    const gridX = { grid:{display:false}, ticks:{font:{size:10},color:"#999"} };
+    const tip = fn => ({ enabled:true, displayColors:false, callbacks:{ title:()=>"", label:fn } });
     let DATA, charts = {};
 
-    function yesterdayLabel(offset){
-      const d = new Date(); d.setDate(d.getDate() + (offset||-1));
-      return `${d.getMonth()+1}/${d.getDate()}(${WD[d.getDay()]})`;
-    }
+    function dLabel(off){ const d=new Date(); d.setDate(d.getDate()+(off||-1)); return `${d.getMonth()+1}/${d.getDate()}(${WD[d.getDay()]})`; }
 
     async function boot(){
-      try { if (LIFF_ID && window.liff) { await liff.init({ liffId: LIFF_ID }).catch(()=>{}); } } catch(e){}
-      try {
-        const res = await fetch("../../data/demo-data.json", { cache:"no-store" });
-        if (!res.ok) throw new Error(res.status);
-        DATA = await res.json();
-      } catch(e){
-        document.getElementById("app").innerHTML =
-          `<div class="error">データを読み込めませんでした（${e.message}）</div>`;
-        return;
-      }
+      try { if (LIFF_ID && window.liff) await liff.init({liffId:LIFF_ID}).catch(()=>{}); } catch(e){}
+      try { const r = await fetch("../../data/demo-data.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status); DATA = await r.json(); }
+      catch(e){ document.getElementById("app").innerHTML = `<div class="ow-error">データを読み込めませんでした（${e.message}）</div>`; return; }
       const dr = DATA.daily_report;
-      document.getElementById("datebrand").textContent =
-        `${yesterdayLabel(dr.date_offset)} ・ ${DATA.company.brand}`;
+      document.getElementById("sub").textContent = `${dLabel(dr.date_offset)} ・ ${DATA.company.brand}`;
       buildTabs();
       render("all");
     }
@@ -97,107 +58,70 @@
     function buildTabs(){
       const tabs = [{id:"all",name:"全店"}].concat(DATA.stores.map(s=>({id:s.id,name:s.name})));
       const el = document.getElementById("tabs");
-      el.innerHTML = tabs.map((t,i)=>`<div class="tab${i===0?' on':''}" data-id="${t.id}">${t.name}</div>`).join("");
-      el.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
-        el.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
-        t.classList.add("on"); render(t.dataset.id);
+      el.innerHTML = tabs.map((t,i)=>`<span class="ow-tab${i===0?' on':''}" data-id="${t.id}">${t.name}</span>`).join("");
+      el.querySelectorAll(".ow-tab").forEach(t=>t.addEventListener("click",()=>{
+        el.querySelectorAll(".ow-tab").forEach(x=>x.classList.remove("on")); t.classList.add("on"); render(t.dataset.id);
       }));
     }
-
-    function storeName(id){ const s = DATA.stores.find(s=>s.id===id); return s?s.name:"全店"; }
+    const storeName = id => { const s=DATA.stores.find(s=>s.id===id); return s?s.name:"全店"; };
 
     function render(scope){
       const dr = DATA.daily_report;
-      document.getElementById("scope").textContent = scope==="all" ? "全店" : storeName(scope);
       Object.values(charts).forEach(c=>c&&c.destroy()); charts = {};
-
-      // KPI
-      let net, cust, avg, vd;
+      let net,cust,avg,vd;
       if (scope==="all"){ const t=dr.total; net=t.net_sales; cust=t.customers; avg=t.avg_spend; vd=t.vs_prev_day; }
       else { const b=dr.by_store.find(x=>x.store===scope); net=b.net_sales; cust=b.customers; avg=b.avg_spend; vd=b.vs_prev_day; }
+      const hours = scope==="all" ? sumHourly(dr.hourly_sales) : dr.hourly_sales[scope].map(h=>({hour:h.hour,sales:h.sales}));
 
-      // hourly
-      const hours = scope==="all"
-        ? sumHourly(dr.hourly_sales)
-        : dr.hourly_sales[scope].map(h=>({hour:h.hour,sales:h.sales}));
-
-      let html = "";
-      // hero
-      html += `<div class="card hero">
-        <div class="lbl">純売上（税抜）</div>
-        <div class="val">${yen(net)}</div>
-        <div class="kpis" style="margin-top:12px">
-          <div class="kpi"><div class="lbl">前日比</div><div class="dlt ${vd>=0?'up':'down'}">${pct(vd)}</div></div>
-          <div class="kpi"><div class="lbl">客数</div><div class="val" style="font-size:17px">${cust}人</div></div>
-          <div class="kpi"><div class="lbl">客単価</div><div class="val" style="font-size:17px">${yen(avg)}</div></div>
+      let h = `<div class="ow-wrap">`;
+      h += `<div class="ow-card">
+        <div class="ow-scope">${scope==="all"?"全店":storeName(scope)}</div>
+        <div class="ow-hero-lbl">純売上（税抜）</div>
+        <div class="ow-hero-main">
+          <span class="ow-hero-val">${yen(net)}</span>
+          <span class="ow-hero-delta"><span class="dl">前日比</span><span class="dv ${vd>=0?'ow-up':'ow-down'}">${pct(vd)}</span></span>
+        </div>
+        <div class="ow-kpi2">
+          <div><div class="l">客数</div><div class="v">${cust}人</div></div>
+          <div><div class="l">客単価</div><div class="v">${yen(avg)}</div></div>
         </div></div>`;
-      // hourly chart
-      html += `<div class="card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
-      // top products (全店データのみ・注記)
-      const tp = dr.top_products;
-      const maxSales = Math.max(...tp.map(p=>p.sales));
-      html += `<div class="card"><h2>売れ筋 TOP5${scope==="all"?"":"（全店）"}</h2>` +
-        tp.map(p=>`<div class="prod">
-          <div class="rk">${p.rank}</div>
-          <div class="nm">${p.name}<small>${p.dept}</small>
-            <div class="bar"><i style="width:${Math.round(p.sales/maxSales*100)}%"></i></div>
-          </div>
-          <div class="qty">${p.qty}個</div>
-          <div class="amt">${yen(p.sales)}</div>
-        </div>`).join("") + `</div>`;
-      // last 7 days
-      html += `<div class="card"><h2>直近7日間の全店売上</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
-      // month progress
+      h += `<div class="ow-card"><h2>時間帯別 売上</h2><div class="chartbox"><canvas id="hcv"></canvas></div></div>`;
+      const tp = dr.top_products, mx = Math.max(...tp.map(p=>p.sales));
+      h += `<div class="ow-card"><h2>売れ筋 TOP5${scope==="all"?"":"（全店）"}</h2>` +
+        tp.map(p=>`<div class="rankrow"><div class="rk">${p.rank}</div>
+          <div class="nm">${p.name} <small class="${p.vs_prev>=0?'ow-up':'ow-down'}">${p.vs_prev>=0?'+':''}${p.vs_prev}${arrow(p.vs_prev)}</small>
+            <div class="ow-bar"><i style="width:${Math.round(p.sales/mx*100)}%"></i></div></div>
+          <div class="qty">${p.qty}個</div><div class="amt">${yen(p.sales)}</div></div>`).join("") + `</div>`;
+      h += `<div class="ow-card"><h2>直近7日間の全店売上</h2><div class="chartbox"><canvas id="wcv"></canvas></div></div>`;
       const mp = dr.month_progress;
-      const rate = Math.min(mp.cum_sales/mp.cum_target,1.2);
-      html += `<div class="card"><h2>今月の進捗（経過${mp.elapsed_days}日）</h2>
-        <div class="prog"><i style="width:${Math.min(rate*100,100)}%"></i></div>
-        <div class="row"><span>累計 ${yen(mp.cum_sales)}</span><span class="${mp.vs_target>=0?'up':'down'}">目標比 ${pct(mp.vs_target)}</span></div></div>`;
-      // sellout alert (難波 or 全店で表示)
-      if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store)){
-        html += `<div class="alert">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div>`;
-      }
-      // AI comment
-      html += `<div class="card"><div class="ai"><b>💬 AIのひとこと</b><br>${dr.ai_comment}</div></div>`;
-
-      document.getElementById("app").innerHTML = html;
-      drawHourly(hours);
-      drawWeek(dr.last7days);
+      h += `<div class="ow-card"><h2>今月の進捗（経過${mp.elapsed_days}日）</h2>
+        <div class="ow-prog"><i style="width:${Math.min(mp.cum_sales/mp.cum_target*100,100)}%"></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:var(--sub)"><span>累計 ${yen(mp.cum_sales)}</span><span class="${mp.vs_target>=0?'ow-up':'ow-down'}">目標比 ${pct(mp.vs_target)}</span></div></div>`;
+      if (dr.sellout_alert && (scope==="all" || scope===dr.sellout_alert.store))
+        h += `<div class="ow-card"><div class="ow-warn">⚠️ ${storeName(dr.sellout_alert.store)}：${dr.sellout_alert.items.join(" / ")}<br>完売が早く、夕方の機会損失が出ています。</div></div>`;
+      h += `<div class="ow-card"><div class="ow-ai"><b>💬 AIのひとこと</b><br>${dr.ai_comment}</div></div>`;
+      h += `</div>`;
+      document.getElementById("app").innerHTML = h;
+      drawHourly(hours); drawWeek(dr.last7days);
     }
 
-    function sumHourly(hs){
-      const map = {};
-      Object.values(hs).forEach(arr=>arr.forEach(h=>{ map[h.hour]=(map[h.hour]||0)+h.sales; }));
-      return Object.keys(map).map(h=>({hour:+h,sales:map[h]})).sort((a,b)=>a.hour-b.hour);
-    }
+    function sumHourly(hs){ const m={}; Object.values(hs).forEach(a=>a.forEach(x=>m[x.hour]=(m[x.hour]||0)+x.sales));
+      return Object.keys(m).map(h=>({hour:+h,sales:m[h]})).sort((a,b)=>a.hour-b.hour); }
 
     function drawHourly(rows){
-      charts.h = new Chart(document.getElementById("hcv"), {
-        type:"bar",
-        data:{ labels:rows.map(r=>r.hour+"時"),
-          datasets:[{ data:rows.map(r=>r.sales), backgroundColor:"#1DB446", borderRadius:4 }] },
-        options:baseOpts("¥")
-      });
+      charts.h = new Chart(document.getElementById("hcv"), { type:"bar",
+        data:{ labels:rows.map(r=>r.hour+"時"), datasets:[{ data:rows.map(r=>r.sales), backgroundColor:BLUE, borderRadius:3 }] },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
+          scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
     }
     function drawWeek(rows){
-      charts.w = new Chart(document.getElementById("wcv"), {
-        type:"line",
-        data:{ labels:rows.map(r=>r.dow),
-          datasets:[{ data:rows.map(r=>r.sales), borderColor:"#1DB446", backgroundColor:"rgba(29,180,70,.12)",
-            fill:true, tension:.35, pointRadius:3, pointBackgroundColor:"#1DB446" }] },
-        options:baseOpts("¥")
-      });
-    }
-    function baseOpts(unit){
-      return { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false},
-          tooltip:{ callbacks:{ label:c=> unit + Number(c.parsed.y).toLocaleString("ja-JP") } } },
-        scales:{ x:{ grid:{display:false}, ticks:{ font:{size:10}, color:"#999" } },
-          y:{ grid:{color:"#f0f0f0"}, ticks:{ font:{size:10}, color:"#999",
-            callback:v=> v>=10000 ? (v/10000)+"万" : v } } } };
+      charts.w = new Chart(document.getElementById("wcv"), { type:"line",
+        data:{ labels:rows.map(r=>r.dow), datasets:[{ data:rows.map(r=>r.sales), borderColor:BLUE, backgroundColor:"rgba(0,160,233,.10)", fill:true, tension:.35, pointRadius:3, pointBackgroundColor:BLUE }] },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tip(c=>yen(c.parsed.y))},
+          scales:{x:gridX,y:{...grid,ticks:{...grid.ticks,callback:v=>v>=10000?v/10000+"万":v}}} } });
     }
 
-    document.getElementById("ctaBtn").addEventListener("click",()=>{ location.href = SHINDAN_URL; });
+    document.getElementById("cta").addEventListener("click",()=>{ location.href = SHINDAN; });
     boot();
   </script>
 </body>

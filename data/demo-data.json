@@ -16,7 +16,6 @@
       "shift_request": "対象=来月1〜15日 / 締切=今月20日"
     }
   },
-
   "company": {
     "name": "株式会社こむぎ堂",
     "brand": "ベーカリーこむぎ堂",
@@ -24,15 +23,28 @@
     "business_hours": "7:00-19:00",
     "prod_start": "4:30",
     "business_days": 26,
-    "fl_target": 0.570
+    "fl_target": 0.57
   },
-
   "stores": [
-    { "id": "umeda",        "name": "梅田店",   "manager": "山口 けんじ", "area_kw": "梅田 パン屋" },
-    { "id": "shinsaibashi", "name": "心斎橋店", "manager": "井上 ちほ",   "area_kw": "心斎橋 パン屋" },
-    { "id": "namba",        "name": "難波店",   "manager": "花岡 だいち", "area_kw": "難波 パン屋" }
+    {
+      "id": "umeda",
+      "name": "梅田店",
+      "manager": "山口 けんじ",
+      "area_kw": "梅田 パン屋"
+    },
+    {
+      "id": "shinsaibashi",
+      "name": "心斎橋店",
+      "manager": "井上 ちほ",
+      "area_kw": "心斎橋 パン屋"
+    },
+    {
+      "id": "namba",
+      "name": "難波店",
+      "manager": "花岡 だいち",
+      "area_kw": "難波 パン屋"
+    }
   ],
-
   "daily_report": {
     "date_offset": -1,
     "total": {
@@ -44,90 +56,461 @@
       "target_achievement": 1.02
     },
     "by_store": [
-      { "store": "umeda",        "net_sales": 249100, "customers": 265, "avg_spend": 940, "vs_prev_day": 0.062 },
-      { "store": "shinsaibashi", "net_sales": 236220, "customers": 254, "avg_spend": 930, "vs_prev_day": 0.048 },
-      { "store": "namba",        "net_sales": 205200, "customers": 228, "avg_spend": 900, "vs_prev_day": 0.051 }
+      {
+        "store": "umeda",
+        "net_sales": 249100,
+        "customers": 265,
+        "avg_spend": 940,
+        "vs_prev_day": 0.062
+      },
+      {
+        "store": "shinsaibashi",
+        "net_sales": 236220,
+        "customers": 254,
+        "avg_spend": 930,
+        "vs_prev_day": 0.048
+      },
+      {
+        "store": "namba",
+        "net_sales": 205200,
+        "customers": 228,
+        "avg_spend": 900,
+        "vs_prev_day": 0.051
+      }
     ],
     "hourly_sales": {
-      "umeda":        [ {"hour":7,"sales":22400},{"hour":8,"sales":29900},{"hour":9,"sales":22400},{"hour":10,"sales":14900},{"hour":11,"sales":19900},{"hour":12,"sales":32400},{"hour":13,"sales":24900},{"hour":14,"sales":12500},{"hour":15,"sales":12500},{"hour":16,"sales":12500},{"hour":17,"sales":22400},{"hour":18,"sales":14900},{"hour":19,"sales":7500} ],
-      "shinsaibashi": [ {"hour":7,"sales":21300},{"hour":8,"sales":28300},{"hour":9,"sales":21300},{"hour":10,"sales":14200},{"hour":11,"sales":18900},{"hour":12,"sales":30700},{"hour":13,"sales":23600},{"hour":14,"sales":11800},{"hour":15,"sales":11800},{"hour":16,"sales":11800},{"hour":17,"sales":21300},{"hour":18,"sales":14200},{"hour":19,"sales":7020} ],
-      "namba":        [ {"hour":7,"sales":18500},{"hour":8,"sales":24600},{"hour":9,"sales":18500},{"hour":10,"sales":12300},{"hour":11,"sales":16400},{"hour":12,"sales":26700},{"hour":13,"sales":20500},{"hour":14,"sales":10300},{"hour":15,"sales":10300},{"hour":16,"sales":10300},{"hour":17,"sales":18500},{"hour":18,"sales":12300},{"hour":19,"sales":6000} ]
+      "umeda": [
+        {
+          "hour": 7,
+          "sales": 22400
+        },
+        {
+          "hour": 8,
+          "sales": 29900
+        },
+        {
+          "hour": 9,
+          "sales": 22400
+        },
+        {
+          "hour": 10,
+          "sales": 14900
+        },
+        {
+          "hour": 11,
+          "sales": 19900
+        },
+        {
+          "hour": 12,
+          "sales": 32400
+        },
+        {
+          "hour": 13,
+          "sales": 24900
+        },
+        {
+          "hour": 14,
+          "sales": 12500
+        },
+        {
+          "hour": 15,
+          "sales": 12500
+        },
+        {
+          "hour": 16,
+          "sales": 12500
+        },
+        {
+          "hour": 17,
+          "sales": 22400
+        },
+        {
+          "hour": 18,
+          "sales": 14900
+        },
+        {
+          "hour": 19,
+          "sales": 7500
+        }
+      ],
+      "shinsaibashi": [
+        {
+          "hour": 7,
+          "sales": 21300
+        },
+        {
+          "hour": 8,
+          "sales": 28300
+        },
+        {
+          "hour": 9,
+          "sales": 21300
+        },
+        {
+          "hour": 10,
+          "sales": 14200
+        },
+        {
+          "hour": 11,
+          "sales": 18900
+        },
+        {
+          "hour": 12,
+          "sales": 30700
+        },
+        {
+          "hour": 13,
+          "sales": 23600
+        },
+        {
+          "hour": 14,
+          "sales": 11800
+        },
+        {
+          "hour": 15,
+          "sales": 11800
+        },
+        {
+          "hour": 16,
+          "sales": 11800
+        },
+        {
+          "hour": 17,
+          "sales": 21300
+        },
+        {
+          "hour": 18,
+          "sales": 14200
+        },
+        {
+          "hour": 19,
+          "sales": 7020
+        }
+      ],
+      "namba": [
+        {
+          "hour": 7,
+          "sales": 18500
+        },
+        {
+          "hour": 8,
+          "sales": 24600
+        },
+        {
+          "hour": 9,
+          "sales": 18500
+        },
+        {
+          "hour": 10,
+          "sales": 12300
+        },
+        {
+          "hour": 11,
+          "sales": 16400
+        },
+        {
+          "hour": 12,
+          "sales": 26700
+        },
+        {
+          "hour": 13,
+          "sales": 20500
+        },
+        {
+          "hour": 14,
+          "sales": 10300
+        },
+        {
+          "hour": 15,
+          "sales": 10300
+        },
+        {
+          "hour": 16,
+          "sales": 10300
+        },
+        {
+          "hour": 17,
+          "sales": 18500
+        },
+        {
+          "hour": 18,
+          "sales": 12300
+        },
+        {
+          "hour": 19,
+          "sales": 6000
+        }
+      ]
     },
     "top_products": [
-      { "rank": 1, "name": "クロワッサン",         "dept": "菓子パン",     "price": 280, "qty": 168, "sales": 47040 },
-      { "rank": 2, "name": "生食パン「こむぎ」",     "dept": "食パン",       "price": 880, "qty": 48,  "sales": 42240 },
-      { "rank": 3, "name": "カレーパン",           "dept": "惣菜パン",     "price": 240, "qty": 155, "sales": 37200 },
-      { "rank": 4, "name": "明太フランス",         "dept": "ハード系",     "price": 380, "qty": 82,  "sales": 31160 },
-      { "rank": 5, "name": "たまごサンド",         "dept": "サンドイッチ", "price": 420, "qty": 64,  "sales": 26880 }
+      {
+        "rank": 1,
+        "name": "クロワッサン",
+        "dept": "菓子パン",
+        "price": 280,
+        "qty": 168,
+        "sales": 47040,
+        "vs_prev": 24
+      },
+      {
+        "rank": 2,
+        "name": "生食パン「こむぎ」",
+        "dept": "食パン",
+        "price": 880,
+        "qty": 48,
+        "sales": 42240,
+        "vs_prev": -12
+      },
+      {
+        "rank": 3,
+        "name": "カレーパン",
+        "dept": "惣菜パン",
+        "price": 240,
+        "qty": 155,
+        "sales": 37200,
+        "vs_prev": 10
+      },
+      {
+        "rank": 4,
+        "name": "明太フランス",
+        "dept": "ハード系",
+        "price": 380,
+        "qty": 82,
+        "sales": 31160,
+        "vs_prev": 6
+      },
+      {
+        "rank": 5,
+        "name": "たまごサンド",
+        "dept": "サンドイッチ",
+        "price": 420,
+        "qty": 64,
+        "sales": 26880,
+        "vs_prev": -3
+      }
     ],
     "sellout_alert": {
       "store": "namba",
-      "items": [ "クロワッサン 16:10完売", "カレーパン 15:40完売" ],
+      "items": [
+        "クロワッサン 16:10完売",
+        "カレーパン 15:40完売"
+      ],
       "note": "完売が早すぎる=夕方の機会損失。難波の縦串ストーリーの起点"
     },
     "last7days": [
-      { "dow": "水", "sales": 671000 },
-      { "dow": "木", "sales": 702000 },
-      { "dow": "金", "sales": 735000 },
-      { "dow": "土", "sales": 812000 },
-      { "dow": "日", "sales": 768000 },
-      { "dow": "月", "sales": 642000 },
-      { "dow": "火", "sales": 690520 }
+      {
+        "dow": "水",
+        "sales": 671000
+      },
+      {
+        "dow": "木",
+        "sales": 702000
+      },
+      {
+        "dow": "金",
+        "sales": 735000
+      },
+      {
+        "dow": "土",
+        "sales": 812000
+      },
+      {
+        "dow": "日",
+        "sales": 768000
+      },
+      {
+        "dow": "月",
+        "sales": 642000
+      },
+      {
+        "dow": "火",
+        "sales": 690520
+      }
     ],
-    "month_progress": { "elapsed_days": 8, "cum_sales": 5480000, "cum_target": 5525000, "vs_target": -0.008 },
+    "month_progress": {
+      "elapsed_days": 8,
+      "cum_sales": 5480000,
+      "cum_target": 5525000,
+      "vs_target": -0.008
+    },
     "ai_comment": "全店とも前日比プラス。ただし難波店はクロワッサンが16時台に完売しており、夕方の機会損失が出ています。焼成の後ろ倒しで拾える可能性があります。"
   },
-
   "monthly_report": {
     "month_label": "先月",
     "total": {
       "net_sales": 17960000,
       "costs": [
-        { "label": "原材料費",     "amount": 5747000, "rate": 0.320, "vs_prev": "+0.6pt" },
-        { "label": "人件費",       "amount": 4850000, "rate": 0.270, "vs_prev": "-0.3pt" },
-        { "label": "広告宣伝費",   "amount": 360000,  "rate": 0.020, "vs_prev": "±0" },
-        { "label": "家賃",         "amount": 1440000, "rate": 0.080, "vs_prev": "±0" },
-        { "label": "水道光熱費",   "amount": 900000,  "rate": 0.050, "vs_prev": "+0.4pt" },
-        { "label": "決済手数料",   "amount": 449000,  "rate": 0.025, "vs_prev": "±0" },
-        { "label": "システム利用料","amount": 165000, "rate": 0.009, "vs_prev": "±0" },
-        { "label": "その他",       "amount": 540000,  "rate": 0.030, "vs_prev": "-0.1pt" }
+        {
+          "label": "原材料費",
+          "amount": 5747000,
+          "rate": 0.32,
+          "vs_prev": "+0.6pt"
+        },
+        {
+          "label": "人件費",
+          "amount": 4850000,
+          "rate": 0.27,
+          "vs_prev": "-0.3pt"
+        },
+        {
+          "label": "広告宣伝費",
+          "amount": 360000,
+          "rate": 0.02,
+          "vs_prev": "±0"
+        },
+        {
+          "label": "家賃",
+          "amount": 1440000,
+          "rate": 0.08,
+          "vs_prev": "±0"
+        },
+        {
+          "label": "水道光熱費",
+          "amount": 900000,
+          "rate": 0.05,
+          "vs_prev": "+0.4pt"
+        },
+        {
+          "label": "決済手数料",
+          "amount": 449000,
+          "rate": 0.025,
+          "vs_prev": "±0"
+        },
+        {
+          "label": "システム利用料",
+          "amount": 165000,
+          "rate": 0.009,
+          "vs_prev": "±0"
+        },
+        {
+          "label": "その他",
+          "amount": 540000,
+          "rate": 0.03,
+          "vs_prev": "-0.1pt"
+        }
       ],
       "operating_profit": 3509000,
       "operating_profit_rate": 0.195,
-      "fl_rate": 0.590,
-      "fl_target": 0.570
+      "fl_rate": 0.59,
+      "fl_target": 0.57
     },
     "by_store": [
-      { "store": "umeda",        "net_sales": 6480000, "operating_profit": 1420000, "profit_rate": 0.219, "waste_rate": 0.028 },
-      { "store": "shinsaibashi", "net_sales": 6150000, "operating_profit": 1310000, "profit_rate": 0.213, "waste_rate": 0.026 },
-      { "store": "namba",        "net_sales": 5330000, "operating_profit": 779000,  "profit_rate": 0.146, "waste_rate": 0.048 }
+      {
+        "store": "umeda",
+        "net_sales": 6480000,
+        "operating_profit": 1420000,
+        "profit_rate": 0.219,
+        "waste_rate": 0.028
+      },
+      {
+        "store": "shinsaibashi",
+        "net_sales": 6150000,
+        "operating_profit": 1310000,
+        "profit_rate": 0.213,
+        "waste_rate": 0.026
+      },
+      {
+        "store": "namba",
+        "net_sales": 5330000,
+        "operating_profit": 779000,
+        "profit_rate": 0.146,
+        "waste_rate": 0.048
+      }
     ],
     "dept_mix": [
-      { "dept": "菓子パン",     "rate": 0.24 },
-      { "dept": "食パン",       "rate": 0.22 },
-      { "dept": "惣菜パン",     "rate": 0.18 },
-      { "dept": "サンドイッチ", "rate": 0.13 },
-      { "dept": "ハード系",     "rate": 0.12 },
-      { "dept": "焼菓子",       "rate": 0.06 },
-      { "dept": "ドリンク",     "rate": 0.05 }
+      {
+        "dept": "菓子パン",
+        "rate": 0.24
+      },
+      {
+        "dept": "食パン",
+        "rate": 0.22
+      },
+      {
+        "dept": "惣菜パン",
+        "rate": 0.18
+      },
+      {
+        "dept": "サンドイッチ",
+        "rate": 0.13
+      },
+      {
+        "dept": "ハード系",
+        "rate": 0.12
+      },
+      {
+        "dept": "焼菓子",
+        "rate": 0.06
+      },
+      {
+        "dept": "ドリンク",
+        "rate": 0.05
+      }
     ],
     "trend_12m": [
-      { "month": "7月",  "sales": 16200000, "profit": 2900000 },
-      { "month": "8月",  "sales": 16800000, "profit": 3100000 },
-      { "month": "9月",  "sales": 16500000, "profit": 3000000 },
-      { "month": "10月", "sales": 17100000, "profit": 3250000 },
-      { "month": "11月", "sales": 17400000, "profit": 3350000 },
-      { "month": "12月", "sales": 18600000, "profit": 3720000 },
-      { "month": "1月",  "sales": 15900000, "profit": 2700000 },
-      { "month": "2月",  "sales": 16400000, "profit": 2950000 },
-      { "month": "3月",  "sales": 17600000, "profit": 3420000 },
-      { "month": "4月",  "sales": 17200000, "profit": 3300000 },
-      { "month": "5月",  "sales": 17500000, "profit": 3380000 },
-      { "month": "6月",  "sales": 17960000, "profit": 3509000 }
+      {
+        "month": "7月",
+        "sales": 16200000,
+        "profit": 2900000
+      },
+      {
+        "month": "8月",
+        "sales": 16800000,
+        "profit": 3100000
+      },
+      {
+        "month": "9月",
+        "sales": 16500000,
+        "profit": 3000000
+      },
+      {
+        "month": "10月",
+        "sales": 17100000,
+        "profit": 3250000
+      },
+      {
+        "month": "11月",
+        "sales": 17400000,
+        "profit": 3350000
+      },
+      {
+        "month": "12月",
+        "sales": 18600000,
+        "profit": 3720000
+      },
+      {
+        "month": "1月",
+        "sales": 15900000,
+        "profit": 2700000
+      },
+      {
+        "month": "2月",
+        "sales": 16400000,
+        "profit": 2950000
+      },
+      {
+        "month": "3月",
+        "sales": 17600000,
+        "profit": 3420000
+      },
+      {
+        "month": "4月",
+        "sales": 17200000,
+        "profit": 3300000
+      },
+      {
+        "month": "5月",
+        "sales": 17500000,
+        "profit": 3380000
+      },
+      {
+        "month": "6月",
+        "sales": 17960000,
+        "profit": 3509000
+      }
     ],
     "ai_comment": "全店FL率59.0%で目標を2.0pt超過。最大要因は難波店です。利益率14.6%（全店平均19.5%）、廃棄率4.8%は全店平均の約1.5倍。一方で夕方の売り切れ口コミも増えており、『朝に作りすぎて夕方に足りない』時間帯ミスマッチが疑われます。焼成スケジュールの後ろ倒しを検討してください。"
   },
-
   "invoice": {
     "sample_image": "assets/invoice-sample.png",
     "sample_image_note": "架空『株式会社ナニワ製粉』の請求書を自作して配置（実在請求書は使わない）",
@@ -146,83 +529,271 @@
       "payment_method": "銀行振込",
       "drive_folder": "経理 > 請求書 > 2026年7月"
     },
-    "account_item_options": ["仕入高（原材料）", "消耗品費", "水道光熱費", "荷造運賃", "外注費", "その他"],
-    "tax_rate_options": [ {"label":"軽減8%","value":0.08}, {"label":"標準10%","value":0.10} ]
+    "account_item_options": [
+      "仕入高（原材料）",
+      "消耗品費",
+      "水道光熱費",
+      "荷造運賃",
+      "外注費",
+      "その他"
+    ],
+    "tax_rate_options": [
+      {
+        "label": "軽減8%",
+        "value": 0.08
+      },
+      {
+        "label": "標準10%",
+        "value": 0.1
+      }
+    ]
   },
-
   "shift_notice": {
     "store": "umeda",
     "date_offset": 1,
-    "weather": { "label": "曇りのち晴れ", "emoji": "⛅", "high": 32, "low": 26 },
+    "weather": {
+      "label": "曇りのち晴れ",
+      "emoji": "⛅",
+      "high": 32,
+      "low": 26
+    },
     "shifts": {
       "製造": [
-        { "name": "藤田 かおる", "time": "4:30〜13:30" },
-        { "name": "岡本 しゅん", "time": "5:00〜14:00" },
-        { "name": "三浦 ゆか",   "time": "8:00〜17:00" }
+        {
+          "name": "藤田 かおる",
+          "time": "4:30〜13:30"
+        },
+        {
+          "name": "岡本 しゅん",
+          "time": "5:00〜14:00"
+        },
+        {
+          "name": "三浦 ゆか",
+          "time": "8:00〜17:00"
+        }
       ],
       "販売": [
-        { "name": "田村 さき", "time": "6:45〜15:45" },
-        { "name": "小林 まい", "time": "10:30〜19:30" }
+        {
+          "name": "田村 さき",
+          "time": "6:45〜15:45"
+        },
+        {
+          "name": "小林 まい",
+          "time": "10:30〜19:30"
+        }
       ]
     },
     "ai_comment": "最高32℃予報。カレーパンなど揚げ物は動きが鈍る傾向です。サンドイッチと冷たいドリンクの仕込み増を検討してください。"
   },
-
   "shift_request": {
     "period": "来月1日〜15日",
     "deadline": "今月20日",
-    "positions": ["製造", "販売"],
+    "positions": [
+      "製造",
+      "販売"
+    ],
     "slot_options": {
-      "製造": ["早番 4:30-13:30", "中番 5:00-14:00", "遅番 8:00-17:00"],
-      "販売": ["早番 6:45-15:45", "遅番 10:30-19:30"]
+      "製造": [
+        "早番 4:30-13:30",
+        "中番 5:00-14:00",
+        "遅番 8:00-17:00"
+      ],
+      "販売": [
+        "早番 6:45-15:45",
+        "遅番 10:30-19:30"
+      ]
     },
-    "common_options": ["どちらでも可", "休み希望"],
-    "collection_status": { "梅田店": "4/5", "心斎橋店": "5/5", "難波店": "3/5" }
+    "common_options": [
+      "どちらでも可",
+      "休み希望"
+    ],
+    "collection_status": {
+      "梅田店": "4/5",
+      "心斎橋店": "5/5",
+      "難波店": "3/5"
+    }
   },
-
   "attendance": {
     "store": "umeda",
     "as_of": "1〜8日時点",
     "staff": [
-      { "name": "藤田 かおる", "position": "製造", "rate": 1400, "days": 7, "hours": 60.0, "early_morning_h": 3.5, "est_wage": 85225 },
-      { "name": "岡本 しゅん", "position": "製造", "rate": 1300, "days": 7, "hours": 59.5, "early_morning_h": 0,   "est_wage": 77350 },
-      { "name": "三浦 ゆか",   "position": "製造", "rate": 1250, "days": 6, "hours": 48.0, "early_morning_h": 0,   "est_wage": 60000 },
-      { "name": "田村 さき",   "position": "販売", "rate": 1150, "days": 7, "hours": 59.5, "early_morning_h": 0,   "est_wage": 68425 },
-      { "name": "小林 まい",   "position": "販売", "rate": 1100, "days": 6, "hours": 51.0, "early_morning_h": 0,   "est_wage": 56100 }
+      {
+        "name": "藤田 かおる",
+        "position": "製造",
+        "rate": 1400,
+        "days": 7,
+        "hours": 60.0,
+        "early_morning_h": 3.5,
+        "est_wage": 85225
+      },
+      {
+        "name": "岡本 しゅん",
+        "position": "製造",
+        "rate": 1300,
+        "days": 7,
+        "hours": 59.5,
+        "early_morning_h": 0,
+        "est_wage": 77350
+      },
+      {
+        "name": "三浦 ゆか",
+        "position": "製造",
+        "rate": 1250,
+        "days": 6,
+        "hours": 48.0,
+        "early_morning_h": 0,
+        "est_wage": 60000
+      },
+      {
+        "name": "田村 さき",
+        "position": "販売",
+        "rate": 1150,
+        "days": 7,
+        "hours": 59.5,
+        "early_morning_h": 0,
+        "est_wage": 68425
+      },
+      {
+        "name": "小林 まい",
+        "position": "販売",
+        "rate": 1100,
+        "days": 6,
+        "hours": 51.0,
+        "early_morning_h": 0,
+        "est_wage": 56100
+      }
     ],
-    "total": { "hours": 278.0, "est_wage": 347100 },
+    "total": {
+      "hours": 278.0,
+      "est_wage": 347100
+    },
     "premium_note": "藤田さんの早朝（〜5:00）3.5hは深夜割増25%で計算済み",
     "alert": "このペースだと梅田店の月間人件費は前月比+6%見込み",
     "daily_punches": {
       "藤田 かおる": [
-        {"date":"7/1","in":"4:28","out":"13:32","break":60,"work":8.1},
-        {"date":"7/2","in":"4:31","out":"13:30","break":60,"work":7.9},
-        {"date":"7/3","in":"4:27","out":"13:35","break":60,"work":8.1},
-        {"date":"7/4","in":"4:30","out":"13:28","break":60,"work":7.9},
-        {"date":"7/6","in":"4:29","out":"13:33","break":60,"work":8.1},
-        {"date":"7/7","in":"4:32","out":"13:31","break":60,"work":7.9},
-        {"date":"7/8","in":"4:28","out":"20:10","break":90,"work":15.2}
+        {
+          "date": "7/1",
+          "in": "4:28",
+          "out": "13:32",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/2",
+          "in": "4:31",
+          "out": "13:30",
+          "break": 60,
+          "work": 7.9
+        },
+        {
+          "date": "7/3",
+          "in": "4:27",
+          "out": "13:35",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/4",
+          "in": "4:30",
+          "out": "13:28",
+          "break": 60,
+          "work": 7.9
+        },
+        {
+          "date": "7/6",
+          "in": "4:29",
+          "out": "13:33",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/7",
+          "in": "4:32",
+          "out": "13:31",
+          "break": 60,
+          "work": 7.9
+        },
+        {
+          "date": "7/8",
+          "in": "4:28",
+          "out": "20:10",
+          "break": 90,
+          "work": 15.2
+        }
       ],
       "岡本 しゅん": [
-        {"date":"7/1","in":"4:59","out":"14:02","break":60,"work":8.0},
-        {"date":"7/2","in":"5:01","out":"14:00","break":60,"work":8.0},
-        {"date":"7/8","in":"5:00","out":"14:05","break":60,"work":8.1}
+        {
+          "date": "7/1",
+          "in": "4:59",
+          "out": "14:02",
+          "break": 60,
+          "work": 8.0
+        },
+        {
+          "date": "7/2",
+          "in": "5:01",
+          "out": "14:00",
+          "break": 60,
+          "work": 8.0
+        },
+        {
+          "date": "7/8",
+          "in": "5:00",
+          "out": "14:05",
+          "break": 60,
+          "work": 8.1
+        }
       ],
       "三浦 ゆか": [
-        {"date":"7/1","in":"7:58","out":"17:03","break":60,"work":8.1},
-        {"date":"7/8","in":"8:02","out":"17:00","break":60,"work":7.9}
+        {
+          "date": "7/1",
+          "in": "7:58",
+          "out": "17:03",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/8",
+          "in": "8:02",
+          "out": "17:00",
+          "break": 60,
+          "work": 7.9
+        }
       ],
       "田村 さき": [
-        {"date":"7/1","in":"6:44","out":"15:47","break":60,"work":8.1},
-        {"date":"7/8","in":"6:46","out":"15:45","break":60,"work":7.9}
+        {
+          "date": "7/1",
+          "in": "6:44",
+          "out": "15:47",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/8",
+          "in": "6:46",
+          "out": "15:45",
+          "break": 60,
+          "work": 7.9
+        }
       ],
       "小林 まい": [
-        {"date":"7/1","in":"10:29","out":"19:33","break":60,"work":8.1},
-        {"date":"7/8","in":"10:31","out":"19:30","break":60,"work":7.9}
+        {
+          "date": "7/1",
+          "in": "10:29",
+          "out": "19:33",
+          "break": 60,
+          "work": 8.1
+        },
+        {
+          "date": "7/8",
+          "in": "10:31",
+          "out": "19:30",
+          "break": 60,
+          "work": 7.9
+        }
       ]
     }
   },
-
   "review": {
     "platform": "Google マップ",
     "store": "namba",
@@ -232,30 +803,98 @@
     "text": "クロワッサンは本当に美味しいです。ただ土曜の16時頃に行ったら棚がほとんど空で、お目当てのパンが買えず残念でした。",
     "ai_draft": "T.K様、ご来店とご投稿ありがとうございます。クロワッサンをお褒めいただき大変嬉しく思います。一方で、夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。また、LINEでのお取り置きも承っておりますので、ぜひご利用ください。またのご来店を心よりお待ちしております。 難波店 店長 花岡",
     "tone_variants": [
-      { "tone": "丁寧", "text": "T.K様、ご来店とご投稿ありがとうございます。クロワッサンをお褒めいただき大変嬉しく思います。一方で、夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。また、LINEでのお取り置きも承っておりますので、ぜひご利用ください。またのご来店を心よりお待ちしております。 難波店 店長 花岡" },
-      { "tone": "フレンドリー", "text": "T.Kさん、口コミありがとうございます！クロワッサン気に入っていただけて嬉しいです😊 夕方は売り切れてしまうことが多く、せっかくのご来店なのにごめんなさい…！難波店は15:30ごろに2回目の焼き上がりがあるので、その時間もねらい目です🥐 LINEでお取り置きもできるので、ぜひ使ってくださいね。またお待ちしています！" },
-      { "tone": "短め", "text": "T.K様、ご投稿ありがとうございます。夕方に品切れとなり申し訳ございませんでした。難波店は15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きもぜひご利用ください。またのご来店をお待ちしております。" }
+      {
+        "tone": "丁寧",
+        "text": "T.K様、ご来店とご投稿ありがとうございます。クロワッサンをお褒めいただき大変嬉しく思います。一方で、夕方にお目当てのパンをご用意できず申し訳ございませんでした。難波店では15:30頃に2回目の焼き上がりがございます。また、LINEでのお取り置きも承っておりますので、ぜひご利用ください。またのご来店を心よりお待ちしております。 難波店 店長 花岡"
+      },
+      {
+        "tone": "フレンドリー",
+        "text": "T.Kさん、口コミありがとうございます！クロワッサン気に入っていただけて嬉しいです😊 夕方は売り切れてしまうことが多く、せっかくのご来店なのにごめんなさい…！難波店は15:30ごろに2回目の焼き上がりがあるので、その時間もねらい目です🥐 LINEでお取り置きもできるので、ぜひ使ってくださいね。またお待ちしています！"
+      },
+      {
+        "tone": "短め",
+        "text": "T.K様、ご投稿ありがとうございます。夕方に品切れとなり申し訳ございませんでした。難波店は15:30頃に2回目の焼き上がりがございます。LINEでのお取り置きもぜひご利用ください。またのご来店をお待ちしております。"
+      }
     ]
   },
-
   "map_rank": {
     "by_store": [
-      { "store": "umeda",        "kw": "梅田 パン屋",   "rank": 5, "diff": 2,  "rating": 4.3, "reviews": 142 },
-      { "store": "shinsaibashi", "kw": "心斎橋 パン屋", "rank": 3, "diff": 1,  "rating": 4.4, "reviews": 118 },
-      { "store": "namba",        "kw": "難波 パン屋",   "rank": 9, "diff": 4,  "rating": 4.0, "reviews": 87 }
+      {
+        "store": "umeda",
+        "kw": "梅田 パン屋",
+        "rank": 5,
+        "diff": 2,
+        "rating": 4.3,
+        "reviews": 142
+      },
+      {
+        "store": "shinsaibashi",
+        "kw": "心斎橋 パン屋",
+        "rank": 3,
+        "diff": 1,
+        "rating": 4.4,
+        "reviews": 118
+      },
+      {
+        "store": "namba",
+        "kw": "難波 パン屋",
+        "rank": 9,
+        "diff": 4,
+        "rating": 4.0,
+        "reviews": 87
+      }
     ],
-    "reply_rate": 1.00,
+    "reply_rate": 1.0,
     "review_diff_30d": 14,
     "rank_trend_30d": {
-      "umeda":        [9, 8, 8, 7, 6, 5, 5],
-      "shinsaibashi": [6, 5, 5, 4, 4, 3, 3],
-      "namba":        [15, 14, 13, 12, 11, 10, 9]
+      "umeda": [
+        9,
+        8,
+        8,
+        7,
+        6,
+        5,
+        5
+      ],
+      "shinsaibashi": [
+        6,
+        5,
+        5,
+        4,
+        4,
+        3,
+        3
+      ],
+      "namba": [
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9
+      ]
     },
     "competitors": {
       "namba": [
-        { "name": "A店", "rank": 1, "reviews": 230, "rating": 4.4 },
-        { "name": "B店", "rank": 2, "reviews": 176, "rating": 4.2 },
-        { "name": "C店", "rank": 3, "reviews": 152, "rating": 4.1 }
+        {
+          "name": "A店",
+          "rank": 1,
+          "reviews": 230,
+          "rating": 4.4
+        },
+        {
+          "name": "B店",
+          "rank": 2,
+          "reviews": 176,
+          "rating": 4.2
+        },
+        {
+          "name": "C店",
+          "rank": 3,
+          "reviews": 152,
+          "rating": 4.1
+        }
       ]
     },
     "ai_comment": "心斎橋店が3位に到達（地図の初期表示圏内）。難波店は順位+4と改善中ですが評価4.0が3店で最下位。直近の低評価3件はいずれも『夕方の売り切れ』が原因で、口コミ対策というより焼成スケジュールの問題です。",
@@ -265,14 +904,13 @@
       "梅田店: 最新のパン写真を3枚追加しましょう"
     ]
   },
-
   "loss_framing": {
-    "daily":      "3店舗の日次集計とグループLINEへの共有に毎日30分 → 月13時間 ≒ 月26,000円",
-    "monthly":    "店舗別PLが揃うのは税理士月次の翌月20日。難波店の廃棄は今日も出続けています",
-    "invoice":    "3店舗分の請求書は月90枚。転記・保存1枚5分 → 月7.5時間 ≒ 月15,000円＋紛失リスク",
-    "shift":      "3店舗15名のシフト回収・調整・催促に月12時間 ≒ 月24,000円",
+    "daily": "3店舗の日次集計とグループLINEへの共有に毎日30分 → 月13時間 ≒ 月26,000円",
+    "monthly": "店舗別PLが揃うのは税理士月次の翌月20日。難波店の廃棄は今日も出続けています",
+    "invoice": "3店舗分の請求書は月90枚。転記・保存1枚5分 → 月7.5時間 ≒ 月15,000円＋紛失リスク",
+    "shift": "3店舗15名のシフト回収・調整・催促に月12時間 ≒ 月24,000円",
     "attendance": "15名の実績集計（給与計算の前準備）に月4時間 ≒ 月10,000円＋ミスの手戻り",
-    "review":     "3店舗の口コミ返信は1件10分・月30件 → 月5時間 ≒ 月10,000円。返信しない店は新規客の7割に選ばれません",
-    "map":        "地図で3位以内に入れないと、その検索の8割はあなたの店を見ていません"
+    "review": "3店舗の口コミ返信は1件10分・月30件 → 月5時間 ≒ 月10,000円。返信しない店は新規客の7割に選ばれません",
+    "map": "地図で3位以内に入れないと、その検索の8割はあなたの店を見ていません"
   }
 }
