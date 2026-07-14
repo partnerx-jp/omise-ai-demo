@@ -11,26 +11,18 @@
       "spacing": "none",
       "contents": [
         {
-          "type": "box",
-          "layout": "baseline",
-          "contents": [
-            {
-              "type": "text",
-              "text": "昨日の売上実績",
-              "size": "md",
-              "weight": "bold",
-              "color": "#1A1A1A",
-              "flex": 0
-            },
-            {
-              "type": "text",
-              "text": "7月13日",
-              "size": "xs",
-              "color": "#9AA0A6",
-              "margin": "sm",
-              "flex": 0
-            }
-          ]
+          "type": "text",
+          "text": "7月13日",
+          "size": "xs",
+          "color": "#9AA0A6"
+        },
+        {
+          "type": "text",
+          "text": "昨日の売上実績",
+          "size": "md",
+          "weight": "bold",
+          "color": "#1A1A1A",
+          "margin": "xs"
         },
         {
           "type": "text",
