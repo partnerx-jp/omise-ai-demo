@@ -115,12 +115,20 @@
       // ③ 部門別売上（ドーナツ）
       h += `<div class="ow-card"><h2>部門別 売上構成</h2><div class="chartbox donut"><canvas id="dcv"></canvas></div></div>`;
 
+      // 部門構成に連動した店舗別ウェイト（数字・並び・バーが辻褄合って動く）
+      const dep = dr.departments, depCur = dep[key] || dep.all;
+      const dw = d => { const i = dep.labels.indexOf(d); return (i>=0 && dep.all[i]) ? depCur[i]/dep.all[i] : 1; };
+
       // ④ 売れ筋 TOP5
-      const tp = dr.top_products.map(p=>({...p, qty:Math.round(p.qty*ratio), sales:Math.round(p.sales*ratio)})), mxT=Math.max(...tp.map(p=>p.sales));
+      const tp = dr.top_products.map(p=>({...p, qty:Math.round(p.qty*ratio*dw(p.dept)), sales:Math.round(p.sales*ratio*dw(p.dept))}))
+        .sort((a,b)=>b.sales-a.sales).map((p,i)=>({...p, rank:i+1}));
+      const mxT = Math.max(...tp.map(p=>p.sales));
       h += `<div class="ow-card"><h2>売れ筋 TOP5</h2>` + rankHTML(tp,mxT,"pos") + `</div>`;
 
       // ⑤ 死に筋 TOP5
-      const wp = dr.worst_products.map(p=>({...p, qty:Math.max(1,Math.round(p.qty*ratio)), sales:Math.round(p.sales*ratio)})), mxW=Math.max(...wp.map(p=>p.sales));
+      const wp = dr.worst_products.map(p=>({...p, qty:Math.max(1,Math.round(p.qty*ratio*dw(p.dept))), sales:Math.round(p.sales*ratio*dw(p.dept))}))
+        .sort((a,b)=>a.sales-b.sales).map((p,i)=>({...p, rank:i+1}));
+      const mxW = Math.max(...wp.map(p=>p.sales));
       h += `<div class="ow-card"><h2>死に筋 TOP5<small class="h2sub">見直し候補</small></h2>` + rankHTML(wp,mxW,"neg") + `</div>`;
 
       // ⑥ 時間帯別売上
