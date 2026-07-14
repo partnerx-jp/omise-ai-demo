@@ -29,6 +29,12 @@
           { "type": "text", "text": "月末の支払一覧に自動反映", "size": "sm", "color": "#1A1A1A", "flex": 1, "wrap": true }
         ]}
       ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "paddingAll": "12px", "paddingTop": "4px",
+      "contents": [
+        { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "action": { "type": "uri", "label": "あなたのお店でお試し（無料相談）", "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/shindan/" } }
+      ]
     }
   }
 }
