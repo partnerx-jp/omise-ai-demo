@@ -42,9 +42,9 @@
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    // LIFF_ID を登録後にここへ設定すると「投稿→トークに完了カードが出て自動で閉じる」になる。
-    // 空のままでも動作（この画面内に完了表示＋CTAを出すフォールバック）。
-    const LIFF_ID = "";
+    // 口コミ返信編集用 LIFF（エンドポイント＝このページ／スコープ chat_message.write）。
+    // 実機LIFFで開くと「投稿→完了カードをトークへ送信→自動で閉じる」。非LIFF時は画面内完了にフォールバック。
+    const LIFF_ID = "2010700075-mPqprWkn";
     const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
     const SHINDAN = "../shindan/";
     const SHINDAN_ABS = PAGES + "/liff/shindan/";
