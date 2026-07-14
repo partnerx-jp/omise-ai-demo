@@ -37,8 +37,8 @@
   --pad: 18px;
   --gap: 12px;
 
-  /* グラフ配色（原色寄り・鮮やか／現在=ブルー・前=グレー） */
-  --c1:#1E9FE0; --c2:#7CB928; --c3:#EE5F9A; --c4:#F5901E; --c5:#8E6FD6; --c6:#17B9A0; --c7:#98A0A6;
+  /* グラフ配色（Air調パステル／現在=ブルー・前=グレー） */
+  --c1:#ABD17E; --c2:#93C0E6; --c3:#F1A9C4; --c4:#F5BE73; --c5:#B6A2DA; --c6:#83CBC0; --c7:#BFC4C9;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -64,7 +64,7 @@ body {
 .ow-scope { font-size: 13px; color: var(--sub); font-weight: 600; }
 .ow-hero-lbl { font-size: 12px; color: var(--sub); margin-top: 2px; }
 .ow-hero-main { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
-.ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; padding-left: .7em; }
+.ow-hero-val { font-size: 34px; font-weight: 400; letter-spacing: -.5px; color: var(--brand); line-height: 1.15; padding-left: .4em; }
 .ow-hero-delta { text-align: right; }
 .ow-hero-delta .dl { display: block; font-size: 11px; color: var(--sub); }
 .ow-hero-delta .dv { display: block; font-size: 16px; font-weight: 700; margin-top: 1px; }
@@ -166,9 +166,9 @@ body {
 .ow-shift tbody td { height: 48px; }
 .ow-shift td.tc { padding: 3px; }
 .ow-shift td.tc .tblk { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; border-radius: 4px; font-size: 10.5px; font-weight: 600; line-height: 1.25; }
-.tblk.tc-am  { background: #E4F3E6; color: #3F9E4E; }   /* 早番（緑・Airシフト） */
-.tblk.tc-day { background: #E4EEF8; color: #2C77B0; }   /* 中番（青） */
-.tblk.tc-pm  { background: #FBEEDD; color: #CE7E24; }   /* 遅番（橙） */
+.tblk.tc-am  { background: #E9F3D9; color: #61903A; }   /* 早番（Air緑） */
+.tblk.tc-day { background: #DCECF9; color: #2C74AA; }   /* 中番（Air青） */
+.tblk.tc-pm  { background: #FCEFD6; color: #B87A22; }   /* 遅番（Air橙） */
 .ow-shift td.off { color: var(--muted); font-weight: 400; }
 
 /* シフトパターン入力のチップ（縦幅コンパクト）／時間入力 */
@@ -202,7 +202,8 @@ body {
 .ow-cal .c.out .dn { color: #CCC; }
 .ow-cal .c.sel { background: var(--shift-tint); }
 .ow-cal .c.sel .dn { display: inline-flex; width: 22px; height: 22px; border-radius: 999px; background: var(--shift); color: #fff; align-items: center; justify-content: center; }
-.ow-cal .pill { display: block; margin-top: 3px; background: var(--shift-tint); color: #0A78B5; border-radius: 3px; padding: 2px 2px; font-size: 9px; line-height: 1.2; text-align: center; overflow: hidden; }
+.ow-cal .pill { display: block; margin-top: 3px; background: #E9F3D9; color: #5E8E39; border-radius: 3px; padding: 2px 2px; font-size: 9px; line-height: 1.2; text-align: center; overflow: hidden; }
+.ow-cal .pill.k { background: #FCEFD6; color: #B87A22; }
 .ow-cal .dots { margin-top: 3px; text-align: center; }
 .ow-cal .dots i { display: inline-block; width: 5px; height: 5px; border-radius: 999px; margin: 0 1px; vertical-align: middle; }
 .ow-cal-detail { background: #F6F7F8; font-size: 12px; color: var(--sub); padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; }
