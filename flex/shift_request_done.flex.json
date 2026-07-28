@@ -7,7 +7,7 @@
     "header": {
       "type": "box", "layout": "vertical", "paddingAll": "16px", "backgroundColor": "#FFFFFF", "spacing": "none",
       "contents": [
-        { "type": "text", "text": "{{date_ja}}", "size": "xxs", "color": "#ABABAB" },
+        { "type": "text", "text": "{{today_ja}}", "size": "xxs", "color": "#ABABAB" },
         { "type": "text", "text": "✅ シフト希望を受け付けました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm", "wrap": true },
         { "type": "text", "text": "締切（{{shift_deadline}}）まで何度でも修正できます", "size": "xxs", "color": "#888888", "margin": "sm" },
         { "type": "separator", "margin": "md", "color": "#E7E7E7" }

@@ -7,7 +7,7 @@
     "header": {
       "type": "box", "layout": "vertical", "paddingAll": "16px", "backgroundColor": "#FFFFFF", "spacing": "none",
       "contents": [
-        { "type": "text", "text": "{{date_ja}}", "size": "xxs", "color": "#ABABAB" },
+        { "type": "text", "text": "{{today_ja}}", "size": "xxs", "color": "#ABABAB" },
         { "type": "text", "text": "📝 シフト希望の提出をお願いします", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm", "wrap": true },
         { "type": "text", "text": "梅田店 スタッフのみなさんへ", "size": "xxs", "color": "#888888", "margin": "sm" },
         { "type": "separator", "margin": "md", "color": "#E7E7E7" }
