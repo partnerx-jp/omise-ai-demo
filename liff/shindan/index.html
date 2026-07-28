@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://partnerx-jp.github.io https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <link rel="stylesheet" href="../shared.css?v=20260714">
+  <title>お店のAIワーカー</title>
+  <style>
+    .ow-wrap { padding: 10px 16px; }
+    .intro { font-size: 13px; color: var(--ink); line-height: 1.8; }
+    .intro b { color: var(--brand-dark); }
+    .intro .meta { margin-top: 8px; font-size: 11.5px; color: var(--sub); }
+    .req { color: var(--neg); font-size: 11px; margin-left: 4px; }
+    .chips-v .ow-chip { padding: 8px 15px; font-size: 13px; }
+    /* 送信中 */
+    #sending { position: fixed; inset: 0; z-index: 60; background: rgba(20,24,28,.42);
+      display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; color: #fff; }
+    #sending.on { display: flex; }
+    #sending .sp { width: 42px; height: 42px; border: 4px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 999px; animation: spin .8s linear infinite; }
+    #sending .msg { font-size: 14px; font-weight: 700; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* 申込完了（ブラウザ時のフォールバック通知） */
+    .ok-mark { text-align: center; padding: 48px 24px; }
+    .ok-mark .circle { width: 72px; height: 72px; border-radius: 999px; background: #E9F6EE; color: #12B24A; font-size: 38px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .ok-mark h2 { font-size: 19px; margin: 0 0 10px; color: var(--ink); }
+    .ok-mark p { font-size: 13px; color: var(--sub); line-height: 1.8; margin: 0; }
+    .ok-mark .store { margin-top: 10px; font-size: 15px; font-weight: 700; color: var(--brand); }
+  </style>
+</head>
+<body class="ow-hasbottom">
+  <div class="ow-header">
+    <div class="ttl">無料診断のお申し込み</div>
+    <div class="sub">お店のAIワーカー・入力は30秒で終わります</div>
+  </div>
+
+  <div id="app">
+    <div class="ow-wrap">
+      <div class="ow-card">
+        <div class="intro">
+          いま一番時間を取られている業務をお聞かせください。<b>AIワーカーに任せられる範囲</b>と<b>月あたりの時間・金額の目安</b>を無料で診断します。
+          <div class="meta">24時間以内にこのLINEでご連絡します。大事な操作は承認して進める形なので、そのままお試しいただけます。</div>
+        </div>
+      </div>
+
+      <div class="ow-card">
+        <div class="ow-field">
+          <label for="f_name">店名（屋号）<span class="req">必須</span></label>
+          <input class="ow-input" id="f_name" placeholder="例：ベーカリーこむぎ堂" autocomplete="organization">
+        </div>
+        <div class="ow-field">
+          <label>業種<span class="req">必須</span></label>
+          <div class="ow-chips chips-v" id="g_industry"></div>
+        </div>
+        <div class="ow-field">
+          <label>店舗数<span class="req">必須</span></label>
+          <div class="ow-chips chips-v" id="g_stores"></div>
+        </div>
+        <div class="ow-field">
+          <label>一番時間を取られている業務<span class="req">必須</span></label>
+          <div class="ow-chips chips-v" id="g_task"></div>
+        </div>
+        <div class="ow-field" style="margin-bottom:0">
+          <label>ご希望の連絡方法</label>
+          <div class="ow-chips chips-v" id="g_contact"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ow-cta" id="ctabar">
+    <button class="ow-btn" id="submitBtn" disabled
+      style="background:linear-gradient(180deg,#12D262,#06C755);border:1.5px solid #05993F;box-shadow:0 3px 0 #05993F,0 4px 6px rgba(0,0,0,.16)">無料診断を申し込む</button>
+  </div>
+
+  <!-- 送信中 -->
+  <div id="sending"><div class="sp"></div><div class="msg">送信しています…</div></div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    const LIFF_ID = ""; // LIFF登録後にIDを設定（未設定でもブラウザ表示は動く）
+    let IN_LIFF = false;
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    // §7-1 フォーム項目（最小5つ・30秒で終わる）
+    const GROUPS = {
+      industry: { opts: ["ベーカリー・飲食","美容","小売","その他"] },
+      stores:   { opts: ["1店舗","2〜3店舗","4店舗以上"] },
+      task:     { opts: ["売上の集計・共有","月次の数字（PL）の把握","請求書の処理","入金の確認・消込","レジ締め・売上照合","シフトの作成・回収","口コミの確認・返信","その他"] },
+      contact:  { opts: ["LINEでOK","電話","訪問"], preset: "LINEでOK" }
+    };
+    const state = { name:"", industry:"", stores:"", task:"", contact: GROUPS.contact.preset };
+
+    function buildChips(key){
+      const box = $("g_" + key);
+      box.innerHTML = GROUPS[key].opts.map(o =>
+        `<span class="ow-chip${state[key]===o?' on':''}" data-v="${esc(o)}">${esc(o)}</span>`).join("");
+      box.querySelectorAll(".ow-chip").forEach(c => c.addEventListener("click", () => {
+        state[key] = c.dataset.v;
+        box.querySelectorAll(".ow-chip").forEach(x => x.classList.toggle("on", x === c));
+        updateSubmit();
+      }));
+    }
+
+    function updateSubmit(){
+      $("submitBtn").disabled = !(state.name.trim() && state.industry && state.stores && state.task && state.contact);
+    }
+
+    async function submit(){
+      const name = state.name.trim();
+      const notif = [
+        "無料診断を申し込みました",
+        `・店名: ${name}`,
+        `・業種: ${state.industry}／店舗数: ${state.stores}`,
+        `・一番時間を取られている業務: ${state.task}`,
+        `・ご希望の連絡方法: ${state.contact}`
+      ].join("\n");
+      $("sending").classList.add("on");
+      await sleep(650);
+      if (IN_LIFF && window.liff && liff.sendMessages) {
+        try {
+          await liff.sendMessages([{ type: "text", text: notif }]);
+          try { liff.closeWindow(); return; } catch(e){}
+        } catch(e){}
+      }
+      $("sending").classList.remove("on");
+      showDone(name);
+    }
+
+    function showDone(name){
+      $("ctabar").style.display = "none";
+      $("app").innerHTML = `
+        <div class="ok-mark">
+          <div class="circle">✓</div>
+          <h2>無料診断を申し込みました</h2>
+          <div class="store">${esc(name)} 様</div>
+          <p style="margin-top:14px">ありがとうございます。<br>24時間以内にこのLINEでご連絡します。<br>このまま画面を閉じてトークにお戻りください。</p>
+        </div>`;
+    }
+
+    async function boot(){
+      try {
+        if (LIFF_ID && window.liff) { await liff.init({ liffId: LIFF_ID }).catch(()=>{}); IN_LIFF = !!(liff.isInClient && liff.isInClient()); }
+      } catch(e){}
+      Object.keys(GROUPS).forEach(buildChips);
+      $("f_name").addEventListener("input", e => { state.name = e.target.value; updateSubmit(); });
+      $("submitBtn").addEventListener("click", submit);
+      updateSubmit();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
