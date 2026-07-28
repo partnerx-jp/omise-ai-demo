@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "{{month}}の月次レポート｜純売上 ¥17,960,000・営業利益 ¥3,509,000（全店）",
+  "altText": "先月のPL速報｜純売上 ¥17,960,000・営業利益 ¥3,509,000（全店）。タップで詳細レポート",
   "contents": {
     "type": "bubble",
     "size": "kilo",
@@ -12,13 +12,13 @@
       "contents": [
         {
           "type": "text",
-          "text": "{{month}}度",
+          "text": "先月分の実績",
           "size": "xs",
           "color": "#9AA0A6"
         },
         {
           "type": "text",
-          "text": "月次レポート",
+          "text": "PL速報",
           "size": "md",
           "weight": "bold",
           "color": "#1A1A1A",
@@ -37,6 +37,37 @@
           "color": "#ECECEC"
         },
         {
+          "type": "text",
+          "text": "純売上（税抜）",
+          "size": "xs",
+          "color": "#9AA0A6",
+          "margin": "md"
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "margin": "xs",
+          "contents": [
+            {
+              "type": "text",
+              "text": "¥17,960,000",
+              "size": "xxl",
+              "weight": "bold",
+              "color": "#00A0E9",
+              "flex": 0
+            },
+            {
+              "type": "text",
+              "text": "+2.6%↑",
+              "size": "sm",
+              "weight": "bold",
+              "color": "#5AAE43",
+              "align": "end",
+              "gravity": "bottom"
+            }
+          ]
+        },
+        {
           "type": "box",
           "layout": "horizontal",
           "spacing": "sm",
@@ -50,9 +81,19 @@
               "paddingAll": "9px",
               "flex": 1,
               "contents": [
-                { "type": "text", "text": "純売上（税抜）", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "¥17,960,000", "size": "md", "weight": "bold", "color": "#00A0E9", "wrap": true },
-                { "type": "text", "text": "前月比 +2.6%", "size": "xxs", "color": "#5AAE43", "margin": "xs" }
+                {
+                  "type": "text",
+                  "text": "営業利益",
+                  "size": "xxs",
+                  "color": "#9AA0A6"
+                },
+                {
+                  "type": "text",
+                  "text": "¥3,509,000",
+                  "size": "sm",
+                  "weight": "bold",
+                  "color": "#1A1A1A"
+                }
               ]
             },
             {
@@ -63,9 +104,19 @@
               "paddingAll": "9px",
               "flex": 1,
               "contents": [
-                { "type": "text", "text": "営業利益", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "¥3,509,000", "size": "md", "weight": "bold", "color": "#5AAE43", "wrap": true },
-                { "type": "text", "text": "利益率 19.5%", "size": "xxs", "color": "#8c8c8c", "margin": "xs" }
+                {
+                  "type": "text",
+                  "text": "利益率",
+                  "size": "xxs",
+                  "color": "#9AA0A6"
+                },
+                {
+                  "type": "text",
+                  "text": "19.5%",
+                  "size": "sm",
+                  "weight": "bold",
+                  "color": "#1A1A1A"
+                }
               ]
             }
           ]
@@ -80,47 +131,110 @@
               "type": "box",
               "layout": "horizontal",
               "contents": [
-                { "type": "text", "text": "原材料費", "size": "sm", "color": "#5C6169", "flex": 0 },
-                { "type": "text", "text": "32.0%", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end" }
+                { "type": "text", "text": "原材料費", "size": "sm", "color": "#5C6169", "flex": 4 },
+                { "type": "text", "text": "¥5,747,000", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 4 },
+                { "type": "text", "text": "32.0%", "size": "xs", "color": "#9AA0A6", "align": "end", "flex": 2, "gravity": "center" }
               ]
             },
             {
               "type": "box",
               "layout": "horizontal",
               "contents": [
-                { "type": "text", "text": "人件費", "size": "sm", "color": "#5C6169", "flex": 0 },
-                { "type": "text", "text": "27.0%", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end" }
+                { "type": "text", "text": "人件費", "size": "sm", "color": "#5C6169", "flex": 4 },
+                { "type": "text", "text": "¥4,850,000", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 4 },
+                { "type": "text", "text": "27.0%", "size": "xs", "color": "#9AA0A6", "align": "end", "flex": 2, "gravity": "center" }
               ]
             },
             {
               "type": "box",
               "layout": "horizontal",
               "contents": [
-                { "type": "text", "text": "広告宣伝費", "size": "sm", "color": "#5C6169", "flex": 0 },
-                { "type": "text", "text": "2.0%", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end" }
+                { "type": "text", "text": "その他費用", "size": "sm", "color": "#5C6169", "flex": 4 },
+                { "type": "text", "text": "¥3,854,000", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 4 },
+                { "type": "text", "text": "21.5%", "size": "xs", "color": "#9AA0A6", "align": "end", "flex": 2, "gravity": "center" }
               ]
             }
           ]
         },
-        { "type": "separator", "margin": "md", "color": "#ECECEC" },
+        {
+          "type": "separator",
+          "margin": "md",
+          "color": "#ECECEC"
+        },
+        {
+          "type": "text",
+          "text": "店舗別の営業利益",
+          "size": "xs",
+          "color": "#9AA0A6",
+          "margin": "md"
+        },
         {
           "type": "box",
-          "layout": "horizontal",
-          "margin": "md",
+          "layout": "vertical",
+          "spacing": "sm",
+          "margin": "sm",
           "contents": [
             {
-              "type": "box", "layout": "vertical", "flex": 1,
+              "type": "box",
+              "layout": "horizontal",
               "contents": [
-                { "type": "text", "text": "FL率", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "59.0%", "size": "sm", "weight": "bold", "color": "#1A1A1A" }
+                { "type": "text", "text": "梅田店", "size": "sm", "color": "#5C6169", "flex": 4 },
+                { "type": "text", "text": "¥1,420,000", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 4 },
+                { "type": "text", "text": "21.9%", "size": "xs", "color": "#9AA0A6", "align": "end", "flex": 2, "gravity": "center" }
               ]
             },
             {
-              "type": "box", "layout": "vertical", "flex": 1,
+              "type": "box",
+              "layout": "horizontal",
               "contents": [
-                { "type": "text", "text": "MFL率", "size": "xxs", "color": "#9AA0A6" },
-                { "type": "text", "text": "61.0%", "size": "sm", "weight": "bold", "color": "#1A1A1A" }
+                { "type": "text", "text": "心斎橋店", "size": "sm", "color": "#5C6169", "flex": 4 },
+                { "type": "text", "text": "¥1,310,000", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 4 },
+                { "type": "text", "text": "21.3%", "size": "xs", "color": "#9AA0A6", "align": "end", "flex": 2, "gravity": "center" }
               ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                { "type": "text", "text": "難波店", "size": "sm", "weight": "bold", "color": "#E5504F", "flex": 4 },
+                { "type": "text", "text": "¥779,000", "size": "sm", "weight": "bold", "color": "#E5504F", "align": "end", "flex": 4 },
+                { "type": "text", "text": "14.6%", "size": "xs", "color": "#E5504F", "align": "end", "flex": 2, "gravity": "center" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "lg",
+          "paddingAll": "10px",
+          "backgroundColor": "#FFF7E6",
+          "cornerRadius": "8px",
+          "contents": [
+            {
+              "type": "text",
+              "text": "FL率 59.0%（目標 57.0%を2.0pt超過）",
+              "size": "xs",
+              "weight": "bold",
+              "color": "#A9770F",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "sm",
+          "paddingAll": "12px",
+          "backgroundColor": "#F5F7F8",
+          "cornerRadius": "8px",
+          "contents": [
+            {
+              "type": "text",
+              "text": "超過の最大要因は難波店です。利益率14.6%は全店平均を5pt下回り、廃棄率4.8%は全店平均の1.5倍。一方で夕方の売り切れ口コミも増えており、朝の作りすぎと夕方の欠品のミスマッチが疑われます。",
+              "size": "xs",
+              "color": "#5C6169",
+              "wrap": true
             }
           ]
         }
@@ -139,8 +253,8 @@
           "height": "sm",
           "action": {
             "type": "uri",
-            "label": "詳しく見る",
-            "uri": "{{liff_url}}"
+            "label": "PL速報の詳細を見る",
+            "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/monthly/"
           }
         }
       ]

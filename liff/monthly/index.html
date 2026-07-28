@@ -183,11 +183,12 @@
       const findCost = label => v.costs.find(c=>c.label===label);
       const material = findCost("原材料費"), labor = findCost("人件費"), ad = findCost("広告宣伝費");
       const mfl = v.fl_rate + (ad ? ad.rate : 0);
-      const deltaHtml = v.delta ? `<div style="font-size:11px;margin-top:2px" class="${v.delta.up?'ow-up':'ow-down'}">${v.delta.label} ${v.delta.value}</div>` : "";
+      const deltaHtml = v.delta ? `<div style="font-size:11px;margin-top:2px;text-align:right" class="${v.delta.up?'ow-up':'ow-down'}">${v.delta.label} ${v.delta.value}</div>` : "";
       h += `<div class="ow-card">
+        <h2>サマリー</h2>
         <div class="ow-kpi2" style="border-top:none;margin-top:0;padding-top:0">
-          <div><div class="l">純売上（税抜）</div><div class="v" style="color:var(--brand)">${yen(v.sales)}</div>${deltaHtml}</div>
-          <div><div class="l">営業利益</div><div class="v" style="color:var(--pos)">${yen(v.profit)}</div><div style="font-size:11px;margin-top:2px;color:var(--sub)">利益率 ${pct(v.profit_rate)}</div></div>
+          <div><div class="l">純売上（税抜）</div><div class="v" style="color:var(--brand);font-weight:700">${yen(v.sales)}</div>${deltaHtml}</div>
+          <div><div class="l">営業利益</div><div class="v" style="color:var(--brand);font-weight:700">${yen(v.profit)}</div><div style="font-size:11px;margin-top:2px;color:var(--sub);text-align:right">利益率 ${pct(v.profit_rate)}</div></div>
         </div>
         <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:6px">
           <div class="ow-row"><div class="k">原材料費</div><div class="v">${pct(material.rate)}</div></div>

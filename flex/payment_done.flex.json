@@ -8,6 +8,7 @@
       "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
       "contents": [
         { "type": "text", "text": "消込・記帳しました", "size": "md", "weight": "bold", "color": "#1A1A1A" },
+        { "type": "text", "text": "ネクストペイ株式会社・今月 1日〜5日 締め分", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
         { "type": "separator", "margin": "md", "color": "#ECECEC" },
         { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "入金元", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "ネクストペイ株式会社", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
         { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "入金額", "size": "sm", "color": "#9AA0A6", "flex": 4, "gravity": "center" }, { "type": "text", "text": "¥312,540", "size": "lg", "weight": "bold", "color": "#00A0E9", "align": "end", "flex": 6, "gravity": "center" } ]},

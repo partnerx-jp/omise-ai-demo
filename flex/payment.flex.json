@@ -7,13 +7,14 @@
     "body": {
       "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "none",
       "contents": [
-        { "type": "text", "text": "入金を確認しました", "size": "md", "weight": "bold", "color": "#1A1A1A" },
-        { "type": "text", "text": "{{date}} ・ キャッシュレス決済入金", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
+        { "type": "text", "text": "{{date}}", "size": "xs", "color": "#9AA0A6" },
+        { "type": "text", "text": "入金を確認しました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "xs" },
+        { "type": "text", "text": "ベーカリーこむぎ堂・キャッシュレス決済入金", "size": "xxs", "color": "#9AA0A6", "margin": "xs" },
         { "type": "separator", "margin": "md", "color": "#ECECEC" },
         { "type": "text", "text": "入金額（手数料差引後）", "size": "xs", "color": "#9AA0A6", "margin": "md" },
         { "type": "text", "text": "¥312,540", "size": "xxl", "weight": "bold", "color": "#00A0E9", "margin": "xs" },
         { "type": "box", "layout": "horizontal", "margin": "lg", "contents": [ { "type": "text", "text": "入金元", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "ネクストペイ株式会社", "size": "sm", "weight": "bold", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
-        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "対象期間", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "7/1〜7/5 締め分", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
+        { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "対象期間", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "今月 1日〜5日 締め分", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
         { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "決済総額", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "¥322,300", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
         { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "決済手数料", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "−¥9,760", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6 } ]},
         { "type": "box", "layout": "horizontal", "margin": "md", "contents": [ { "type": "text", "text": "入金口座", "size": "sm", "color": "#9AA0A6", "flex": 4 }, { "type": "text", "text": "近畿みらい銀行 梅田支店", "size": "sm", "color": "#1A1A1A", "align": "end", "flex": 6, "wrap": true } ]},
