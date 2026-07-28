@@ -1,0 +1,51 @@
+{
+  "type": "flex",
+  "altText": "✅ シフト希望を受け付けました。3店舗の回収状況もAIが自動集計中",
+  "contents": {
+    "type": "bubble",
+    "size": "kilo",
+    "header": {
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "backgroundColor": "#FFFFFF", "spacing": "none",
+      "contents": [
+        { "type": "text", "text": "{{date_ja}}", "size": "xxs", "color": "#ABABAB" },
+        { "type": "text", "text": "✅ シフト希望を受け付けました", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm", "wrap": true },
+        { "type": "text", "text": "締切（{{shift_deadline}}）まで何度でも修正できます", "size": "xxs", "color": "#888888", "margin": "sm" },
+        { "type": "separator", "margin": "md", "color": "#E7E7E7" }
+      ]
+    },
+    "body": {
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "md",
+      "contents": [
+        { "type": "text", "text": "店長側には、全員分がこう集計されます 👇", "size": "xs", "weight": "bold", "color": "#888888" },
+        { "type": "box", "layout": "horizontal", "spacing": "md", "contents": [
+          { "type": "text", "text": "梅田店", "size": "sm", "color": "#333333", "flex": 3, "gravity": "center" },
+          { "type": "box", "layout": "vertical", "flex": 6, "backgroundColor": "#EEF1F4", "cornerRadius": "10px", "height": "8px", "contents": [
+            { "type": "box", "layout": "vertical", "backgroundColor": "#00A0E9", "cornerRadius": "10px", "height": "8px", "width": "80%", "contents": [ { "type": "filler" } ] } ] },
+          { "type": "text", "text": "4/5", "size": "sm", "weight": "bold", "color": "#0089C7", "align": "end", "flex": 2, "gravity": "center" } ] },
+        { "type": "box", "layout": "horizontal", "spacing": "md", "contents": [
+          { "type": "text", "text": "心斎橋店", "size": "sm", "color": "#333333", "flex": 3, "gravity": "center" },
+          { "type": "box", "layout": "vertical", "flex": 6, "backgroundColor": "#EEF1F4", "cornerRadius": "10px", "height": "8px", "contents": [
+            { "type": "box", "layout": "vertical", "backgroundColor": "#00A0E9", "cornerRadius": "10px", "height": "8px", "width": "100%", "contents": [ { "type": "filler" } ] } ] },
+          { "type": "text", "text": "5/5 ✅", "size": "sm", "weight": "bold", "color": "#5AAE43", "align": "end", "flex": 2, "gravity": "center" } ] },
+        { "type": "box", "layout": "horizontal", "spacing": "md", "contents": [
+          { "type": "text", "text": "難波店", "size": "sm", "color": "#333333", "flex": 3, "gravity": "center" },
+          { "type": "box", "layout": "vertical", "flex": 6, "backgroundColor": "#EEF1F4", "cornerRadius": "10px", "height": "8px", "contents": [
+            { "type": "box", "layout": "vertical", "backgroundColor": "#00A0E9", "cornerRadius": "10px", "height": "8px", "width": "60%", "contents": [ { "type": "filler" } ] } ] },
+          { "type": "text", "text": "3/5", "size": "sm", "weight": "bold", "color": "#0089C7", "align": "end", "flex": 2, "gravity": "center" } ] },
+        { "type": "box", "layout": "vertical", "paddingAll": "12px", "backgroundColor": "#FFF7E6", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "未提出の方には締切前日にAIが自動でお声がけ。全員そろい次第、AIがシフト原案を作成して店長に共有します。", "size": "xs", "color": "#A9770F", "wrap": true } ] },
+        { "type": "box", "layout": "vertical", "paddingAll": "12px", "backgroundColor": "#F5F7F8", "cornerRadius": "8px", "contents": [
+          { "type": "text", "text": "💬 AIのひとこと", "size": "xs", "weight": "bold", "color": "#0089C7" },
+          { "type": "text", "text": "希望の回収・集計・催促・原案づくりまで、この流れがそのまま自動で回ります。", "size": "xs", "color": "#4a4f55", "wrap": true, "margin": "sm" } ] },
+        { "type": "text", "text": "3店舗15名のシフト回収・調整・催促に月12時間 ≒ 月24,000円", "size": "xxs", "color": "#888888", "align": "center", "wrap": true }
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "paddingAll": "12px",
+      "contents": [
+        { "type": "button", "style": "primary", "color": "#06C755", "height": "sm",
+          "action": { "type": "uri", "label": "あなたのお店でお試し（無料相談）", "uri": "{{liff_shindan_url}}" } }
+      ]
+    }
+  }
+}

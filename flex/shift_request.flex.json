@@ -1,35 +1,38 @@
 {
   "type": "flex",
-  "altText": "📝 シフト希望の提出依頼（来月1日〜15日・締切 今月20日）",
+  "altText": "📝 シフト希望の提出をお願いします（対象 {{shift_period}}・締切 {{shift_deadline}}）。タップで入力",
   "contents": {
     "type": "bubble",
-    "size": "mega",
+    "size": "kilo",
     "header": {
-      "type": "box", "layout": "vertical", "spacing": "none", "paddingAll": "16px", "backgroundColor": "#1DB446",
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "backgroundColor": "#FFFFFF", "spacing": "none",
       "contents": [
-        { "type": "text", "text": "📝 シフト希望の提出をお願いします", "color": "#ffffff", "weight": "bold", "size": "md" },
-        { "type": "text", "text": "スタッフ全員へ自動送信", "color": "#e8f5e9", "size": "xxs", "margin": "sm" }
+        { "type": "text", "text": "{{date_ja}}", "size": "xxs", "color": "#ABABAB" },
+        { "type": "text", "text": "📝 シフト希望の提出をお願いします", "size": "md", "weight": "bold", "color": "#1A1A1A", "margin": "sm", "wrap": true },
+        { "type": "text", "text": "梅田店 スタッフのみなさんへ", "size": "xxs", "color": "#888888", "margin": "sm" },
+        { "type": "separator", "margin": "md", "color": "#E7E7E7" }
       ]
     },
     "body": {
-      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "16px",
+      "type": "box", "layout": "vertical", "paddingAll": "16px", "spacing": "sm",
       "contents": [
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "対象期間", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "来月 1日〜15日", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "提出締切", "size": "sm", "color": "#8c8c8c", "flex": 4 }, { "type": "text", "text": "今月 20日", "size": "sm", "weight": "bold", "align": "end", "flex": 6 } ]},
-        { "type": "separator", "margin": "md" },
-        { "type": "text", "text": "回収状況（3店舗）", "size": "xxs", "color": "#aaaaaa", "margin": "md" },
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "梅田店", "size": "sm", "flex": 4 }, { "type": "text", "text": "4/5 提出済", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "心斎橋店", "size": "sm", "flex": 4 }, { "type": "text", "text": "5/5 提出済 ✅", "size": "sm", "color": "#2E7D32", "align": "end", "flex": 6 } ]},
-        { "type": "box", "layout": "horizontal", "contents": [ { "type": "text", "text": "難波店", "size": "sm", "flex": 4 }, { "type": "text", "text": "3/5 提出済", "size": "sm", "color": "#8c8c8c", "align": "end", "flex": 6 } ]},
-        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#f5f7f5", "cornerRadius": "8px", "contents": [
-          { "type": "text", "text": "💬 スタッフはLINEのフォームから希望日を提出（早番/中番/遅番/休み）。未提出者には明日AIが自動で催促します。集計まで自動。", "size": "xs", "color": "#555555", "wrap": true }
-        ]}
+        { "type": "box", "layout": "horizontal", "contents": [
+          { "type": "text", "text": "対象期間", "size": "sm", "color": "#888888", "flex": 3 },
+          { "type": "text", "text": "{{shift_period}}", "size": "sm", "weight": "bold", "color": "#333333", "align": "end", "flex": 7 } ] },
+        { "type": "box", "layout": "horizontal", "contents": [
+          { "type": "text", "text": "提出締切", "size": "sm", "color": "#888888", "flex": 3 },
+          { "type": "text", "text": "{{shift_deadline}}", "size": "sm", "weight": "bold", "color": "#E5504F", "align": "end", "flex": 7 } ] },
+        { "type": "box", "layout": "vertical", "margin": "md", "paddingAll": "12px", "backgroundColor": "#F5F7F8", "cornerRadius": "8px",
+          "contents": [
+            { "type": "text", "text": "下のボタンから、勤務できる日と希望の時間帯（早番／中番／遅番）を選んで提出してください。未提出の方には締切前日にAIが自動でお声がけします。", "size": "xs", "color": "#555555", "wrap": true }
+          ] }
       ]
     },
     "footer": {
-      "type": "box", "layout": "vertical", "spacing": "sm", "paddingAll": "12px",
+      "type": "box", "layout": "vertical", "paddingAll": "12px",
       "contents": [
-        { "type": "button", "style": "link", "height": "sm", "action": { "type": "uri", "label": "🔍 あなたのお店の数字で見る（無料診断）", "uri": "{{shindan_url}}" } }
+        { "type": "button", "style": "primary", "color": "#06C755", "height": "sm",
+          "action": { "type": "uri", "label": "シフト希望を入力する", "uri": "{{liff_shift_request_url}}" } }
       ]
     }
   }
