@@ -31,7 +31,8 @@
     "footer": {
       "type": "box", "layout": "vertical", "spacing": "sm", "paddingStart": "16px", "paddingEnd": "16px", "paddingBottom": "14px", "paddingTop": "0px",
       "contents": [
-        { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "uri", "label": "編集・確認", "uri": "https://liff.line.me/2010700075-mPqprWkn?rev=20260714b" } }
+        { "type": "button", "style": "secondary", "height": "sm", "action": { "type": "uri", "label": "編集する", "uri": "https://liff.line.me/2010700075-mPqprWkn?rev=20260730a" } },
+        { "type": "button", "style": "primary", "height": "sm", "color": "#06C755", "action": { "type": "postback", "label": "このまま送信", "data": "demo=review&act=posted", "displayText": "このまま送信" } }
       ]
     }
   }

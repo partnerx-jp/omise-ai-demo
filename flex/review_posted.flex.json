@@ -1,15 +1,25 @@
 {
   "type": "flex",
-  "altText": "✅ Googleマップに返信を投稿しました",
+  "altText": "口コミの返信を完了しました",
   "contents": {
     "type": "bubble",
     "size": "kilo",
     "body": {
       "type": "box", "layout": "vertical", "paddingAll": "18px", "spacing": "sm", "contents": [
-        { "type": "text", "text": "✅ 返信を投稿しました", "size": "md", "weight": "bold", "color": "#2F9E44" },
-        { "type": "text", "text": "Google マップ｜難波店｜T.K さんの口コミへ返信済み", "size": "xxs", "color": "#888888", "wrap": true },
+        { "type": "text", "text": "口コミの返信を完了しました", "size": "md", "weight": "bold", "color": "#2F9E44", "wrap": true },
+        { "type": "text", "text": "Google マップ｜難波店｜T.K さんの口コミへ返信を投稿しました。", "size": "xxs", "color": "#888888", "wrap": true },
         { "type": "separator", "color": "#E7E7E7", "margin": "md" },
-        { "type": "text", "text": "承認された返信だけが投稿されます。文面の調整や却下もワンタップ。大事な操作は必ずあなたの承認を通して進みます。", "size": "xs", "color": "#444444", "wrap": true, "margin": "md" }
+        { "type": "box", "layout": "vertical", "backgroundColor": "#F5F7F8", "cornerRadius": "10px", "paddingAll": "12px", "margin": "md", "contents": [
+          { "type": "text", "text": "T.K様、ご来店ありがとうございます。せっかくお越しいただいたのに、製造個数が足りずお目当てのパンをご用意できず申し訳ございませんでした。今後はInstagramで焼き上がりのスケジュールや売り切れ状況をお知らせしてまいります。ぜひまたお立ち寄りください。スタッフ一同お待ちしております。", "size": "xs", "color": "#444444", "wrap": true },
+          { "type": "text", "text": "難波店 店長 花岡", "size": "xxs", "color": "#888888", "align": "end", "margin": "md" }
+        ]},
+        { "type": "text", "text": "承認された返信だけが投稿されます。大事な操作は必ずあなたの承認を通して進みます。", "size": "xs", "color": "#444444", "wrap": true, "margin": "md" }
+      ]
+    },
+    "footer": {
+      "type": "box", "layout": "vertical", "paddingAll": "12px", "paddingTop": "4px",
+      "contents": [
+        { "type": "button", "style": "primary", "color": "#06C755", "height": "sm", "adjustMode": "shrink-to-fit", "action": { "type": "uri", "label": "あなたのお店でお試し（無料相談）", "uri": "https://partnerx-jp.github.io/omise-ai-demo/liff/shindan/" } }
       ]
     }
   }

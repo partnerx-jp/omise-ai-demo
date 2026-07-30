@@ -44,11 +44,10 @@
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
     // 口コミ返信編集用 LIFF（エンドポイント＝このページ／スコープ chat_message.write）。
-    // 実機LIFFで開くと「投稿→完了カードをトークへ送信→自動で閉じる」。非LIFF時は画面内完了にフォールバック。
+    // 実機LIFFで開くと「投稿→トリガーテキスト送信→自動で閉じる→botが完了カードを返信」。非LIFF時は画面内完了にフォールバック。
+    // 完了カードは bot（お店のAIワーカー）側から届く（flex/review_posted.flex.json ＝ n8n がルーティング）。
     const LIFF_ID = "2010700075-mPqprWkn";
-    const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
     const SHINDAN = "../shindan/";
-    const SHINDAN_ABS = PAGES + "/liff/shindan/";
     const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     let inLiff = false;
 
@@ -104,31 +103,11 @@
       document.getElementById("ctabar").style.display = "";
     }
 
-    // トークに出す完了カード（Flex）。テキストではなくFlexで送るのでbotの既定応答を誘発しない。
-    function completionFlex(){
-      return { type:"flex", altText:"口コミの返信を完了しました", contents:{
-        type:"bubble", size:"kilo",
-        body:{ type:"box", layout:"vertical", paddingAll:"18px", spacing:"sm", contents:[
-          { type:"text", text:"口コミの返信を完了しました", weight:"bold", size:"md", color:"#2F9E44", wrap:true },
-          { type:"text", text:"Google マップ｜難波店｜T.K さんの口コミへ返信を投稿しました。", size:"xxs", color:"#888888", wrap:true },
-          { type:"separator", margin:"md", color:"#E7E7E7" },
-          { type:"box", layout:"vertical", backgroundColor:"#F5F7F8", cornerRadius:"10px", paddingAll:"12px", margin:"md", contents:[
-            { type:"text", text: state.reply, size:"xs", color:"#444444", wrap:true }
-          ]}
-        ]},
-        footer:{ type:"box", layout:"vertical", paddingAll:"12px", contents:[
-          { type:"box", layout:"vertical", backgroundColor:"#06C755", cornerRadius:"8px", paddingTop:"12px", paddingBottom:"12px", paddingStart:"10px", paddingEnd:"10px",
-            action:{ type:"uri", label:"あなたのお店でお試し（無料相談）", uri: SHINDAN_ABS },
-            contents:[ { type:"text", text:"あなたのお店でお試し（無料相談）", color:"#ffffff", weight:"bold", size:"sm", align:"center", wrap:false } ] }
-        ]}
-      }};
-    }
-
     function submit(){
       if (!state.reply.trim()) { return; }
-      // 実機LIFF: 完了カードをトークへ送信 → LIFFを自動で閉じる → 通常トーク画面に戻る
+      // 実機LIFF: トリガーテキストを送信 → LIFFを自動で閉じる → botが完了カード（review_posted）を返信
       if (inLiff && window.liff && liff.sendMessages){
-        liff.sendMessages([ completionFlex() ])
+        liff.sendMessages([{ type:"text", text:"この内容で口コミに返信します" }])
           .then(()=> liff.closeWindow())
           .catch(()=> showDone());
       } else {
