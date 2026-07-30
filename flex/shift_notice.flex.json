@@ -237,8 +237,7 @@
                   "type": "text",
                   "text": "4:30〜13:30",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -262,8 +261,7 @@
                   "type": "text",
                   "text": "5:00〜14:00",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -287,8 +285,7 @@
                   "type": "text",
                   "text": "8:00〜17:00",
                   "size": "sm",
-                  "color": "#2C74AA",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -319,8 +316,7 @@
                   "type": "text",
                   "text": "6:45〜15:45",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -344,8 +340,7 @@
                   "type": "text",
                   "text": "10:30〜19:30",
                   "size": "sm",
-                  "color": "#B87A22",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -619,8 +614,7 @@
                   "type": "text",
                   "text": "4:30〜13:30",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -644,8 +638,7 @@
                   "type": "text",
                   "text": "6:00〜15:00",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -676,8 +669,7 @@
                   "type": "text",
                   "text": "7:30〜16:30",
                   "size": "sm",
-                  "color": "#2C74AA",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -701,8 +693,7 @@
                   "type": "text",
                   "text": "11:00〜20:00",
                   "size": "sm",
-                  "color": "#B87A22",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -726,8 +717,7 @@
                   "type": "text",
                   "text": "13:00〜21:00",
                   "size": "sm",
-                  "color": "#B87A22",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -1001,8 +991,7 @@
                   "type": "text",
                   "text": "4:30〜13:30",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -1026,8 +1015,7 @@
                   "type": "text",
                   "text": "5:30〜14:30",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -1058,8 +1046,7 @@
                   "type": "text",
                   "text": "6:45〜15:45",
                   "size": "sm",
-                  "color": "#61903A",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
@@ -1083,8 +1070,7 @@
                   "type": "text",
                   "text": "10:00〜19:00",
                   "size": "sm",
-                  "color": "#B87A22",
-                  "weight": "bold",
+                  "color": "#333333",
                   "align": "end",
                   "flex": 5,
                   "gravity": "center"
