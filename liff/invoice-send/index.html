@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://partnerx-jp.github.io; connect-src 'self' https://partnerx-jp.github.io https://api.line.me https://*.line.me https://*.line-apps.com https://*.line-scdn.net;">
+  <link rel="stylesheet" href="../shared.css?v=20260714">
+  <title>お店のAIワーカー</title>
+  <style>
+    .send-wrap { text-align: center; padding: 36px 20px; }
+    .send-wrap .spin { width: 36px; height: 36px; margin: 0 auto 14px; border: 3px solid #E4E7EA; border-top-color: var(--brand, #00A0E9); border-radius: 999px; animation: sp .8s linear infinite; }
+    @keyframes sp { to { transform: rotate(360deg); } }
+    .send-wrap h2 { font-size: 15px; margin: 0 0 6px; color: var(--ink, #1A1A1A); }
+    .send-wrap p { font-size: 12px; color: var(--sub, #5C6169); line-height: 1.7; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="send-wrap" id="app">
+    <div class="spin"></div>
+    <h2>請求書サンプルを送信しています…</h2>
+    <p>届いた請求書の写真を送るのと同じ操作を再現します</p>
+  </div>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    const LIFF_ID = "2010700075-zQ4sAdpF";
+    const PAGES = "https://partnerx-jp.github.io/omise-ai-demo";
+    const IMG = PAGES + "/assets/invoice-sample.png";
+
+    function fail(msg){
+      document.getElementById("app").innerHTML =
+        '<h2>送信できませんでした</h2><p>' + msg + '</p>';
+    }
+
+    (async () => {
+      try {
+        if (!LIFF_ID || !window.liff) { fail("LIFF IDが未設定です（登録待ち）"); return; }
+        await liff.init({ liffId: LIFF_ID });
+        if (!liff.isInClient()) { fail("LINEアプリ内のトーク画面から開いてください"); return; }
+        // オーナー本人のメッセージとして請求書画像を送信（トーク右側に表示される）
+        await liff.sendMessages([
+          { type: "image", originalContentUrl: IMG, previewImageUrl: IMG }
+        ]);
+        liff.closeWindow();
+      } catch (e) {
+        fail((e && e.message) || "不明なエラー");
+      }
+    })();
+  </script>
+</body>
+</html>

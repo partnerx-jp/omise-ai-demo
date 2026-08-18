@@ -10,12 +10,17 @@ API=https://api.line.me
 for old in $(curl -s "$API/v2/bot/richmenu/list" -H "Authorization: Bearer $TOKEN" | python3 -c "import sys,json;print(' '.join(m['richMenuId'] for m in json.load(sys.stdin).get('richmenus',[])))"); do
   curl -s -X DELETE "$API/v2/bot/richmenu/$old" -H "Authorization: Bearer $TOKEN" >/dev/null && echo "deleted old: $old"
 done
-# 作成用JSON（8ボタン postback demo={key}）
+# 請求書登録はLIFF起動（invoice-send がオーナー側から画像送信）。LIFF登録後のURLを設定
+INVOICE_SEND_LIFF_URL="${INVOICE_SEND_LIFF_URL:-__SET_AFTER_LIFF_REGISTER__}"
+[ "$INVOICE_SEND_LIFF_URL" != "__SET_AFTER_LIFF_REGISTER__" ] || { echo "❌ INVOICE_SEND_LIFF_URL を設定してから実行（register-liff.sh invoice-send compact で取得）"; exit 1; }
+export INVOICE_SEND_LIFF_URL
+# 作成用JSON（invoice=uri(LIFF)・他7ボタン postback demo={key}）
 python3 - > /tmp/richmenu_obj.json <<'PY'
-import json
+import json, os
+liff = os.environ["INVOICE_SEND_LIFF_URL"]
 keys=[["daily","monthly","invoice","payment"],["reconcile","shift_notice","shift_request","review"]]
 areas=[{"bounds":{"x":c*625,"y":300+r*693,"width":625,"height":693},
-        "action":{"type":"postback","data":f"demo={k}"}}
+        "action":({"type":"uri","uri":liff} if k=="invoice" else {"type":"postback","data":f"demo={k}"})}
        for r,row in enumerate(keys) for c,k in enumerate(row)]
 print(json.dumps({"size":{"width":2500,"height":1686},"selected":True,
                   "name":"tab1","chatBarText":"メニュー","areas":areas},ensure_ascii=False))
